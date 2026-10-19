@@ -4,11 +4,11 @@ function pending(row){return row.reply_version!==row.version;}
 const core={score,pending};if(typeof module!=='undefined'&&module.exports){module.exports=core;return;}
 window.PenguinsTraining={
 async mount(ctx){const {api,checked,section,el,field,option,button,helper,user,profile,message,render}=ctx;const coach=profile.role==='coach';
-const links=await checked(api.from('coaching_links').select('*').eq(coach?'coach_id':'client_id',user.id).eq('status','accepted').limit(100));const ids=links.map(l=>coach?l.client_id:l.coach_id);const people=ids.length?await checked(api.from('member_profiles').select('id,name').in('id',ids)):[];const name=id=>people.find(p=>p.id===id)?.name||'عضو';
+const allLinks=await checked(api.from('coaching_links').select('*').eq(coach?'coach_id':'client_id',user.id).eq('status','accepted').limit(100));const links=allLinks.filter(l=>!ctx.selectedPerson||(coach?l.client_id:l.coach_id)===ctx.selectedPerson);const ids=links.map(l=>coach?l.client_id:l.coach_id);const people=ids.length?await checked(api.from('member_profiles').select('id,name').in('id',ids)):[];const name=id=>people.find(p=>p.id===id)?.name||'عضو';
 const stats=section(coach?'متابعة التدريب':'تقدّمك في التدريب');const grid=el('div',undefined,stats,'stats-grid');
 const queries=coach?[['عملاء مرتبطين','coaching_links','coach_id','status','accepted'],['طلبات جديدة','coaching_links','coach_id','status','requested']]:[['مدرّبين مرتبطين','coaching_links','client_id','status','accepted'],['خطط مكتملة','plan_progress','client_id','done',true],['خطط مفضلة','plan_progress','client_id','favorite',true]];
 for(const [title,table,id,key,value]of queries){const r=await api.from(table).select('*',{count:'exact',head:true}).eq(id,user.id).eq(key,value);if(r.error)throw r.error;const card=el('div',undefined,grid,'stat');el('span',title,card);el('strong',r.count||0,card);}
-const rows=await checked(api.from('weekly_checkins').select('*').order('week',{ascending:false}).order('updated_at',{ascending:false}).limit(50));
+let checkins=api.from('weekly_checkins').select('*');if(ctx.selectedPerson)checkins=checkins.eq(coach?'client_id':'coach_id',ctx.selectedPerson);const rows=await checked(checkins.order('week',{ascending:false}).order('updated_at',{ascending:false}).limit(50));
 if(coach){const card=el('div',undefined,grid,'stat');el('span','تحتاج ردًا · من آخر ٥٠ متابعة',card);el('strong',rows.filter(pending).length,card);}
 if(!coach){const box=section('متابعتك الأسبوعية');helper('هدفك، عدد أيام تدريبك خلال آخر ٧ أيام، وانطباعك عن طاقتك. تُشارك مع الكوتش المحدد. تجنّب كتابة معلومات صحية أو شخصية حساسة.',box);
 if(!links.length)helper('بعد قبول طلب انضمامك لكوتش، تقدر تبعت له متابعة أسبوعية من هنا.',box);else{

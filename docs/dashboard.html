@@ -244,6 +244,7 @@
       <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-1" data-i18n="sidebar.overview">Overview</p>
       <a href="#" data-page="dashboard" class="nav-link active flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◆</span><span data-i18n="nav.dashboard">Dashboard</span></a>
       <a href="#" data-page="messages" class="nav-link flex items-center justify-between px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="flex items-center"><span class="mr-3">✉</span><span data-i18n="nav.messages">Messages</span></span><span id="unread-badge" class="hidden bg-accent text-white text-[10px] rounded-full px-1.5 py-0.5"></span></a>
+      <a href="#" data-page="connected" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">↔</span><span>العملاء والمتابعات</span></a>
       <a href="#" data-page="clients" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◇</span><span data-i18n="nav.clients">Clients</span></a>
 
       <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.coachingTools">Coaching Tools</p>
@@ -760,6 +761,7 @@
     </div>
 
     <!-- ===== CLIENTS (CRM) ===== -->
+    <div id="page-connected" class="page"><header class="mb-6" dir="rtl"><h2 class="display text-3xl font-bold text-white">العملاء والمتابعات</h2><p class="text-muted mt-1">طلبات الانضمام، الخطط وPDF، الإنجاز والمتابعات الأسبوعية لحسابات العملاء المرتبطة بك.</p></header><div id="connected-host" dir="rtl"></div></div>
     <div id="page-clients" class="page">
       <header class="mb-6"><h2 class="display text-3xl font-bold text-white">Clients</h2><p class="text-muted mt-1">Every client, in one place. Click a card for the full profile.</p></header>
       <div class="flex flex-col sm:flex-row gap-3 mb-6">
@@ -1101,5 +1103,5 @@
   <a href="#" data-bn="more" onclick="event.preventDefault();openSidebar()" class="bottom-nav-item"><span class="bn-icon">☰</span><span>Menu</span></a>
 </div>
 
-<div id="sync-alert" role="alert" hidden><p id="sync-alert-message"></p><button id="pg-retry">Retry save</button> · <button id="pg-export-alert">Export backup</button> · <button onclick="location.reload()">Reload</button></div><div id="pg-undo" hidden>Item removed <button id="pg-undo-button">Undo</button></div><dialog id="pg-dialog" aria-labelledby="pg-dialog-title"><h2 id="pg-dialog-title"></h2><div id="pg-dialog-body"></div><button id="pg-dialog-close">Close</button></dialog><input type="file" id="pg-import-file" accept=".json,application/json" hidden><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/core.js" defer></script><script src="assets/security.js" defer></script><script src="assets/client.js?v=original-entry" defer></script><script src="assets/demo-client.js?v=2" defer></script><script src="assets/store.js" defer></script><script src="assets/dashboard.js" defer></script></body>
+<div id="sync-alert" role="alert" hidden><p id="sync-alert-message"></p><button id="pg-retry">Retry save</button> · <button id="pg-export-alert">Export backup</button> · <button onclick="location.reload()">Reload</button></div><div id="pg-undo" hidden>Item removed <button id="pg-undo-button">Undo</button></div><dialog id="pg-dialog" aria-labelledby="pg-dialog-title"><h2 id="pg-dialog-title"></h2><div id="pg-dialog-body"></div><button id="pg-dialog-close">Close</button></dialog><input type="file" id="pg-import-file" accept=".json,application/json" hidden><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/core.js" defer></script><script src="assets/security.js" defer></script><script src="assets/client.js?v=original-entry" defer></script><script src="assets/demo-client.js?v=2" defer></script><script src="assets/store.js" defer></script><script src="assets/dashboard.js" defer></script><script src="assets/connected-dashboard.js?v=1" defer></script></body>
 </html>

@@ -1,0 +1,7 @@
+/* Preserve the original workspace; load real member tools only when opened. */
+(()=>{'use strict';const host=document.getElementById('connected-host');if(!host)return;let loaded=false;
+const shortcut=document.querySelector('#workspace-tools a[href="portal.html?view=followup"]');if(shortcut&&new URLSearchParams(location.search).get('demo')!=='1'){shortcut.textContent='↔ العملاء والمتابعات وPDF';shortcut.addEventListener('click',e=>{e.preventDefault();navigateTo('connected');});}
+function open(){if(loaded||!document.getElementById('page-connected').classList.contains('active'))return;loaded=true;
+if(new URLSearchParams(location.search).get('demo')==='1'){const p=document.createElement('p');p.textContent='دي تجربة محلية للداشبورد القديمة. ربط العملاء الحقيقيين وإرسال الخطط متاح بعد الدخول بحساب كوتش معتمد. بيانات التجربة لا تُرسل لأي عميل.';host.append(p);const a=document.createElement('a');a.textContent='افتح حسابك الحقيقي';a.href='portal.html?view=followup';host.append(a);return;}
+const frame=document.createElement('iframe');frame.title='إدارة العملاء المرتبطين والمتابعات';frame.src='portal.html?view=followup&embedded=1';frame.style.cssText='width:100%;height:calc(100vh - 200px);min-height:650px;border:1px solid #33303e;border-radius:16px;background:#090b11';host.append(frame);}
+new MutationObserver(open).observe(document.getElementById('page-connected'),{attributes:true,attributeFilter:['class']});open();})();

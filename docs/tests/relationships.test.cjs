@@ -1,0 +1,5 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const {group,summarize}=require('../assets/relationships.js');
+test('member summaries use UUID relationships and exclude private drafts and hidden plans',()=>{const plans=[{id:'p1',client_id:'a'},{id:'p2',client_id:'b'},{id:'p3',client_id:'a',pdf_name:'draft',attachment_ready:false},{id:'p4',client_id:'a',moderation_hidden:true}];const s=summarize('a',true,plans,[{plan_id:'p1',done:true},{plan_id:'p2',done:true}],[]);assert.equal(s.total,1);assert.equal(s.done,1);assert.equal(s.percent,100);assert.equal(summarize('unknown',true,plans,[],[]).percent,0);});
+test('client summary separates plans from different coaches',()=>{assert.equal(summarize('coach1',false,[{id:'p',coach_id:'coach2'}],[],[]).total,0);});
+test('navigation keeps plans, weekly followup and account separate',()=>{assert.equal(group('خططي وملفات التمرين'),'plans');assert.equal(group('سجل المتابعة وردود الكوتش'),'followup');assert.equal(group('الشهادات والمؤهلات'),'account');});
