@@ -7,3 +7,13 @@ New features: add/edit clients; full client search; autosave and save status; of
 Reliability repairs: empty chat startup, missing metrics initialization, blank-data overwrite after failed load, stale sample client dropdowns, broken auth links, and silent save errors.
 
 Security changes: per-user RLS, anonymous database access revoked, invoker-mode save function, payload checks, prototype-key rejection on import, safer CSV, HTML sanitization and restricted dynamic event interpretation. Security and performance advisors returned no findings after schema creation. Database isolation tests denied cross-user read/write/delete and anonymous reads.
+
+
+## Client access and coach approval
+
+- Clients register without administrator approval. Coaches require explicit approval.
+- Private owner review queue with decisions and audit records.
+- Up to three coach certificate slots, enforced by database constraints and storage paths.
+- Client-to-coach requests, acceptance, and isolated shared workout plans.
+- Optional workout PDFs up to 10 MiB, available only to sender and assigned client.
+- Logged-out UI and transactional permission tests checked; real email delivery still depends on the configured mail provider.

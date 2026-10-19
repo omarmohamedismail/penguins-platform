@@ -6,10 +6,10 @@ function toggleVisibility(id,button){const input=$(id);input.type=input.type==='
 function showError(id,message){const field=$(id);field.textContent=message;field.classList.remove('hidden');field.setAttribute('role','alert');}
 function authUrl(name){return new URL(name,location.href).href;}
 if(new URLSearchParams(location.search).get('mode')==='signup')setMode('signup');
-api.auth.getSession().then(({data})=>{if(data.session)location.replace('dashboard.html');});
+api.auth.getSession().then(({data})=>{if(data.session)location.replace('portal.html');});
 $('form-login').addEventListener('submit',async event=>{
  event.preventDefault();const button=$('login-submit');button.disabled=true;$('login-form-error').classList.add('hidden');
- try{const {error}=await api.auth.signInWithPassword({email:$('login-email').value.trim(),password:$('login-password').value});if(error)throw error;location.assign('dashboard.html');}
+ try{const {error}=await api.auth.signInWithPassword({email:$('login-email').value.trim(),password:$('login-password').value});if(error)throw error;location.assign('portal.html');}
  catch(error){showError('login-form-error',error.message||'Could not log in. Check your connection.');}
  finally{button.disabled=false;}
 });
@@ -22,9 +22,9 @@ $('form-signup').addEventListener('submit',async event=>{
  if(!$('signup-terms').checked)return showError('signup-form-error','Please read and accept the development-use notice.');
  button.disabled=true;
  try{
-  const {data,error}=await api.auth.signUp({email:$('signup-email').value.trim(),password,options:{emailRedirectTo:authUrl('auth.html'),data:{name,niche:$('signup-niche').value}}});
+  const {data,error}=await api.auth.signUp({email:$('signup-email').value.trim(),password,options:{emailRedirectTo:authUrl('auth.html'),data:{name,requested_role:$('signup-role').value,niche:$('signup-niche').value}}});
   if(error)throw error;
-  if(data.session)location.assign('dashboard.html');else{toast('Check your email to confirm your account, then log in here.');setMode('login');$('login-email').value=$('signup-email').value.trim();}
+  if(data.session)location.assign('portal.html');else{toast('Check your email to confirm your account, then log in here.');setMode('login');$('login-email').value=$('signup-email').value.trim();}
  }catch(error){showError('signup-form-error',error.message||'Could not create your account.');}finally{button.disabled=false;}
 });
 $('signup-password').addEventListener('input',event=>{

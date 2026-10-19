@@ -15,6 +15,11 @@ class PenguinsStore {
       if(userError&&session)throw new Error('Cannot verify your session. Check your connection and retry.');
       location.replace('auth.html');throw new Error('Sign in required.');
     }
+    const {data:membership,error:membershipError}=await this.client.from('member_profiles').select('role,status').eq('id',user.id).maybeSingle();
+    if(membershipError)throw new Error(membershipError.message);
+    if(!membership || membership.role!=='coach' || membership.status!=='approved'){
+      location.replace('portal.html');throw new Error('Open your account portal to continue.');
+    }
     this.user=user;
     const {data:row,error}=await this.client.from('workspaces').select('data,version').eq('user_id',user.id).maybeSingle();
     if(error)throw new Error('Could not load your workspace. '+error.message);
