@@ -62,3 +62,8 @@ A plan with a PDF stays private to the coach until `publish_plan` verifies the s
 The portal has an external-script Content Security Policy, private link referrer protection, role-specific headers, counts, request search and pagination, explicit empty states, accessible dialogs and responsive layouts. Email-link login is also available alongside password login; open the message in the browser that requested it.
 
 Run `node --test docs/tests/*.test.cjs` for unit tests. Run `docs/tests/security-regression.sql` against an owner-managed test connection for transaction-only role and storage policy assertions. It rolls back its fixtures. The legacy `membership-rls.sql` path contains the same current suite. Never publish the local `work/portal-preview` UI fixture server.
+
+
+## Calm studio edition
+
+Arabic landing page, cream and sage palette, redesigned account portal and matching sign-in/recovery screens. Personal weekly organizer and notes use account-scoped browser storage only (no device sync or coach sharing). Rest timer uses elapsed wall time with pause/resume. Coaches get editable plan-writing templates; plans support current-page text search and individual print layouts. Templates contain organizational prompts, not prescribed workouts. No database permissions or paid services changed.

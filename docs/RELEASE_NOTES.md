@@ -27,3 +27,8 @@ Security changes: per-user RLS, anonymous database access revoked, invoker-mode 
 - Add portal CSP and referrer protection, signature checks for uploads, and safe file-opening dialogs.
 - Redesign Arabic admin, coach and client views with counts, search, pagination and mobile layouts.
 - Add automated validation and regression tests; security SQL uses rollback-only synthetic fixtures.
+
+
+## Calm studio edition
+
+Arabic landing page, cream and sage palette, redesigned account portal and matching sign-in/recovery screens. Personal weekly organizer and notes use account-scoped browser storage only (no device sync or coach sharing). Rest timer uses elapsed wall time with pause/resume. Coaches get editable plan-writing templates; plans support current-page text search and individual print layouts. Templates contain organizational prompts, not prescribed workouts. No database permissions or paid services changed.
