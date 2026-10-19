@@ -1,0 +1,9 @@
+Options -Indexes
+DirectoryIndex index.html
+<FilesMatch "^(config\..*|db\.php|README\.md|SECURITY\.md|LAUNCH_CHECKLIST\.md|.*\.(sql|sqlite|log))$">
+  Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(?:scripts|tests|data|\.git|\.github)(?:/|$) - [F,L]
+</IfModule>

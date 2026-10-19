@@ -1,0 +1,12 @@
+config.local.php
+.env
+.env.*
+!.env.example
+/data/
+*.sqlite*
+*.sql
+*.log
+/vendor/
+/node_modules/
+/.idea/
+/.vscode/
