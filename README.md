@@ -39,7 +39,7 @@ Run `python -m http.server 8090 --bind 127.0.0.1 --directory docs` from the repo
 
 ## Development
 
-The repository root contains pinned dependencies and a lockfile. Run `npm ci`, `npm run build:pages`, and `npm test`. Edit `docs/assets/dashboard-base.js` and `docs/assets/enhancements.js`; the build combines them into `dashboard.js` and bundles dependencies into `vendor.js`.
+The repository root contains pinned dependencies and a lockfile. Run `npm ci`, `npm run build:pages`, and `npm test`. The legacy `utilities.css` is a versioned static compatibility stylesheet; new component styles belong in `product.css` or `portal.css`. The build no longer installs the old Tailwind toolchain. Edit `docs/assets/dashboard-base.js` and `docs/assets/enhancements.js`; the build combines them into `dashboard.js` and bundles dependencies into `vendor.js`.
 
 The original PHP edition remains at the repository root as a legacy version. Pages serves only `docs/`.
 
@@ -57,3 +57,14 @@ Open `auth.html`, create an account, and select Client or Coach. New accounts en
 The initial `schema.sql` and subsequent `membership.sql` migrations are already applied to the live project; do not rerun them there. The administrator email allowlist is stored in the private database schema, never in client code. A matching confirmed email is required. Provision administrators only through a trusted project-owner database connection.
 
 The existing coach workspace remains private. CRM contacts and workspace plan drafts are separate from registered client accounts; send deliverable plans from the portal after the client connects. Existing users choose their account role on their next visit.
+
+
+## Security and portal UI update
+
+The `supabase/security-upgrade.sql` migrations are already applied to the live project. Approved coach certificates are immutable until the coach explicitly requests another review. Certificate writes and administrator review lock the same coach profile to serialize decisions. Review decisions reject stale status values and retain an audit record.
+
+A plan with a PDF stays private to the coach until `publish_plan` verifies the stored object. Failed uploads retain a private draft with retry controls. Clients cannot set the publication flag or read unfinished attachments. Approved files use canonical private storage paths and short-lived links. File signature checks in the browser improve input validation; they are not antivirus scanning or a substitute for server authorization.
+
+The portal has an external-script Content Security Policy, private link referrer protection, role-specific headers, counts, request search and pagination, explicit empty states, accessible dialogs and responsive layouts. Email-link login is also available alongside password login; open the message in the browser that requested it.
+
+Run `node --test docs/tests/*.test.cjs` for unit tests. Run `docs/tests/security-regression.sql` against an owner-managed test connection for transaction-only role and storage policy assertions. It rolls back its fixtures. The legacy `membership-rls.sql` path contains the same current suite. Never publish the local `work/portal-preview` UI fixture server.

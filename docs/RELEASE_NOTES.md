@@ -17,3 +17,13 @@ Security changes: per-user RLS, anonymous database access revoked, invoker-mode 
 - Client-to-coach requests, acceptance, and isolated shared workout plans.
 - Optional workout PDFs up to 10 MiB, available only to sender and assigned client.
 - Logged-out UI and transactional permission tests checked; real email delivery still depends on the configured mail provider.
+
+
+## Security review and portal redesign
+
+- Freeze approved coach certificates; explicit review reopening is required for edits.
+- Lock certificate writes against review decisions, and reject stale administrator actions.
+- Hide PDF plans from clients until upload verification; interrupted uploads retain private drafts.
+- Add portal CSP and referrer protection, signature checks for uploads, and safe file-opening dialogs.
+- Redesign Arabic admin, coach and client views with counts, search, pagination and mobile layouts.
+- Add automated validation and regression tests; security SQL uses rollback-only synthetic fixtures.
