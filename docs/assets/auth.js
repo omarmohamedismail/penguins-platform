@@ -50,3 +50,11 @@ $('resend-confirmation').addEventListener('click',async()=>{
  try{const {error}=await api.auth.resend({type:'signup',email,options:{emailRedirectTo:authUrl('auth.html')}});if(error)throw error;toast('لو الحساب محتاج تفعيل، هتوصلك رسالة على نفس البريد. راجع الرسائل غير المرغوب فيها كمان.');}
  catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
 });
+
+$('email-link-login').addEventListener('click',async()=>{
+ clearAuthFeedback();const email=$('login-email').value.trim();
+ if(!email||!$('login-email').checkValidity())return showError('login-form-error','اكتب بريدك الإلكتروني الصحيح أولًا.');
+ const button=$('email-link-login');button.disabled=true;
+ try{const {error}=await api.auth.signInWithOtp({email,options:{emailRedirectTo:authUrl('auth.html'),shouldCreateUser:true}});if(error)throw error;toast('راجع بريدك واضغط رابط الدخول. افتحه من نفس المتصفح اللي طلبت منه الرابط. لو مش لاقي الرسالة، راجع الرسائل غير المرغوب فيها.');}
+ catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
+});
