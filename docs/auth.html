@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Penguins brings client management, training plans, scheduling and coaching business tools into one workspace.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penguins — Log in or sign up</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  body { background:#05050A; font-family:'Inter',sans-serif; }
+  .display { font-family:'Space Grotesk',sans-serif; }
+
+  #stars { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .star { position:absolute; background:#fff; border-radius:50%; opacity:0.5; animation:twinkle linear infinite; }
+  @keyframes twinkle { 0%,100%{ opacity:.15; } 50%{ opacity:.85; } }
+
+  .glow { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; }
+  .glow-1 { width:560px; height:560px; background:radial-gradient(circle, rgba(108,92,231,0.35), transparent 70%); top:-200px; left:-160px; }
+  .glow-2 { width:480px; height:480px; background:radial-gradient(circle, rgba(245,185,66,0.14), transparent 70%); bottom:-180px; right:-160px; }
+
+  .glass { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(14px); }
+  .glass-strong { background:rgba(255,255,255,0.045); border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(20px); }
+
+  .grad-text { background:linear-gradient(120deg,#F5F5F7 20%,#B9AEFF 55%,#F5B942 85%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  .btn-primary { background:linear-gradient(135deg,#6C5CE7,#8B5CF6); box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset, 0 12px 30px -10px rgba(108,92,231,0.55); }
+  .btn-primary:hover { box-shadow:0 0 0 1px rgba(255,255,255,0.12) inset, 0 16px 38px -8px rgba(108,92,231,0.7); }
+  .btn-primary:disabled { opacity:.55; cursor:not-allowed; box-shadow:none; }
+  .btn-metal:disabled { opacity:.55; cursor:not-allowed; }
+  .btn-metal:disabled::before { display:none; }
+
+  .field { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.1); color:#F5F5F7; transition:border-color .15s ease, box-shadow .15s ease; }
+  .field:focus { outline:none; border-color:#8B5CF6; box-shadow:0 0 0 3px rgba(139,92,246,0.18); }
+  .field.field-error { border-color:#F55151; }
+  .field.field-error:focus { box-shadow:0 0 0 3px rgba(245,81,81,0.18); }
+
+  .tab-btn { transition: color .15s ease, background .15s ease; position:relative; z-index:1; }
+  .tab-btn.active { background:linear-gradient(160deg,#3a3a44,#1c1c22); color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,0.15), 0 4px 12px -4px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); }
+
+  .strength-bar { height:4px; border-radius:999px; background:#1E1E2E; overflow:hidden; }
+  .strength-fill { height:100%; border-radius:999px; transition:width .2s ease, background .2s ease; }
+
+  /* ===== Metallic surfaces (shared with index.html) ===== */
+  .metal-card { position:relative; overflow:hidden; background:linear-gradient(150deg,#1c1c22 0%,#0a0a0c 45%,#17171c 100%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.5), 0 20px 50px -20px rgba(0,0,0,0.8); }
+  .metal-icon-plate { background:linear-gradient(150deg,#2a2a32,#111114); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.1); }
+  .btn-metal { position:relative; overflow:hidden; background:linear-gradient(160deg,#3a3a44 0%,#1c1c22 45%,#2a2a32 100%); border:1px solid rgba(255,255,255,0.16); box-shadow:inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.5), 0 10px 26px -12px rgba(0,0,0,0.7); transition:border-color .2s ease; }
+  .btn-metal::before { content:''; position:absolute; top:0; left:-160%; width:55%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent); transform:skewX(-20deg); transition:left .7s ease; }
+  .btn-metal:hover::before { left:160%; }
+  .btn-metal:hover { border-color:rgba(139,92,246,0.5); }
+  .tab-wrap { background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.2)); border:1px solid rgba(255,255,255,0.06); border-radius:16px; }
+
+  ::selection { background:#6C5CE7; color:#fff; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star { animation:none; opacity:.4; }
+  }
+  @media (max-width: 767px) {
+    #form-login .field, #form-signup .field, #form-login button, #form-signup button { font-size:16px; } /* prevents iOS auto-zoom on focus */
+  }
+</style>
+<style>
+  :focus-visible { outline: 3px solid #a79bff; outline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
+<link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/product.css">
+</head>
+<body class="text-ink antialiased relative min-h-screen" >
+
+<div id="stars"></div>
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+</div>
+
+<div class="relative z-10 min-h-screen flex flex-col">
+
+  <header class="max-w-7xl mx-auto w-full px-6 md:px-8 pt-6">
+    <a href="index.html" class="display text-lg font-bold text-white inline-flex items-center gap-2">
+      Penguins <span class="text-base">🐧</span><span class="text-nebula">.</span>
+    </a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-md">
+
+      <div class="text-center mb-8">
+        <h1 class="display text-3xl font-bold text-white">Welcome to <span class="grad-text">Penguins</span></h1>
+        <p class="text-dim text-sm mt-2">Run your coaching business from one command center.</p>
+      </div>
+
+      <div class="metal-card rounded-2xl p-2">
+        <div class="flex gap-1 mb-2">
+          <button id="tab-login" onclick="setMode('login')" class="tab-btn active flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">Log in</button>
+          <button id="tab-signup" onclick="setMode('signup')" class="tab-btn flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">Sign up</button>
+        </div>
+
+        <div class="p-6 pt-4">
+
+          <!-- ============ LOGIN FORM ============ -->
+          <div id="auth-status" role="status" aria-live="polite" hidden></div><form id="form-login" class="space-y-4" novalidate>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Email</label>
+              <input type="email" id="login-email" aria-label="Email" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs text-dim">Password</label>
+                
+              </div>
+              <div class="relative">
+                <input type="password" id="login-password" aria-label="Password" required name="password" autocomplete="current-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm pr-11">
+                <button type="button" onclick="toggleVisibility('login-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">Show</button>
+              </div>
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <p class="text-xs text-dim">Stay signed in on this browser. Use Log out on shared devices.</p>
+            <button type="submit" id="login-submit" class="btn-metal w-full text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+              <span id="login-submit-label">Log in</span>
+            </button>
+            <button type="button" id="reset-password" class="text-sm text-nebula">Forgot password?</button><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
+          </form>
+
+          <!-- ============ SIGNUP FORM ============ -->
+          <form id="form-signup" class="space-y-4 hidden" novalidate>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Full name</label>
+              <input type="text" id="signup-name" name="name" autocomplete="name" placeholder="Jordan Diaz" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Email</label>
+              <input type="email" id="signup-email" aria-label="Email" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Coaching focus</label>
+              <select id="signup-niche" class="field w-full rounded-xl px-4 py-3 text-sm">
+                <option>Fitness / Strength</option>
+                <option>Nutrition</option>
+                <option>Life &amp; Mindset</option>
+                <option>Business / Executive</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Password</label>
+              <div class="relative">
+                <input type="password" id="signup-password" name="password" autocomplete="new-password" placeholder="At least 10 characters" class="field w-full rounded-xl px-4 py-3 text-sm pr-11">
+                <button type="button" onclick="toggleVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">Show</button>
+              </div>
+              <div class="strength-bar mt-2"><div id="strength-fill" class="strength-fill" style="width:0%"></div></div>
+              <p id="strength-label" class="text-dim text-[11px] mt-1">Password strength</p>
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <div>
+              <label class="text-xs text-dim mb-1.5 block">Confirm password</label>
+              <input type="password" id="signup-confirm" name="confirm" autocomplete="new-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <p class="error-text hidden text-danger text-xs mt-1.5"></p>
+            </div>
+            <label class="flex items-start gap-2 text-xs text-dim">
+              <input type="checkbox" id="signup-terms" class="accent-accent rounded mt-0.5">
+              <span>I understand this is a development workspace and have read the <a href="privacy.html" class="text-nebula">data notice</a>.</span>
+            </label>
+            <p class="error-text hidden text-danger text-xs -mt-2" id="terms-error"></p>
+            <button type="submit" id="signup-submit" class="btn-metal w-full text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
+              <span id="signup-submit-label">Create account</span>
+            </button>
+            <p id="signup-form-error" class="hidden text-danger text-xs text-center"></p>
+          </form>
+
+          <div class="flex items-center gap-3 my-5">
+            <div class="flex-1 h-px bg-line"></div>
+            <a href="index.html" class="text-dim text-[11px]">Back to home</a>
+            <div class="flex-1 h-px bg-line"></div>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <p class="text-center text-dim text-xs mt-6">
+        Your data is isolated by account. <a href="privacy.html">Read the data notice</a>.
+      </p>
+    </div>
+  </main>
+</div>
+
+<div id="toastWrap" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
+
+
+
+<style>
+  @keyframes fadeSlideIn { from{ opacity:0; transform:translateX(16px);} to{ opacity:1; transform:translateX(0);} }
+</style>
+
+<script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/client.js" defer></script><script src="assets/auth.js" defer></script></body>
+</html>
