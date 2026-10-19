@@ -17,7 +17,7 @@ A static coaching workspace that runs without PHP, XAMPP or MySQL. The browser u
 
 ## Hosting
 
-The `docs/` copy in the GitHub repository is the Pages site. Enable **Settings → Pages → Deploy from a branch → main → /docs**. GitHub Free requires a public repository for Pages. The repository must contain no private credentials or client data.
+The `docs/` copy in the GitHub repository is the Pages site. Use **Settings → Pages → Source → GitHub Actions**. The Publish Penguins website workflow builds and deploys `docs/`. GitHub Free requires a public repository for Pages. The repository must contain no private credentials or client data.
 
 Supabase project: `batjqwxvjkjjbggfnnct`. Its publishable browser key in `assets/config.js` is intentionally public; authorization comes from Supabase Auth and RLS. Never replace it with a service-role or secret key.
 
@@ -44,7 +44,7 @@ Payment processing, delivered client messaging, hosted video calls, electronic s
 
 ## Client portal and coach review
 
-Open `auth.html`, create an account, and select Client or Coach. After signing in, confirm the account type once. Clients enter immediately; coaches remain pending until reviewed by a verified platform administrator. The account role is stored in the database and cannot be changed by editing browser metadata.
+Open `auth.html`, create an account, and select Client or Coach. New accounts enter the selected portal after signing in. Existing accounts without a role select one once. Clients enter immediately; coaches remain pending until reviewed by a verified platform administrator. The account role is stored in the database and cannot be changed by editing browser metadata.
 
 `portal.html` provides the administrator review queue (pending / approved / rejected), optional review notes, up to three private coach qualification files (PDF, JPEG or PNG), client requests to approved coaches, coach acceptance, and shared text plans with an optional PDF. Maximum file size: 10 MiB. File links expire after 60 seconds. Use Refresh to see new requests.
 

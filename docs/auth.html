@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="Penguins brings client management, training plans, scheduling and coaching business tools into one workspace.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penguins — Log in or sign up</title>
+<title>Penguins — تسجيل الدخول وإنشاء حساب</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -89,14 +89,14 @@
     <div class="w-full max-w-md">
 
       <div class="text-center mb-8">
-        <h1 class="display text-3xl font-bold text-white">Welcome to <span class="grad-text">Penguins</span></h1>
-        <p class="text-dim text-sm mt-2">Run your coaching business from one command center.</p>
+        <h1 class="display text-3xl font-bold text-white">أهلًا بك في <span class="grad-text">Penguins</span></h1>
+        <p class="text-dim text-sm mt-2">خططك ومدرّبك في مكان واحد. ابدأ بالحساب المناسب لك.</p>
       </div>
 
       <div class="metal-card rounded-2xl p-2">
         <div class="flex gap-1 mb-2">
-          <button id="tab-login" onclick="setMode('login')" class="tab-btn active flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">Log in</button>
-          <button id="tab-signup" onclick="setMode('signup')" class="tab-btn flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">Sign up</button>
+          <button id="tab-login" onclick="setMode('login')" class="tab-btn active flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">تسجيل الدخول</button>
+          <button id="tab-signup" onclick="setMode('signup')" class="tab-btn flex-1 py-2.5 rounded-xl text-sm font-medium text-dim">حساب جديد</button>
         </div>
 
         <div class="p-6 pt-4">
@@ -104,80 +104,80 @@
           <!-- ============ LOGIN FORM ============ -->
           <div id="auth-status" role="status" aria-live="polite" hidden></div><form id="form-login" class="space-y-4" novalidate>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Email</label>
-              <input type="email" id="login-email" aria-label="Email" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <label class="text-xs text-dim mb-1.5 block" for="login-email">البريد الإلكتروني</label>
+              <input type="email" id="login-email" dir="ltr" aria-label="البريد الإلكتروني" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
             <div>
               <div class="flex items-center justify-between mb-1.5">
-                <label class="text-xs text-dim">Password</label>
+                <label class="text-xs text-dim" for="login-password">كلمة المرور</label>
                 
               </div>
               <div class="relative">
-                <input type="password" id="login-password" aria-label="Password" required name="password" autocomplete="current-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm pr-11">
-                <button type="button" onclick="toggleVisibility('login-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">Show</button>
+                <input type="password" id="login-password" aria-label="كلمة المرور" required name="password" autocomplete="current-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm pl-11">
+                <button type="button" onclick="toggleVisibility('login-password', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">إظهار</button>
               </div>
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
-            <p class="text-xs text-dim">Stay signed in on this browser. Use Log out on shared devices.</p>
+            <p class="text-xs text-dim">سيظل حسابك مسجلًا على هذا المتصفح. سجّل الخروج عند استخدام جهاز مشترك.</p>
             <button type="submit" id="login-submit" class="btn-metal w-full text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
-              <span id="login-submit-label">Log in</span>
+              <span id="login-submit-label">تسجيل الدخول</span>
             </button>
-            <button type="button" id="reset-password" class="text-sm text-nebula">Forgot password?</button><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
+            <button type="button" id="reset-password" class="text-sm text-nebula">نسيت كلمة المرور؟</button><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
           </form>
 
           <!-- ============ SIGNUP FORM ============ -->
           <form id="form-signup" class="space-y-4 hidden" novalidate>
-<label for="signup-role">نوع الحساب / Account type</label><select id="signup-role" class="w-full rounded-xl py-3 px-4 bg-panel border border-line"><option value="client">عميل — دخول مباشر / Client</option><option value="coach">كوتش — يحتاج موافقة الإدارة / Coach</option></select><p class="text-dim text-xs">العميل يدخل بعد تسجيل الدخول. طلب الكوتش تراجعه إدارة المنصة.</p>
+<label for="signup-role">اختر نوع حسابك</label><select id="signup-role" class="w-full rounded-xl py-3 px-4 bg-panel border border-line"><option value="client">عميل — ابدأ متابعة تمرينك</option><option value="coach">كوتش — قدّم طلب انضمام</option></select><p class="text-dim text-xs">حساب العميل لا يحتاج موافقة الإدارة. حساب الكوتش يُفعّل بعد مراجعة طلبه.</p>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Full name</label>
-              <input type="text" id="signup-name" name="name" autocomplete="name" placeholder="Jordan Diaz" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <label class="text-xs text-dim mb-1.5 block" for="signup-name">الاسم الكامل</label>
+              <input type="text" id="signup-name" maxlength="80" name="name" autocomplete="name" placeholder="اكتب اسمك الكامل" class="field w-full rounded-xl px-4 py-3 text-sm">
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Email</label>
-              <input type="email" id="signup-email" aria-label="Email" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
+              <label class="text-xs text-dim mb-1.5 block" for="signup-email">البريد الإلكتروني</label>
+              <input type="email" id="signup-email" dir="ltr" aria-label="البريد الإلكتروني" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Coaching focus</label>
+              <label class="text-xs text-dim mb-1.5 block" for="signup-niche">تخصصك التدريبي</label>
               <select id="signup-niche" class="field w-full rounded-xl px-4 py-3 text-sm">
-                <option>Fitness / Strength</option>
-                <option>Nutrition</option>
-                <option>Life &amp; Mindset</option>
-                <option>Business / Executive</option>
-                <option>Other</option>
+                <option value="Fitness / Strength">لياقة وقوة</option>
+                <option value="Nutrition">تغذية</option>
+                <option value="Life &amp; Mindset">أسلوب حياة</option>
+                <option value="Business / Executive">تدريب مهني</option>
+                <option value="Other">تخصص آخر</option>
               </select>
             </div>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Password</label>
+              <label class="text-xs text-dim mb-1.5 block" for="signup-password">كلمة المرور</label>
               <div class="relative">
-                <input type="password" id="signup-password" name="password" autocomplete="new-password" placeholder="At least 10 characters" class="field w-full rounded-xl px-4 py-3 text-sm pr-11">
-                <button type="button" onclick="toggleVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">Show</button>
+                <input type="password" id="signup-password" name="password" autocomplete="new-password" placeholder="١٠ أحرف على الأقل" class="field w-full rounded-xl px-4 py-3 text-sm pl-11">
+                <button type="button" onclick="toggleVisibility('signup-password', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">إظهار</button>
               </div>
               <div class="strength-bar mt-2"><div id="strength-fill" class="strength-fill" style="width:0%"></div></div>
-              <p id="strength-label" class="text-dim text-[11px] mt-1">Password strength</p>
+              <p id="strength-label" class="text-dim text-[11px] mt-1">قوة كلمة المرور</p>
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
             <div>
-              <label class="text-xs text-dim mb-1.5 block">Confirm password</label>
+              <label class="text-xs text-dim mb-1.5 block" for="signup-confirm">تأكيد كلمة المرور</label>
               <input type="password" id="signup-confirm" name="confirm" autocomplete="new-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm">
               <p class="error-text hidden text-danger text-xs mt-1.5"></p>
             </div>
             <label class="flex items-start gap-2 text-xs text-dim">
               <input type="checkbox" id="signup-terms" class="accent-accent rounded mt-0.5">
-              <span>I understand this is a development workspace and have read the <a href="privacy.html" class="text-nebula">data notice</a>.</span>
+              <span>أفهم أن المنصة في مرحلة التطوير، واطلعت على <a href="privacy.html" class="text-nebula">بيان الخصوصية والبيانات</a>.</span>
             </label>
             <p class="error-text hidden text-danger text-xs -mt-2" id="terms-error"></p>
             <button type="submit" id="signup-submit" class="btn-metal w-full text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
-              <span id="signup-submit-label">Create account</span>
+              <span id="signup-submit-label">إنشاء الحساب</span>
             </button>
             <p id="signup-form-error" class="hidden text-danger text-xs text-center"></p>
           </form>
 
           <div class="flex items-center gap-3 my-5">
             <div class="flex-1 h-px bg-line"></div>
-            <a href="index.html" class="text-dim text-[11px]">Back to home</a>
+            <a href="index.html" class="text-dim text-[11px]">العودة للرئيسية</a>
             <div class="flex-1 h-px bg-line"></div>
           </div>
 
@@ -186,7 +186,7 @@
       </div>
 
       <p class="text-center text-dim text-xs mt-6">
-        Your data is isolated by account. <a href="privacy.html">Read the data notice</a>.
+        لكل حساب مساحة خاصة. <a href="privacy.html">اطّلع على بيان البيانات</a>.
       </p>
     </div>
   </main>

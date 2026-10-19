@@ -23,7 +23,7 @@ A static coaching workspace that runs without PHP, XAMPP or MySQL. The browser u
 
 ## Hosting
 
-The `docs/` copy in the GitHub repository is the Pages site. Enable **Settings → Pages → Deploy from a branch → main → /docs**. GitHub Free requires a public repository for Pages. The repository must contain no private credentials or client data.
+The `docs/` copy in the GitHub repository is the Pages site. Use **Settings → Pages → Source → GitHub Actions**. The Publish Penguins website workflow builds and deploys `docs/`. GitHub Free requires a public repository for Pages. The repository must contain no private credentials or client data.
 
 Supabase project: `batjqwxvjkjjbggfnnct`. Its publishable browser key in `assets/config.js` is intentionally public; authorization comes from Supabase Auth and RLS. Never replace it with a service-role or secret key.
 
@@ -45,4 +45,15 @@ The original PHP edition remains at the repository root as a legacy version. Pag
 
 ## Honest scope
 
-Payment processing, delivered client messaging, hosted video calls, electronic signatures, uploaded resource-file storage, background automation execution and separate client accounts are not connected services in this edition. Their existing management screens record information only. Complete owner-approved privacy/terms, email delivery, backups and end-to-end acceptance tests before accepting sensitive client records.
+Payment processing, delivered client messaging, hosted video calls, electronic signatures, background automation execution are not connected services in this edition. Their existing management screens record information only. Complete owner-approved privacy/terms, email delivery, backups and end-to-end acceptance tests before accepting sensitive client records.
+
+
+## Client portal and coach review
+
+Open `auth.html`, create an account, and select Client or Coach. New accounts enter the selected portal after signing in. Existing accounts without a role select one once. Clients enter immediately; coaches remain pending until reviewed by a verified platform administrator. The account role is stored in the database and cannot be changed by editing browser metadata.
+
+`portal.html` provides the administrator review queue (pending / approved / rejected), optional review notes, up to three private coach qualification files (PDF, JPEG or PNG), client requests to approved coaches, coach acceptance, and shared text plans with an optional PDF. Maximum file size: 10 MiB. File links expire after 60 seconds. Use Refresh to see new requests.
+
+The initial `schema.sql` and subsequent `membership.sql` migrations are already applied to the live project; do not rerun them there. The administrator email allowlist is stored in the private database schema, never in client code. A matching confirmed email is required. Provision administrators only through a trusted project-owner database connection.
+
+The existing coach workspace remains private. CRM contacts and workspace plan drafts are separate from registered client accounts; send deliverable plans from the portal after the client connects. Existing users choose their account role on their next visit.
