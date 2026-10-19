@@ -32,3 +32,8 @@ Security changes: per-user RLS, anonymous database access revoked, invoker-mode 
 ## Calm studio edition
 
 Arabic landing page, cream and sage palette, redesigned account portal and matching sign-in/recovery screens. Personal weekly organizer and notes use account-scoped browser storage only (no device sync or coach sharing). Rest timer uses elapsed wall time with pause/resume. Coaches get editable plan-writing templates; plans support current-page text search and individual print layouts. Templates contain organizational prompts, not prescribed workouts. No database permissions or paid services changed.
+
+
+## Owner console and original dark design
+
+The dark public design is restored with restrained, reduced-motion-aware animation. The owner console replaces the admin-only review screen: overview, reviewed coaches, members, coaching relationships, plan moderation, audit history and in-portal announcements. Administrative APIs require the existing verified private allowlist on every call; public wrappers use invoker mode. Account pause uses database/storage policies and privileged-function checks; it is reversible and does not delete or ban the Auth identity. Moderation hides plans and blocks new client file links; already-issued signed URLs expire normally. Private coach workspaces are not exposed to administrators. `supabase/owner-console.sql` is already applied to the live project; do not rerun it there. Use rollback-only `tests/owner-security.sql` for role checks. The personal organizer remains local to the browser for clients/coaches.
