@@ -1,15 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="Penguins brings client management, training plans, scheduling and coaching business tools into one workspace.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penguins | Coach Platform</title>
-
-
+<title>Penguins · منصة الكوتش</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
   :root {
     --accent-color:#6C5CE7; --gold-color:#F5B942;
@@ -194,7 +191,6 @@
   button.bg-accent::before, a.bg-accent::before { content:''; position:absolute; top:0; left:-160%; width:55%; height:100%; background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent); transform:skewX(-20deg); transition:left .6s ease; pointer-events:none; }
   button.bg-accent:hover::before, a.bg-accent:hover::before { left:160%; }
 </style>
-
 <style>
   :focus-visible { outline: 3px solid #a79bff; outline-offset: 4px; }
   @media (prefers-reduced-motion: reduce) {
@@ -202,906 +198,845 @@
   }
 </style>
 <link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/product.css">
-</head>
+<link rel="stylesheet" href="assets/exercise-studio.css?v=1"><link rel="stylesheet" href="assets/arabic.css?v=1"></head>
 <body class="text-text antialiased" >
-
 <div id="stars"></div>
 <div class="cs-glow cs-glow-1"></div>
 <div class="cs-glow cs-glow-2"></div>
-
 <div id="loadingVeil" class="loading-veil">
-  <div class="text-center">
-    <div class="display text-3xl text-white mb-2">Penguins 🐧<span class="text-accent">.</span></div>
-    <div class="text-muted text-xs tracking-widest uppercase">Loading dashboard…</div>
-  </div>
+<div class="text-center">
+<div class="display text-3xl text-white mb-2">Penguins 🐧<span class="text-accent">.</span></div>
+<div class="text-muted text-xs tracking-widest uppercase">جارٍ تحميل الداشبورد…</div>
 </div>
-
+</div>
 <!-- ================= APP ================= -->
 <div id="app" class="flex h-screen overflow-hidden relative z-10">
-
-  <!-- SIDEBAR BACKDROP (mobile only) -->
-  <div id="sidebarBackdrop" onclick="closeSidebar()" class="hidden fixed inset-0 bg-black/60 z-40 md:hidden"></div>
-
-  <!-- SIDEBAR -->
-  <aside id="sidebar" class="w-64 bg-card border-r border-border flex-col flex shrink-0">
-    <div class="p-6 border-b border-border flex items-center justify-between">
-      <div>
-        <h1 class="display text-2xl font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
-        <p class="text-[11px] text-muted mt-1 tracking-wide uppercase">Coach Platform</p>
-      </div>
-      <button onclick="closeSidebar()" class="md:hidden w-8 h-8 flex items-center justify-center text-muted hover:text-white text-lg">×</button>
-    </div>
-    <div class="px-6 pt-4 space-y-2">
-      <button onclick="openPalette()" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
-        <span class="flex items-center"><span class="mr-2">⌕</span><span data-i18n="sidebar.search">Quick search</span></span>
-        <kbd>⌘K</kbd>
-      </button>
-      <button onclick="openHelp()" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
-        <span class="flex items-center"><span class="mr-2">?</span><span data-i18n="sidebar.help">Help & Guide</span></span>
-      </button>
-    </div>
-    <nav class="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-hide min-h-0">
-      <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-1" data-i18n="sidebar.overview">Overview</p>
-      <a href="#" data-page="dashboard" class="nav-link active flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◆</span><span data-i18n="nav.dashboard">Dashboard</span></a>
-      <a href="#" data-page="messages" class="nav-link flex items-center justify-between px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="flex items-center"><span class="mr-3">✉</span><span data-i18n="nav.messages">Messages</span></span><span id="unread-badge" class="hidden bg-accent text-white text-[10px] rounded-full px-1.5 py-0.5"></span></a>
-      <a href="#" data-page="connected" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">↔</span><span>العملاء والمتابعات</span></a>
-      <a href="#" data-page="clients" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◇</span><span data-i18n="nav.clients">Clients</span></a>
-
-      <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.coachingTools">Coaching Tools</p>
-      <a href="#" data-page="planner" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▤</span><span data-i18n="nav.planner">Plan Builder</span></a>
-      <a href="#" data-page="nutrition" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◍</span><span data-i18n="nav.nutrition">Nutrition</span></a>
-      <a href="#" data-page="live" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">●</span><span data-i18n="nav.live">Live Sessions</span></a>
-      <a href="#" data-page="library" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▦</span><span data-i18n="nav.library">Resource Library</span></a>
-      <a href="#" data-page="feedback" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">★</span><span data-i18n="nav.feedback">Client Feedback</span></a>
-      <a href="#" data-page="review" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▶</span><span data-i18n="nav.review">Vision Review</span></a>
-
-      <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.clientMonitoring">Client Monitoring</p>
-      <a href="#" data-page="points" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◈</span><span data-i18n="nav.points">Points & Streaks</span></a>
-      <a href="#" data-page="readiness" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◎</span><span data-i18n="nav.readiness">Readiness</span></a>
-      <a href="#" data-page="vault" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▣</span><span data-i18n="nav.vault">Progress Vault</span></a>
-      <a href="#" data-page="community" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◐</span><span data-i18n="nav.community">Community</span></a>
-      <a href="#" data-page="cohorts" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⬢</span><span data-i18n="nav.cohorts">Cohorts</span></a>
-
-      <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.automation">Automation & Insight</p>
-      <a href="#" data-page="automations" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⚡</span><span data-i18n="nav.automations">Automations</span></a>
-      <a href="#" data-page="reports" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▩</span><span data-i18n="nav.reports">Reports</span></a>
-      <a href="#" data-page="contracts" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">✎</span><span data-i18n="nav.contracts">Contracts</span></a>
-
-      <p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.business">Business</p>
-      <a href="#" data-page="pipeline" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⬡</span><span data-i18n="nav.pipeline">Pipeline</span></a>
-      <a href="#" data-page="invoices" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▥</span><span data-i18n="nav.invoices">Invoices</span></a>
-      <a href="#" data-page="shop" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▨</span><span data-i18n="nav.shop">Shop</span></a>
-      <a href="#" data-page="referrals" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">↗</span><span data-i18n="nav.referrals">Referrals</span></a>
-      <a href="#" data-page="verification" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">✓</span><span data-i18n="nav.verification">Verification</span></a>
-      <a href="#" data-page="account" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◉</span><span data-i18n="nav.account">Account</span></a>
-    </nav>
-    <div class="px-4 pb-2">
-      <button onclick="openClientPreview()" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 hover:text-white transition">
-        <span>◑</span> <span data-i18n="sidebar.viewAsClient">View as Client</span>
-      </button>
-    </div>
-    <div class="p-4 border-t border-border flex items-center gap-2">
-      <a href="#" onclick="goToAccount(event)" class="flex items-center flex-1 min-w-0 text-left hover:bg-card2 rounded-lg p-2 transition">
-        <div id="sidebar-avatar" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm shrink-0">JD</div>
-        <div class="ml-3 flex-1 min-w-0"><p id="sidebar-name" class="text-sm font-medium text-white truncate">Client</p><p class="text-xs text-muted">View account</p></div>
-      </a>
-      <a href="#" onclick="event.preventDefault(); logOut()" title="Log out" class="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:text-white hover:bg-card2 transition shrink-0">⏻</a>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- APP TOPBAR (always visible, every screen size) -->
-    <div class="flex items-center gap-3 px-4 md:px-8 py-3 border-b border-border bg-card shrink-0">
-      <button onclick="openSidebar()" class="md:hidden w-9 h-9 flex items-center justify-center text-white text-xl leading-none">☰</button>
-      <h1 class="md:hidden display text-lg font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
-      <div class="flex-1"></div>
-      <div class="relative" id="langSwitchWrap">
-        <button onclick="toggleLangPanel(event)" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-sm hover:border-accent/50 transition">
-          <span id="lang-current-flag">🇬🇧</span>
-        </button>
-        <div id="lang-panel" class="hidden absolute top-12 right-0 flex items-center gap-1.5 p-1.5 rounded-full bg-black border border-border z-40 shadow-2xl">
-          <button onclick="setLang('en')" data-lang="en" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇬🇧</button>
-          <button onclick="setLang('de')" data-lang="de" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇩🇪</button>
-          <button onclick="setLang('ar')" data-lang="ar" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇸🇦</button>
-          <button onclick="setLang('fr')" data-lang="fr" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇫🇷</button>
-          <button onclick="setLang('es')" data-lang="es" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇪🇸</button>
-        </div>
-      </div>
-      <button onclick="toggleColorMode()" id="colorModeBtn" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">🌙</button>
-      <div class="relative" id="notifBellWrap">
-        <button onclick="toggleNotifPanel()" class="relative w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">
+<!-- SIDEBAR BACKDROP (mobile only) -->
+<div id="sidebarBackdrop" onclick="closeSidebar()" class="hidden fixed inset-0 bg-black/60 z-40 md:hidden"></div>
+<!-- SIDEBAR -->
+<aside id="sidebar" class="w-64 bg-card border-r border-border flex-col flex shrink-0">
+<div class="p-6 border-b border-border flex items-center justify-between">
+<div>
+<h1 class="display text-2xl font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
+<p class="text-[11px] text-muted mt-1 tracking-wide uppercase">منصة الكوتش</p>
+</div>
+<button onclick="closeSidebar()" class="md:hidden w-8 h-8 flex items-center justify-center text-muted hover:text-white text-lg">×</button>
+</div>
+<div class="px-6 pt-4 space-y-2">
+<button onclick="openPalette()" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
+<span class="flex items-center"><span class="mr-2">⌕</span><span data-i18n="sidebar.search">بحث سريع</span></span>
+<kbd>⌘K</kbd>
+</button>
+<button onclick="openHelp()" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
+<span class="flex items-center"><span class="mr-2">?</span><span data-i18n="sidebar.help">المساعدة والدليل</span></span>
+</button>
+</div>
+<nav class="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-hide min-h-0">
+<p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-1" data-i18n="sidebar.overview">نظرة عامة</p>
+<a href="#" data-page="dashboard" class="nav-link active flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◆</span><span data-i18n="nav.dashboard">الرئيسية</span></a>
+<a href="#" data-page="messages" class="nav-link flex items-center justify-between px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="flex items-center"><span class="mr-3">✉</span><span data-i18n="nav.messages">الرسائل</span></span><span id="unread-badge" class="hidden bg-accent text-white text-[10px] rounded-full px-1.5 py-0.5"></span></a>
+<a href="#" data-page="connected" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">↔</span><span>العملاء والمتابعات</span></a>
+<a href="#" data-page="clients" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◇</span><span data-i18n="nav.clients">العملاء</span></a>
+<p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.coachingTools">أدوات التدريب</p>
+<a href="#" data-page="planner" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▤</span><span data-i18n="nav.planner">باني الخطط</span></a>
+<a href="#" data-page="nutrition" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◍</span><span data-i18n="nav.nutrition">التغذية</span></a>
+<a href="#" data-page="live" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">●</span><span data-i18n="nav.live">الجلسات المباشرة</span></a>
+<a href="#" data-page="library" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▦</span><span data-i18n="nav.library">مكتبة الموارد</span></a>
+<a href="#" data-page="feedback" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">★</span><span data-i18n="nav.feedback">تقييمات العملاء</span></a>
+<a href="#" data-page="review" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▶</span><span data-i18n="nav.review">مراجعة الأداء</span></a>
+<p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.clientMonitoring">متابعة العملاء</p>
+<a href="#" data-page="points" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◈</span><span data-i18n="nav.points">النقاط والاستمرارية</span></a>
+<a href="#" data-page="readiness" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◎</span><span data-i18n="nav.readiness">الجاهزية</span></a>
+<a href="#" data-page="vault" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▣</span><span data-i18n="nav.vault">سجل التقدّم</span></a>
+<a href="#" data-page="community" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◐</span><span data-i18n="nav.community">المجتمع</span></a>
+<a href="#" data-page="cohorts" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⬢</span><span data-i18n="nav.cohorts">المجموعات</span></a>
+<p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.automation">التنظيم والتقارير</p>
+<a href="#" data-page="automations" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⚡</span><span data-i18n="nav.automations">التنظيم التلقائي</span></a>
+<a href="#" data-page="reports" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▩</span><span data-i18n="nav.reports">التقارير</span></a>
+<a href="#" data-page="contracts" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">✎</span><span data-i18n="nav.contracts">العقود</span></a>
+<p class="text-[10px] text-muted uppercase tracking-widest px-4 mb-2 mt-4" data-i18n="sidebar.business">إدارة الأعمال</p>
+<a href="#" data-page="pipeline" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">⬡</span><span data-i18n="nav.pipeline">العملاء المحتملون</span></a>
+<a href="#" data-page="invoices" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▥</span><span data-i18n="nav.invoices">الفواتير</span></a>
+<a href="#" data-page="shop" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">▨</span><span data-i18n="nav.shop">المتجر</span></a>
+<a href="#" data-page="referrals" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">↗</span><span data-i18n="nav.referrals">الإحالات</span></a>
+<a href="#" data-page="verification" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">✓</span><span data-i18n="nav.verification">التحقق</span></a>
+<a href="#" data-page="account" class="nav-link flex items-center px-4 py-2.5 text-sm font-medium text-muted rounded-lg transition-all"><span class="mr-3">◉</span><span data-i18n="nav.account">الحساب</span></a>
+</nav>
+<div class="px-4 pb-2">
+<button onclick="openClientPreview()" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 hover:text-white transition">
+<span>◑</span>
+<span data-i18n="sidebar.viewAsClient">معاينة واجهة العميل</span>
+</button>
+</div>
+<div class="p-4 border-t border-border flex items-center gap-2">
+<a href="#" onclick="goToAccount(event)" class="flex items-center flex-1 min-w-0 text-left hover:bg-card2 rounded-lg p-2 transition">
+<div id="sidebar-avatar" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm shrink-0">JD</div>
+<div class="ml-3 flex-1 min-w-0"><p id="sidebar-name" class="text-sm font-medium text-white truncate">عميل</p><p class="text-xs text-muted">عرض الحساب</p></div>
+</a>
+<a href="#" onclick="event.preventDefault(); logOut()" title="تسجيل الخروج" class="w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:text-white hover:bg-card2 transition shrink-0">⏻</a>
+</div>
+</aside>
+<!-- MAIN -->
+<div class="flex-1 flex flex-col overflow-hidden">
+<!-- APP TOPBAR (always visible, every screen size) -->
+<div class="flex items-center gap-3 px-4 md:px-8 py-3 border-b border-border bg-card shrink-0">
+<button onclick="openSidebar()" class="md:hidden w-9 h-9 flex items-center justify-center text-white text-xl leading-none">☰</button>
+<h1 class="md:hidden display text-lg font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
+<div class="flex-1"></div>
+<div class="relative" id="langSwitchWrap" hidden hidden hidden>
+<button onclick="toggleLangPanel(event)" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-sm hover:border-accent/50 transition">
+<span id="lang-current-flag">🇬🇧</span>
+</button>
+<div id="lang-panel" class="hidden absolute top-12 right-0 flex items-center gap-1.5 p-1.5 rounded-full bg-black border border-border z-40 shadow-2xl">
+<button onclick="setLang('en')" data-lang="en" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇬🇧</button>
+<button onclick="setLang('de')" data-lang="de" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇩🇪</button>
+<button onclick="setLang('ar')" data-lang="ar" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇸🇦</button>
+<button onclick="setLang('fr')" data-lang="fr" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇫🇷</button>
+<button onclick="setLang('es')" data-lang="es" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇪🇸</button>
+</div>
+</div>
+<button onclick="toggleColorMode()" id="colorModeBtn" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">🌙</button>
+<div class="relative" id="notifBellWrap">
+<button onclick="toggleNotifPanel()" class="relative w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">
           🔔
           <span id="notif-dot" class="notif-dot hidden"></span>
-        </button>
-        <div id="notif-panel" class="notif-panel card rounded-2xl p-3 thin-scroll hidden">
-          <p class="text-xs text-muted uppercase tracking-wide px-2 py-1">Notifications</p>
-          <div id="notif-list" class="space-y-1"></div>
-        </div>
-      </div>
-    </div>
-    <main class="flex-1 overflow-y-auto p-4 md:p-8"><div id="workspace-tools" aria-label="Workspace tools"><a href="portal.html?view=followup" style="padding:8px 12px;border:1px solid #5f4e88;border-radius:9px;color:#c6b5f1">المتابعات والشهادات وPDF</a><span id="sync-status" role="status" aria-live="polite">Loading workspace…</span><button id="pg-add-client">+ Client</button><button id="pg-export">Backup</button><button id="pg-import">Restore</button><button id="pg-history">History</button><button id="pg-csv">Export CSV</button><button id="pg-print">Print</button></div><div id="draft-banner" hidden style="padding:12px;background:#302438;color:white">Unsaved changes were found on this device. <button id="restore-draft">Review draft</button> · <button id="discard-draft">Discard draft</button></div>
-
-    <!-- ===== DASHBOARD ===== -->
-    <div id="page-dashboard" class="page active">
-      <header class="mb-8">
-        <h2 class="display text-3xl font-bold text-white">Welcome back, <span id="dash-name">Coach</span></h2>
-        <p class="text-muted mt-1">Here's your practice at a glance.</p>
-      </header>
-      <div id="dash-checklist" class="card rounded-2xl p-5 mb-6"></div>
-      <div id="dash-insights" class="card rounded-2xl p-5 mb-6"></div>
-      <div id="dash-business-goals" class="card rounded-2xl p-5 mb-6"></div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="dash-stats"></div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="display text-lg font-semibold text-white">Revenue</h3>
-            <span class="text-xs text-muted bg-black/40 border border-border rounded-lg px-3 py-1">Last 6 months</span>
-          </div>
-          <div class="h-64"><canvas id="earningsChart"></canvas></div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Recent Activity</h3>
-          <div id="dash-activity" class="space-y-3"></div>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div class="lg:col-span-3 card rounded-2xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="display text-lg font-semibold text-white">My Tasks</h3>
-          </div>
-          <form id="form-task" class="flex gap-2 mb-4">
-            <input type="text" name="text" required placeholder="Add a task…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
-            <button type="submit" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">Add</button>
-          </form>
-          <div id="list-tasks" class="space-y-2"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== MESSAGES ===== -->
-    <div id="page-messages" class="page">
-      <header class="mb-6"><h2 class="display text-3xl font-bold text-white">Messages</h2><p class="text-muted mt-1">Keep conversation records for your clients. Message delivery is not connected.</p></header>
-      <div class="card rounded-2xl overflow-hidden" style="height:70vh;">
-        <div class="flex h-full">
-          <div class="w-full sm:w-64 border-r border-border overflow-y-auto thin-scroll shrink-0" id="chat-list-panel"><div id="chat-client-list"></div></div>
-          <div class="hidden sm:flex flex-1 flex-col" id="chat-thread-panel">
-            <div class="p-4 border-b border-border flex items-center" id="chat-header">
-              <button onclick="backToChatList()" class="sm:hidden mr-3 text-white text-lg leading-none">←</button>
-              <div id="chat-header-info" class="flex items-center flex-1"></div>
-            </div>
-            <div class="flex-1 overflow-y-auto thin-scroll p-4 space-y-3 min-h-0" id="chat-thread"></div>
-            <div id="quick-replies" class="px-3 pt-2 flex gap-2 overflow-x-auto thin-scroll"></div>
-            <form id="form-chat" class="p-3 border-t border-border flex gap-2">
-              <input type="text" id="chat-input" placeholder="Write a message…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
-              <button type="submit" class="px-5 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">Send</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== PLAN BUILDER ===== -->
-    <div id="page-planner" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Plan Builder</h2><p class="text-muted mt-1">Build structured programs from the exercise library, or write freeform. Send to any client.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-3">Exercise Library</h3>
-          <input type="text" id="exercise-search" oninput="renderExerciseLibrary()" placeholder="Search exercises…" class="w-full input-dark rounded-lg px-4 py-2 text-sm mb-3">
-          <div id="exercise-library" class="space-y-2 max-h-[420px] overflow-y-auto thin-scroll pr-1"></div>
-        </div>
-
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Create & Assign Plan</h3>
-          <p class="text-muted text-sm">This builder saves plans in your private workspace. To deliver a plan and PDF to a registered client, use <a href="portal.html?view=followup">Client portal / بوابة العملاء</a>.</p><form id="form-plan" class="space-y-4">
-            <div><label class="text-xs text-muted mb-1 block">Assign to Client</label><select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Client</option><option>Client</option><option>Client</option><option>Client</option></select></div>
-            <div><label class="text-xs text-muted mb-1 block">Plan Title</label><input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="e.g. Week 3 - Hypertrophy"></div>
-            <div><label class="text-xs text-muted mb-1 block">Type</label><select name="type" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Training</option><option>Nutrition</option><option>Mindset</option><option>Business Goals</option></select></div>
-            <div>
-              <div class="flex items-center justify-between mb-1"><label class="text-xs text-muted block">Built Workout (from library)</label><button type="button" onclick="clearBuiltWorkout()" class="text-[11px] text-muted hover:text-red-400">Clear</button></div>
-              <div id="built-workout" class="space-y-2 mb-2 min-h-[40px] bg-black border border-border rounded-lg p-3">
-                <p class="text-muted text-xs" id="built-workout-empty">Click exercises on the left to add them here.</p>
-              </div>
-            </div>
-            <div><label class="text-xs text-muted mb-1 block">Additional Notes / Freeform Details</label><textarea name="details" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Nutrition notes, cues, anything else..."></textarea></div>
-            <div class="flex gap-2">
-              <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Send to Client →</button>
-              <button type="button" onclick="saveAsTemplate()" class="px-4 py-2.5 bg-black border border-border text-muted text-sm font-medium rounded-lg hover:border-accent/50 hover:text-accent transition whitespace-nowrap">Save as Template</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="card rounded-2xl p-6">
-          <div class="flex bg-black border border-border rounded-lg p-1 text-xs mb-4">
-            <button id="plan-tab-sent" onclick="setPlanTab('sent')" class="flex-1 px-3 py-1.5 rounded-md font-medium transition">Sent Plans</button>
-            <button id="plan-tab-templates" onclick="setPlanTab('templates')" class="flex-1 px-3 py-1.5 rounded-md font-medium transition">Templates</button>
-          </div>
-          <div id="plan-view-sent"><div id="list-plans" class="space-y-3 max-h-[500px] overflow-y-auto thin-scroll pr-2"></div></div>
-          <div id="plan-view-templates" class="hidden"><div id="list-templates" class="space-y-3 max-h-[500px] overflow-y-auto thin-scroll pr-2"></div></div>
-        </div>
-      </div>
-
-      <div class="card rounded-2xl p-6 mt-6 max-w-sm">
-        <h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-4">Rest Timer</h3>
-        <div class="text-center">
-          <p id="timer-display" class="display text-5xl font-bold text-white mb-4 tabular-nums">01:30</p>
-          <div class="flex justify-center gap-2 mb-4">
-            <button onclick="setTimerPreset(30)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">30s</button>
-            <button onclick="setTimerPreset(60)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">60s</button>
-            <button onclick="setTimerPreset(90)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">90s</button>
-            <button onclick="setTimerPreset(120)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">120s</button>
-          </div>
-          <div class="flex gap-2">
-            <button id="timer-toggle-btn" onclick="toggleTimer()" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Start</button>
-            <button onclick="resetTimer()" class="px-4 py-2.5 bg-black border border-border text-muted rounded-lg hover:text-white transition">↺</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== NUTRITION (subscribed clients only) ===== -->
-    <div id="page-nutrition" class="page">
-      <header class="mb-6"><h2 class="display text-3xl font-bold text-white">Nutrition</h2><p class="text-muted mt-1">Set macro targets and track intake — only for clients subscribed to the Nutrition add-on.</p></header>
-
-      <div class="mb-8">
-        <h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-3">Subscribed Clients</h3>
-        <div id="list-nutrition-subscribed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      </div>
-
-      <div>
-        <h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-3">Not Subscribed</h3>
-        <p class="text-muted text-xs mb-3">These clients don't have the Nutrition add-on. Enable it to start setting macro targets for them.</p>
-        <div id="list-nutrition-unsubscribed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      </div>
-    </div>
-
-    <!-- ===== LIVE SESSIONS ===== -->
-    <div id="page-live" class="page">
-      <header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div><h2 class="display text-3xl font-bold text-white">Live Sessions</h2><p class="text-muted mt-1">Schedule calls, or open slots for clients to self-book.</p></div>
-        <div class="flex bg-black border border-border rounded-lg p-1 text-xs">
-          <button id="live-tab-list" onclick="setLiveView('list')" class="px-3 py-1.5 rounded-md font-medium transition">List</button>
-          <button id="live-tab-cal" onclick="setLiveView('cal')" class="px-3 py-1.5 rounded-md font-medium transition">Calendar</button>
-        </div>
-      </header>
-
-      <div id="live-view-list" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Schedule a Session</h3>
-          <form id="form-live" class="space-y-3">
-            <input type="text" name="topic" required placeholder="Session Topic" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-            <input type="datetime-local" name="time" required class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-            <select name="access" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>All Clients</option><option>Paid Clients Only</option></select>
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Schedule</button>
-          </form>
-          <hr class="border-border my-5">
-          <h3 class="display text-sm font-semibold text-white mb-3">Open a Bookable Slot</h3>
-          <form id="form-slot" class="space-y-3">
-            <input type="datetime-local" name="time" required class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-            <button type="submit" class="w-full py-2 bg-black border border-border text-white text-sm font-medium rounded-lg hover:border-accent/50 transition">+ Add Open Slot</button>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Scheduled Sessions</h3>
-          <div id="list-live" class="space-y-3 mb-6"></div>
-          <h3 class="display text-lg font-semibold text-white mb-4">Open Slots (clients can self-book)</h3>
-          <div id="list-slots" class="space-y-3"></div>
-        </div>
-      </div>
-
-      <div id="live-view-cal" class="card rounded-2xl p-6 hidden">
-        <h3 class="display text-lg font-semibold text-white mb-4">This Week</h3>
-        <div class="cal-grid-wrap"><div class="cal-grid" id="live-calendar"></div></div>
-      </div>
-    </div>
-
-    <!-- ===== RESOURCE LIBRARY (PDF upload, free/paid) ===== -->
-    <div id="page-library" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Resource Library</h2><p class="text-muted mt-1">Catalog guides and programs. This edition stores resource details, not uploaded files.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Upload a Resource</h3>
-          <form id="form-library" class="space-y-4">
-            <div>
-              <label class="text-xs text-muted mb-1 block">PDF File</label>
-              <input type="file" name="file" accept=".pdf" required class="w-full input-dark rounded-lg px-3 py-2 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-accent file:text-white file:text-xs">
-            </div>
-            <div><label class="text-xs text-muted mb-1 block">Title</label><input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="e.g. 30-Day Foundations Guide"></div>
-            <div><label class="text-xs text-muted mb-1 block">Description</label><textarea name="desc" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="What's inside this resource?"></textarea></div>
-            <div class="flex gap-3">
-              <div class="flex-1"><label class="text-xs text-muted mb-1 block">Access</label>
-                <select name="tier" id="library-tier" onchange="toggleLibraryPrice()" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Free">Free</option><option value="Paid">Paid</option></select>
-              </div>
-              <div class="flex-1 hidden" id="library-price-wrap"><label class="text-xs text-muted mb-1 block">Price ($)</label><input type="number" step="0.01" name="price" id="library-price" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="19.99"></div>
-            </div>
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Upload Resource</button>
-            <p class="text-muted text-[11px]">This is a demo uploader — the file name and details are saved, but hosting real PDF downloads needs a backend.</p>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Your Library</h3>
-          <div id="list-library" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto thin-scroll pr-2"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== FEEDBACK ===== -->
-    <div id="page-feedback" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Client Feedback</h2><p class="text-muted mt-1">Reviews and messages from your clients.</p></header>
-      <div class="card rounded-2xl p-6"><div id="list-feedback" class="space-y-4"></div></div>
-    </div>
-
-    <!-- ===== VISION REVIEW ===== -->
-    <div id="page-review" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Vision Review</h2><p class="text-muted mt-1">Review client-submitted form videos. Draw annotations and send corrections.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Client Submissions</h3>
-          <div id="list-submissions" class="space-y-3"></div>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Annotation Tool</h3>
-          <div class="flex flex-wrap gap-3 mb-4">
-            <input type="color" id="draw-color" value="#6C5CE7" class="w-10 h-10 bg-transparent border-none rounded cursor-pointer">
-            <input type="range" id="draw-size" min="1" max="20" value="4" class="flex-1 accent-accent">
-            <button onclick="clearCanvas()" class="px-4 py-2 bg-red-500/15 text-red-400 text-sm rounded-lg hover:bg-red-500/25">Clear</button>
-            <button onclick="sendAnnotation()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg glow">Send to Client</button>
-          </div>
-          <div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-border">
-            <canvas id="drawCanvas" class="absolute top-0 left-0 w-full h-full cursor-crosshair"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== POINTS & STREAKS ===== -->
-    <div id="page-points" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Points & Streaks</h2><p class="text-muted mt-1">Monitor your clients' daily habit completion.</p></header>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Total Points (All Clients)</p><h3 class="display text-4xl font-bold text-accent mt-2" id="total-points">0</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Avg Daily Completion</p><h3 class="display text-4xl font-bold text-white mt-2">78%</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Top Client</p><h3 class="display text-4xl font-bold text-green-400 mt-2">Client</h3></div>
-      </div>
-      <div class="card rounded-2xl p-6">
-        <h3 class="display text-lg font-semibold text-white mb-4">Client Leaderboard</h3>
-        <div id="points-leaderboard" class="space-y-3"></div>
-      </div>
-    </div>
-
-    <!-- ===== READINESS ===== -->
-    <div id="page-readiness" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Readiness</h2><p class="text-muted mt-1">View client readiness scores. Override auto-adjustments if needed.</p></header>
-      <div class="card rounded-2xl p-6">
-        <h3 class="display text-lg font-semibold text-white mb-4">Today's Client Readiness</h3>
-        <div id="readiness-list" class="space-y-4"></div>
-      </div>
-    </div>
-
-    <!-- ===== PROGRESS VAULT ===== -->
-    <div id="page-vault" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Progress Vault</h2><p class="text-muted mt-1">View client transformation progress (Day 1 vs Day 90).</p></header>
-      <div class="card rounded-2xl p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h3 class="display text-lg font-semibold text-white">Client — 90 Day Progress</h3>
-          <span class="text-xs text-muted">Photo storage is not connected</span>
-        </div>
-        <div class="vault-container">
-          <div class="text-muted p-6">No progress photo uploaded</div>
-          <div class="text-muted p-6">No progress photo uploaded</div>
-          <div class="vault-line" id="vaultLine"></div>
-          <div class="vault-handle" id="vaultHandle">⟺</div>
-          <input type="range" min="0" max="100" value="50" class="vault-slider" id="vaultSlider" disabled aria-label="Photo comparison is not connected">
-        </div>
-        <div class="flex justify-center gap-4 mt-4">
-          <span class="px-4 py-2 bg-black border border-border rounded-lg text-sm text-muted">Day 1</span>
-          <span class="px-4 py-2 bg-accent/15 border border-accent/40 rounded-lg text-sm text-accent font-bold">Day 90</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Log Body Metrics</h3>
-          <form id="form-metrics" class="space-y-3">
-            <select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Client</option><option>Client</option><option>Client</option><option>Client</option></select>
-            <input type="number" step="0.1" name="weight" required placeholder="Weight (lbs)" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-            <input type="number" step="0.1" name="waist" placeholder="Waist (in, optional)" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Log Entry</button>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="display text-lg font-semibold text-white">Weight Trend</h3>
-            <select id="metrics-client-select" onchange="renderMetricsChart()" class="input-dark text-xs rounded-lg px-3 py-1"><option>Client</option><option>Client</option><option>Client</option><option>Client</option></select>
-          </div>
-          <div class="h-56"><canvas id="metricsChart"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== COMMUNITY ===== -->
-    <div id="page-community" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Community</h2><p class="text-muted mt-1">Moderate your private client community. Post challenges & announcements.</p></header>
-      <div class="card rounded-2xl p-6 mb-6">
-        <form id="form-community" class="flex gap-3">
-          <select name="type" class="input-dark rounded-lg px-4 py-3 text-sm"><option>Announcement</option><option>Challenge</option><option>General Post</option></select>
-          <input type="text" name="post" required placeholder="Post to the community..." class="flex-1 input-dark rounded-lg px-4 py-3 text-sm">
-          <button type="submit" class="px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Post</button>
-        </form>
-      </div>
-      <div id="list-community" class="space-y-4"></div>
-    </div>
-
-    <!-- ===== SHOP ===== -->
-    <div id="page-shop" class="page">
-      <header class="mb-6"><h2 class="display text-3xl font-bold text-white">Shop</h2><p class="text-muted mt-1">Manage your merch, digital products, coaching packages, and brand collaborations.</p></header>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">Shop Revenue</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-revenue">$0</p></div>
-        <div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">Units Sold</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-sold">0</p></div>
-        <div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">Low Stock</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-lowstock">0</p></div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="metal-card p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Add Product</h3>
-          <form id="form-shop" class="space-y-3">
-            <input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Product Name">
-            <div class="grid grid-cols-2 gap-3">
-              <input type="number" name="price" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Price ($)">
-              <input type="number" name="salePrice" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Sale price (optional)">
-            </div>
-            <select name="category" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Merch</option><option>Digital Product</option><option>Coaching Package</option><option>Brand Collab</option></select>
-            <div class="grid grid-cols-2 gap-3">
-              <input type="number" name="stock" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Stock (blank = unlimited)">
-              <label class="flex items-center gap-2 px-3 bg-black border border-border rounded-lg text-xs text-muted"><input type="checkbox" name="featured" class="accent-accent"> Featured</label>
-            </div>
-            <input type="url" name="image" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Image URL (optional)">
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Add Product</button>
-          </form>
-        </div>
-
-        <div class="lg:col-span-2">
-          <div class="flex flex-wrap gap-2 mb-4" id="shop-filter-tabs"></div>
-          <div id="list-shop" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto thin-scroll pr-2"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== REFERRALS ===== -->
-    <div id="page-referrals" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Referrals</h2><p class="text-muted mt-1">Your referral link. Clients share it, you both earn rewards.</p></header>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Total Clicks</p><h3 class="display text-4xl font-bold text-white mt-2" id="ref-clicks">0</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Signups</p><h3 class="display text-4xl font-bold text-accent mt-2" id="ref-signups">0</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Revenue</p><h3 class="display text-4xl font-bold text-green-400 mt-2" id="ref-rev">$0</h3></div>
-      </div>
-      <div class="card rounded-2xl p-6">
-        <h3 class="display text-lg font-semibold text-white mb-4">Your Referral Link</h3>
-        <div class="flex gap-3">
-          <input type="text" id="ref-link" value="penguins.app/join/jordan-diaz" readonly class="flex-1 input-dark rounded-lg px-4 py-3 text-sm font-mono">
-          <button onclick="copyRef()" class="px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Copy</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== VERIFICATION ===== -->
-    <div id="page-verification" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Verification Status</h2><p class="text-muted mt-1">Profile information is self-managed in this development edition.</p></header>
-      <div class="max-w-2xl">
-        <div class="card rounded-2xl p-8 text-center mb-6">
-          <div class="w-20 h-20 rounded-full verified-badge flex items-center justify-center mx-auto mb-4">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-          </div>
-          <h3 class="display text-2xl font-bold text-white mb-2">Verified by Penguins</h3>
-          <p class="text-muted">Your identity and certifications have been reviewed and approved by the Penguins verification team.</p>
-          <p class="text-accent text-sm mt-3 font-medium">Verified on: January 15, 2025</p>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Documents on File (Managed by Penguins)</h3>
-          <div class="space-y-3">
-            <div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
-              <div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">Personal ID</p><p class="text-muted text-xs">Reviewed by Penguins Admin</p></div></div>
-              <span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">Approved</span>
-            </div>
-            <div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
-              <div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">Coaching Certification</p><p class="text-muted text-xs">Reviewed by Penguins Admin</p></div></div>
-              <span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">Approved</span>
-            </div>
-            <div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
-              <div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">Background Check</p><p class="text-muted text-xs">Reviewed by Penguins Admin</p></div></div>
-              <span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">Approved</span>
-            </div>
-          </div>
-          <div class="mt-6 p-4 bg-black border border-border rounded-xl">
-            <p class="text-muted text-sm text-center">⚠️ You cannot upload or modify verification documents. Contact support@penguins.app for changes.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== ACCOUNT ===== -->
-    <div id="page-account" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Account</h2><p class="text-muted mt-1">Manage your coach profile and business details.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6 text-center">
-          <div id="account-avatar" class="w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white font-bold text-3xl mx-auto mb-4">JD</div>
-          <h3 id="account-name-display" class="text-white font-semibold text-lg">Client</h3>
-          <p id="account-niche-display" class="text-muted text-sm">Fitness / Strength</p>
-          <div class="mt-4 pt-4 border-t border-border text-left space-y-2">
-            <div class="flex justify-between text-sm"><span class="text-muted">Plan</span><span class="text-white font-medium">Free</span></div>
-            <div class="flex justify-between text-sm"><span class="text-muted">Clients</span><span id="account-clients-count" class="text-white font-medium">0 active</span></div>
-            <div class="flex justify-between text-sm"><span class="text-muted">Member since</span><span id="account-member-since" class="text-white font-medium">—</span></div>
-          </div>
-        </div>
-        <div class="lg:col-span-2 space-y-6">
-          <div id="account-pending-banner" class="hidden"></div>
-          <div class="card rounded-2xl p-6">
-            <h3 class="display text-lg font-semibold text-white mb-1">Profile Settings</h3>
-            <p class="text-muted text-xs mb-4">Changes here are submitted as a request — nothing updates on your live profile until Penguins reviews and approves it.</p>
-            <form id="form-account" class="space-y-4">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div><label class="text-xs text-muted mb-1 block">Full Name</label><input type="text" name="name" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-                <div><label class="text-xs text-muted mb-1 block">Email</label><input type="email" name="email" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-              </div>
-              <div><label class="text-xs text-muted mb-1 block">Coaching Niche</label>
-                <select name="niche" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Fitness / Strength</option><option>Life & Mindset</option><option>Business / Executive</option><option>Nutrition</option><option>Other</option></select>
-              </div>
-              <div><label class="text-xs text-muted mb-1 block">Bio</label><textarea name="bio" rows="4" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Tell clients about your approach..."></textarea></div>
-              <div><label class="text-xs text-muted mb-1 block">Hourly Rate ($)</label><input type="number" name="rate" step="1" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-              <button type="submit" id="account-submit-btn" class="px-6 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Submit for Approval</button>
-            </form>
-          </div>
-          <div class="card rounded-2xl p-6">
-            <h3 class="display text-lg font-semibold text-white mb-1">Appearance</h3>
-            <p class="text-muted text-xs mb-4">Pick an accent color for your dashboard. Purple is the default — pick another any time.</p>
-            <div id="theme-swatches" class="flex flex-wrap gap-3"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== CLIENTS (CRM) ===== -->
-    <div id="page-connected" class="page"><header class="mb-6" dir="rtl"><h2 class="display text-3xl font-bold text-white">العملاء والمتابعات</h2><p class="text-muted mt-1">طلبات الانضمام، الخطط وPDF، الإنجاز والمتابعات الأسبوعية لحسابات العملاء المرتبطة بك.</p></header><div id="connected-host" dir="rtl"></div></div>
-    <div id="page-clients" class="page">
-      <header class="mb-6"><h2 class="display text-3xl font-bold text-white">Clients</h2><p class="text-muted mt-1">Every client, in one place. Click a card for the full profile.</p></header>
-      <div class="flex flex-col sm:flex-row gap-3 mb-6">
-        <input type="text" id="client-search" oninput="renderClients()" placeholder="Search clients…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
-        <select id="client-filter" onchange="renderClients()" class="input-dark rounded-lg px-4 py-2 text-sm">
-          <option value="All">All Statuses</option>
-          <option value="Active">Active</option>
-          <option value="Paused">Paused</option>
-        </select>
-      </div>
-      <div id="list-clients" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    </div>
-
-    <!-- ===== PIPELINE (LEADS) ===== -->
-    <div id="page-pipeline" class="page">
-      <header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div><h2 class="display text-3xl font-bold text-white">Pipeline</h2><p class="text-muted mt-1">Track prospects from first contact to signed client. Drag cards between stages.</p></div>
-        <button onclick="openAddLead()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition glow whitespace-nowrap">+ Add Lead</button>
-      </header>
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4" id="pipeline-board"></div>
-    </div>
-
-    <!-- ===== INVOICES ===== -->
-    <div id="page-invoices" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Invoices</h2><p class="text-muted mt-1">Track what's owed, paid, and overdue.</p></header>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Outstanding</p><h3 class="display text-3xl font-bold text-gold mt-2" id="inv-outstanding">$0</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Paid This Month</p><h3 class="display text-3xl font-bold text-green-400 mt-2" id="inv-paid">$0</h3></div>
-        <div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">Overdue</p><h3 class="display text-3xl font-bold text-red-400 mt-2" id="inv-overdue">$0</h3></div>
-      </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">New Invoice</h3>
-          <form id="form-invoice" class="space-y-4">
-            <div><label class="text-xs text-muted mb-1 block">Client</label><select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Client</option><option>Client</option><option>Client</option><option>Client</option></select></div>
-            <div><label class="text-xs text-muted mb-1 block">Description</label><input type="text" name="desc" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="e.g. March coaching package"></div>
-            <div><label class="text-xs text-muted mb-1 block">Amount ($)</label><input type="number" name="amount" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-            <div><label class="text-xs text-muted mb-1 block">Due Date</label><input type="date" name="due" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Create Invoice</button>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">All Invoices</h3>
-          <div id="list-invoices" class="space-y-3 max-h-[520px] overflow-y-auto thin-scroll pr-2"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== COHORTS (GROUP COACHING) ===== -->
-    <div id="page-cohorts" class="page">
-      <header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div><h2 class="display text-3xl font-bold text-white">Cohorts</h2><p class="text-muted mt-1">Run group programs alongside your 1:1 clients.</p></div>
-        <button onclick="openAddCohort()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition glow whitespace-nowrap">+ New Cohort</button>
-      </header>
-      <div id="list-cohorts" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
-    </div>
-
-    <!-- ===== AUTOMATIONS ===== -->
-    <div id="page-automations" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Automations</h2><p class="text-muted mt-1">Set rules once, let the platform handle the follow-up.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">New Rule</h3>
-          <form id="form-automation" class="space-y-4">
-            <div><label class="text-xs text-muted mb-1 block">When</label>
-              <select name="trigger" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-                <option>Client misses a check-in</option>
-                <option>Readiness flagged red</option>
-                <option>Invoice becomes overdue</option>
-                <option>New lead enters pipeline</option>
-                <option>Client hits a 7-day streak</option>
-              </select>
-            </div>
-            <div><label class="text-xs text-muted mb-1 block">Then</label>
-              <select name="action" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-                <option>Send a check-in reminder message</option>
-                <option>Send an encouragement message</option>
-                <option>Notify me only</option>
-                <option>Send a payment reminder</option>
-                <option>Post a shoutout in Community</option>
-              </select>
-            </div>
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Create Rule</button>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Active Rules</h3>
-          <div id="list-automations" class="space-y-3"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== REPORTS ===== -->
-    <div id="page-reports" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Reports</h2><p class="text-muted mt-1">Retention, engagement, and revenue at a glance.</p></header>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="reports-stats"></div>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Client Retention</h3>
-          <div class="h-56"><canvas id="retentionChart"></canvas></div>
-        </div>
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Engagement (Avg Habit Completion)</h3>
-          <div class="h-56"><canvas id="engagementChart"></canvas></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== CONTRACTS ===== -->
-    <div id="page-contracts" class="page">
-      <header class="mb-8"><h2 class="display text-3xl font-bold text-white">Contracts</h2><p class="text-muted mt-1">Send agreements and waivers for clients to sign electronically.</p></header>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Send a Contract</h3>
-          <form id="form-contract" class="space-y-4">
-            <select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Client</option><option>Client</option><option>Client</option><option>Client</option></select>
-            <select name="title" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
-              <option>Coaching Agreement</option>
-              <option>Liability Waiver</option>
-              <option>Nutrition Disclaimer</option>
-              <option>Custom Agreement</option>
-            </select>
-            <button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Send for Signature</button>
-          </form>
-        </div>
-        <div class="lg:col-span-2 card rounded-2xl p-6">
-          <h3 class="display text-lg font-semibold text-white mb-4">Sent Contracts</h3>
-          <div id="list-contracts" class="space-y-3"></div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-  </div>
+</button>
+<div id="notif-panel" class="notif-panel card rounded-2xl p-3 thin-scroll hidden">
+<p class="text-xs text-muted uppercase tracking-wide px-2 py-1">التنبيهات</p>
+<div id="notif-list" class="space-y-1"></div>
 </div>
-
+</div>
+</div>
+<main class="flex-1 overflow-y-auto p-4 md:p-8"><div id="workspace-tools" aria-label="أدوات مساحة العمل"><a href="portal.html?view=followup" style="padding:8px 12px;border:1px solid #5f4e88;border-radius:9px;color:#c6b5f1">المتابعات والشهادات وPDF</a><span id="sync-status" role="status" aria-live="polite">جارٍ تحميل مساحتك…</span><button id="pg-add-client">+ إضافة عميل</button><button id="pg-export">نسخة احتياطية</button><button id="pg-import">استعادة</button><button id="pg-history">سجل النسخ</button><button id="pg-csv">تصدير جدول</button><button id="pg-print">طباعة</button></div><div id="draft-banner" hidden style="padding:12px;background:#302438;color:white">توجد تغييرات غير محفوظة على هذا الجهاز. <button id="restore-draft">مراجعة المسودة</button> · <button id="discard-draft">تجاهل المسودة</button></div>
+<!-- ===== DASHBOARD ===== -->
+<div id="page-dashboard" class="page active">
+<header class="mb-8">
+<h2 class="display text-3xl font-bold text-white">أهلًا بعودتك، <span id="dash-name">كوتش</span></h2>
+<p class="text-muted mt-1">ملخص نشاطك ومتابعاتك في مكان واحد.</p>
+</header>
+<div id="dash-checklist" class="card rounded-2xl p-5 mb-6"></div>
+<div id="dash-insights" class="card rounded-2xl p-5 mb-6"></div>
+<div id="dash-business-goals" class="card rounded-2xl p-5 mb-6"></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="dash-stats"></div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="display text-lg font-semibold text-white">الإيرادات</h3>
+<span class="text-xs text-muted bg-black/40 border border-border rounded-lg px-3 py-1">آخر ٦ أشهر</span>
+</div>
+<div class="h-64"><canvas id="earningsChart"></canvas></div>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">آخر النشاطات</h3>
+<div id="dash-activity" class="space-y-3"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<div class="lg:col-span-3 card rounded-2xl p-6">
+<div class="flex items-center justify-between mb-4">
+<h3 class="display text-lg font-semibold text-white">مهامي</h3>
+</div>
+<form id="form-task" class="flex gap-2 mb-4">
+<input type="text" name="text" required placeholder="أضف مهمة…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
+<button type="submit" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">إضافة</button>
+</form>
+<div id="list-tasks" class="space-y-2"></div>
+</div>
+</div>
+</div>
+<!-- ===== MESSAGES ===== -->
+<div id="page-messages" class="page">
+<header class="mb-6"><h2 class="display text-3xl font-bold text-white">الرسائل</h2><p class="text-muted mt-1">احفظ سجلات محادثاتك. إرسال الرسائل من هذا القسم غير متصل؛ استخدم المتابعة الأسبوعية للتواصل داخل المنصة.</p></header>
+<div class="card rounded-2xl overflow-hidden" style="height:70vh;">
+<div class="flex h-full">
+<div class="w-full sm:w-64 border-r border-border overflow-y-auto thin-scroll shrink-0" id="chat-list-panel"><div id="chat-client-list"></div></div>
+<div class="hidden sm:flex flex-1 flex-col" id="chat-thread-panel">
+<div class="p-4 border-b border-border flex items-center" id="chat-header">
+<button onclick="backToChatList()" class="sm:hidden mr-3 text-white text-lg leading-none">←</button>
+<div id="chat-header-info" class="flex items-center flex-1"></div>
+</div>
+<div class="flex-1 overflow-y-auto thin-scroll p-4 space-y-3 min-h-0" id="chat-thread"></div>
+<div id="quick-replies" class="px-3 pt-2 flex gap-2 overflow-x-auto thin-scroll"></div>
+<form id="form-chat" class="p-3 border-t border-border flex gap-2">
+<input type="text" id="chat-input" placeholder="Write a message…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
+<button type="submit" class="px-5 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">إرسال</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== PLAN BUILDER ===== -->
+<div id="page-planner" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">باني الخطط</h2><p class="text-muted mt-1">جهّز تمارينك من المكتبة أو اكتب خطتك. للإرسال لحساب عميل مرتبط استخدم زر المراجعة والإرسال.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-3">مكتبة التمارين</h3>
+<input type="text" id="exercise-search" oninput="renderExerciseLibrary()" placeholder="ابحث عن تمرين…" class="w-full input-dark rounded-lg px-4 py-2 text-sm mb-3">
+<div id="exercise-library" class="space-y-2 max-h-[420px] overflow-y-auto thin-scroll pr-1"></div>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إعداد خطة في سجلك الخاص</h3>
+<p class="text-muted text-sm">هذا النموذج يحفظ الخطط في سجلك الخاص. لإرسال خطة وملف PDF لحساب عميل مرتبط افتح <a href="portal.html?view=followup">العملاء والمتابعات</a>.</p><form id="form-plan" class="space-y-4">
+<div><label class="text-xs text-muted mb-1 block">اختيار سجل العميل</label><select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option></select></div>
+<div><label class="text-xs text-muted mb-1 block">عنوان الخطة</label><input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="مثلًا: خطة الأسبوع الثالث"></div>
+<div><label class="text-xs text-muted mb-1 block">النوع</label><select name="type" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Training">تدريب</option><option value="Nutrition">التغذية</option><option value="Mindset">العادات والأهداف</option><option value="Business Goals">أهداف العمل</option></select></div>
+<div>
+<div class="flex items-center justify-between mb-1"><label class="text-xs text-muted block">تمارين الخطة في السجل الخاص</label><button type="button" onclick="clearBuiltWorkout()" class="text-[11px] text-muted hover:text-red-400">مسح</button></div>
+<div id="built-workout" class="space-y-2 mb-2 min-h-[40px] bg-black border border-border rounded-lg p-3">
+<p class="text-muted text-xs" id="built-workout-empty">اختار تمرينًا من المكتبة لإضافته هنا.</p>
+</div>
+</div>
+<div><label class="text-xs text-muted mb-1 block">ملاحظات وتفاصيل إضافية</label><textarea name="details" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="ملاحظات التمرين والتغذية…"></textarea></div>
+<div class="flex gap-2">
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ في سجل العميل الخاص ←</button>
+<button type="button" onclick="saveAsTemplate()" class="px-4 py-2.5 bg-black border border-border text-muted text-sm font-medium rounded-lg hover:border-accent/50 hover:text-accent transition whitespace-nowrap">حفظ كقالب</button>
+</div>
+</form>
+</div>
+<div class="card rounded-2xl p-6">
+<div class="flex bg-black border border-border rounded-lg p-1 text-xs mb-4">
+<button id="plan-tab-sent" onclick="setPlanTab('sent')" class="flex-1 px-3 py-1.5 rounded-md font-medium transition">الخطط المحفوظة</button>
+<button id="plan-tab-templates" onclick="setPlanTab('templates')" class="flex-1 px-3 py-1.5 rounded-md font-medium transition">القوالب</button>
+</div>
+<div id="plan-view-sent"><div id="list-plans" class="space-y-3 max-h-[500px] overflow-y-auto thin-scroll pr-2"></div></div>
+<div id="plan-view-templates" class="hidden"><div id="list-templates" class="space-y-3 max-h-[500px] overflow-y-auto thin-scroll pr-2"></div></div>
+</div>
+</div>
+<div class="card rounded-2xl p-6 mt-6 max-w-sm">
+<h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-4">مؤقّت الراحة</h3>
+<div class="text-center">
+<p id="timer-display" class="display text-5xl font-bold text-white mb-4 tabular-nums">01:30</p>
+<div class="flex justify-center gap-2 mb-4">
+<button onclick="setTimerPreset(30)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">30s</button>
+<button onclick="setTimerPreset(60)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">60s</button>
+<button onclick="setTimerPreset(90)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">90s</button>
+<button onclick="setTimerPreset(120)" class="px-3 py-1.5 bg-black border border-border rounded-lg text-xs text-muted hover:border-accent/50 hover:text-white transition">120s</button>
+</div>
+<div class="flex gap-2">
+<button id="timer-toggle-btn" onclick="toggleTimer()" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">ابدأ</button>
+<button onclick="resetTimer()" class="px-4 py-2.5 bg-black border border-border text-muted rounded-lg hover:text-white transition">↺</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== NUTRITION (subscribed clients only) ===== -->
+<div id="page-nutrition" class="page">
+<header class="mb-6"><h2 class="display text-3xl font-bold text-white">التغذية</h2><p class="text-muted mt-1">احفظ أهداف التغذية وسجلاتها للعملاء في مساحة العمل الخاصة.</p></header>
+<div class="mb-8">
+<h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-3">العملاء المشتركون</h3>
+<div id="list-nutrition-subscribed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</div>
+<div>
+<h3 class="display text-sm font-semibold text-white tracking-wide uppercase mb-3">غير مشترك</h3>
+<p class="text-muted text-xs mb-3">فعّل سجل التغذية للعميل لإضافة أهدافه في مساحة العمل.</p>
+<div id="list-nutrition-unsubscribed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</div>
+</div>
+<!-- ===== LIVE SESSIONS ===== -->
+<div id="page-live" class="page">
+<header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+<div><h2 class="display text-3xl font-bold text-white">الجلسات المباشرة</h2><p class="text-muted mt-1">نظّم مواعيد جلساتك وأوقاتك المتاحة في سجلك الخاص.</p></div>
+<div class="flex bg-black border border-border rounded-lg p-1 text-xs">
+<button id="live-tab-list" onclick="setLiveView('list')" class="px-3 py-1.5 rounded-md font-medium transition">قائمة</button>
+<button id="live-tab-cal" onclick="setLiveView('cal')" class="px-3 py-1.5 rounded-md font-medium transition">تقويم</button>
+</div>
+</header>
+<div id="live-view-list" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">تحديد جلسة</h3>
+<form id="form-live" class="space-y-3">
+<input type="text" name="topic" required placeholder="Session Topic" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<input type="datetime-local" name="time" required class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<select name="access" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="All Clients">كل العملاء</option><option value="Paid Clients Only">العملاء المدفوعون فقط</option></select>
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">المواعيد</button>
+</form>
+<hr class="border-border my-5">
+<h3 class="display text-sm font-semibold text-white mb-3">إضافة موعد متاح</h3>
+<form id="form-slot" class="space-y-3">
+<input type="datetime-local" name="time" required class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<button type="submit" class="w-full py-2 bg-black border border-border text-white text-sm font-medium rounded-lg hover:border-accent/50 transition">+ إضافة موعد متاح</button>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">الجلسات المحددة</h3>
+<div id="list-live" class="space-y-3 mb-6"></div>
+<h3 class="display text-lg font-semibold text-white mb-4">المواعيد المتاحة في سجلك</h3>
+<div id="list-slots" class="space-y-3"></div>
+</div>
+</div>
+<div id="live-view-cal" class="card rounded-2xl p-6 hidden">
+<h3 class="display text-lg font-semibold text-white mb-4">هذا الأسبوع</h3>
+<div class="cal-grid-wrap"><div class="cal-grid" id="live-calendar"></div></div>
+</div>
+</div>
+<!-- ===== RESOURCE LIBRARY (PDF upload, free/paid) ===== -->
+<div id="page-library" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">مكتبة الموارد</h2><p class="text-muted mt-1">نظّم الأدلة والبرامج. هذا القسم يحفظ تفاصيل الموارد فقط؛ ملفات التمرين تُرسل من العملاء والمتابعات.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إضافة مورد</h3>
+<form id="form-library" class="space-y-4">
+<div>
+<label class="text-xs text-muted mb-1 block">ملف PDF</label>
+<input type="file" name="file" accept=".pdf" required class="w-full input-dark rounded-lg px-3 py-2 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-accent file:text-white file:text-xs">
+</div>
+<div><label class="text-xs text-muted mb-1 block">العنوان</label><input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="e.g. 30-Day Foundations Guide"></div>
+<div><label class="text-xs text-muted mb-1 block">الوصف</label><textarea name="desc" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="What's inside this resource?"></textarea></div>
+<div class="flex gap-3">
+<div class="flex-1"><label class="text-xs text-muted mb-1 block">الوصول</label>
+<select name="tier" id="library-tier" onchange="toggleLibraryPrice()" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Free">مجاني</option><option value="Paid">مدفوع</option></select>
+</div>
+<div class="flex-1 hidden" id="library-price-wrap"><label class="text-xs text-muted mb-1 block">السعر بالدولار</label><input type="number" step="0.01" name="price" id="library-price" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="19.99"></div>
+</div>
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إضافة مورد</button>
+<p class="text-muted text-[11px]">هذا نموذج لسجل الموارد فقط. لرفع PDF حقيقي لعميلك استخدم قسم العملاء والمتابعات.</p>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">مكتبتك</h3>
+<div id="list-library" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto thin-scroll pr-2"></div>
+</div>
+</div>
+</div>
+<!-- ===== FEEDBACK ===== -->
+<div id="page-feedback" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">تقييمات العملاء</h2><p class="text-muted mt-1">التقييمات والملاحظات المسجلة لعملائك.</p></header>
+<div class="card rounded-2xl p-6"><div id="list-feedback" class="space-y-4"></div></div>
+</div>
+<!-- ===== VISION REVIEW ===== -->
+<div id="page-review" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">مراجعة الأداء</h2><p class="text-muted mt-1">نظّم مراجعات الأداء وتعليقاتك في السجل الخاص. الفيديوهات المشتركة تُرفق بروابط داخل خطط العملاء.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">مشاركات العملاء</h3>
+<div id="list-submissions" class="space-y-3"></div>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">أداة التعليق على الأداء</h3>
+<div class="flex flex-wrap gap-3 mb-4">
+<input type="color" id="draw-color" value="#6C5CE7" class="w-10 h-10 bg-transparent border-none rounded cursor-pointer">
+<input type="range" id="draw-size" min="1" max="20" value="4" class="flex-1 accent-accent">
+<button onclick="clearCanvas()" class="px-4 py-2 bg-red-500/15 text-red-400 text-sm rounded-lg hover:bg-red-500/25">مسح</button>
+<button onclick="sendAnnotation()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg glow">حفظ في سجل العميل</button>
+</div>
+<div class="relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-border">
+<canvas id="drawCanvas" class="absolute top-0 left-0 w-full h-full cursor-crosshair"></canvas>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== POINTS & STREAKS ===== -->
+<div id="page-points" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">النقاط والاستمرارية</h2><p class="text-muted mt-1">تابع سجلات إنجاز العادات اليومية لعملائك.</p></header>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">مجموع نقاط العملاء</p><h3 class="display text-4xl font-bold text-accent mt-2" id="total-points">0</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">متوسط الإنجاز اليومي</p><h3 class="display text-4xl font-bold text-white mt-2">78%</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">العميل الأكثر نشاطًا</p><h3 class="display text-4xl font-bold text-green-400 mt-2">عميل</h3></div>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">ترتيب العملاء</h3>
+<div id="points-leaderboard" class="space-y-3"></div>
+</div>
+</div>
+<!-- ===== READINESS ===== -->
+<div id="page-readiness" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">الجاهزية</h2><p class="text-muted mt-1">راجع مؤشرات الجاهزية المسجلة لعملائك وعدّلها عند الحاجة.</p></header>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">جاهزية العملاء اليوم</h3>
+<div id="readiness-list" class="space-y-4"></div>
+</div>
+</div>
+<!-- ===== PROGRESS VAULT ===== -->
+<div id="page-vault" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">سجل التقدّم</h2><p class="text-muted mt-1">قارن بيانات وصور التقدّم في سجلك الخاص.</p></header>
+<div class="card rounded-2xl p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="display text-lg font-semibold text-white">سجل تقدّم العميل خلال ٩٠ يومًا</h3>
+<span class="text-xs text-muted">تخزين صور التقدّم غير متصل</span>
+</div>
+<div class="vault-container">
+<div class="text-muted p-6">لا توجد صورة تقدّم</div>
+<div class="text-muted p-6">لا توجد صورة تقدّم</div>
+<div class="vault-line" id="vaultLine"></div>
+<div class="vault-handle" id="vaultHandle">⟺</div>
+<input type="range" min="0" max="100" value="50" class="vault-slider" id="vaultSlider" disabled aria-label="Photo comparison is not connected">
+</div>
+<div class="flex justify-center gap-4 mt-4">
+<span class="px-4 py-2 bg-black border border-border rounded-lg text-sm text-muted">اليوم الأول</span>
+<span class="px-4 py-2 bg-accent/15 border border-accent/40 rounded-lg text-sm text-accent font-bold">اليوم التسعون</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">تسجيل قياسات الجسم</h3>
+<form id="form-metrics" class="space-y-3">
+<select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option></select>
+<input type="number" step="0.1" name="weight" required placeholder="Weight (lbs)" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<input type="number" step="0.1" name="waist" placeholder="Waist (in, optional)" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ القياسات</button>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<div class="flex justify-between items-center mb-4">
+<h3 class="display text-lg font-semibold text-white">تغيّر الوزن</h3>
+<select id="metrics-client-select" onchange="renderMetricsChart()" class="input-dark text-xs rounded-lg px-3 py-1"><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option></select>
+</div>
+<div class="h-56"><canvas id="metricsChart"></canvas></div>
+</div>
+</div>
+</div>
+<!-- ===== COMMUNITY ===== -->
+<div id="page-community" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">المجتمع</h2><p class="text-muted mt-1">نظّم منشورات وتحديات المجتمع في مساحة العمل الخاصة.</p></header>
+<div class="card rounded-2xl p-6 mb-6">
+<form id="form-community" class="flex gap-3">
+<select name="type" class="input-dark rounded-lg px-4 py-3 text-sm"><option value="Announcement">إعلان</option><option value="Challenge">تحدٍّ</option><option value="General Post">منشور عام</option></select>
+<input type="text" name="post" required placeholder="Post to the community..." class="flex-1 input-dark rounded-lg px-4 py-3 text-sm">
+<button type="submit" class="px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">نشر</button>
+</form>
+</div>
+<div id="list-community" class="space-y-4"></div>
+</div>
+<!-- ===== SHOP ===== -->
+<div id="page-shop" class="page">
+<header class="mb-6"><h2 class="display text-3xl font-bold text-white">المتجر</h2><p class="text-muted mt-1">نظّم سجلات المنتجات والبرامج وباقات التدريب. الدفع الإلكتروني غير متصل.</p></header>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+<div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">إيرادات المتجر المسجلة</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-revenue">$0</p></div>
+<div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">الوحدات المباعة</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-sold">0</p></div>
+<div class="metal-card p-5"><p class="text-muted text-xs uppercase tracking-wide">مخزون منخفض</p><p class="display text-2xl font-bold text-white mt-1" id="shop-stat-lowstock">0</p></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="metal-card p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إضافة منتج</h3>
+<form id="form-shop" class="space-y-3">
+<input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Product Name">
+<div class="grid grid-cols-2 gap-3">
+<input type="number" name="price" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="السعر بالدولار">
+<input type="number" name="salePrice" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Sale price (optional)">
+</div>
+<select name="category" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Merch">منتج</option><option value="Digital Product">منتج رقمي</option><option value="Coaching Package">باقة تدريب</option><option value="Brand Collab">تعاون تجاري</option></select>
+<div class="grid grid-cols-2 gap-3">
+<input type="number" name="stock" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Stock (blank = unlimited)">
+<label class="flex items-center gap-2 px-3 bg-black border border-border rounded-lg text-xs text-muted"><input type="checkbox" name="featured" class="accent-accent"> مميّز</label>
+</div>
+<input type="url" name="image" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Image URL (optional)">
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إضافة منتج</button>
+</form>
+</div>
+<div class="lg:col-span-2">
+<div class="flex flex-wrap gap-2 mb-4" id="shop-filter-tabs"></div>
+<div id="list-shop" class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[560px] overflow-y-auto thin-scroll pr-2"></div>
+</div>
+</div>
+</div>
+<!-- ===== REFERRALS ===== -->
+<div id="page-referrals" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">الإحالات</h2><p class="text-muted mt-1">رابط الإحالة وسجل الإحصاءات داخل مساحة العمل.</p></header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">إجمالي النقرات</p><h3 class="display text-4xl font-bold text-white mt-2" id="ref-clicks">0</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">التسجيلات</p><h3 class="display text-4xl font-bold text-accent mt-2" id="ref-signups">0</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">الإيرادات</p><h3 class="display text-4xl font-bold text-green-400 mt-2" id="ref-rev">$0</h3></div>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">رابط الإحالة</h3>
+<div class="flex gap-3">
+<input type="text" id="ref-link" value="penguins.app/join/jordan-diaz" readonly class="flex-1 input-dark rounded-lg px-4 py-3 text-sm font-mono">
+<button onclick="copyRef()" class="px-6 py-3 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">نسخ</button>
+</div>
+</div>
+</div>
+<!-- ===== VERIFICATION ===== -->
+<div id="page-verification" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">حالة التحقق في السجل</h2><p class="text-muted mt-1">هذه بيانات ملف مساحة العمل. صلاحيات الحساب واعتماد الكوتش تديرها إدارة المنصة.</p></header>
+<div class="max-w-2xl">
+<div class="card rounded-2xl p-8 text-center mb-6">
+<div class="w-20 h-20 rounded-full verified-badge flex items-center justify-center mx-auto mb-4">
+<svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+</div>
+<h3 class="display text-2xl font-bold text-white mb-2">حالة مسجلة في مساحة العمل</h3>
+<p class="text-muted">الاعتماد الفعلي والشهادات موجودان في قسم الحساب والشهادات ضمن العملاء والمتابعات.</p>
+<p class="text-accent text-sm mt-3 font-medium">هذا القسم القديم لعرض السجل فقط</p>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">مستندات السجل الخاص</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
+<div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">إثبات الهوية</p><p class="text-muted text-xs">مراجعة الإدارة من قسم الحساب والشهادات</p></div></div>
+<span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">معتمد</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
+<div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">شهادة تدريب</p><p class="text-muted text-xs">مراجعة الإدارة من قسم الحساب والشهادات</p></div></div>
+<span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">معتمد</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-black border border-border rounded-xl">
+<div class="flex items-center"><span class="text-green-400 mr-3">✓</span><div><p class="text-white text-sm font-medium">مراجعة البيانات</p><p class="text-muted text-xs">مراجعة الإدارة من قسم الحساب والشهادات</p></div></div>
+<span class="px-3 py-1 bg-green-500/15 text-green-400 text-xs rounded-full font-medium">معتمد</span>
+</div>
+</div>
+<div class="mt-6 p-4 bg-black border border-border rounded-xl">
+<p class="text-muted text-sm text-center">رفع الشهادات ومتابعة قرار الإدارة متاحان من قسم الحساب والشهادات.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== ACCOUNT ===== -->
+<div id="page-account" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">الحساب</h2><p class="text-muted mt-1">إدارة بيانات ملف الكوتش وتفاصيل العمل.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6 text-center">
+<div id="account-avatar" class="w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white font-bold text-3xl mx-auto mb-4">JD</div>
+<h3 id="account-name-display" class="text-white font-semibold text-lg">عميل</h3>
+<p id="account-niche-display" class="text-muted text-sm">لياقة وقوة</p>
+<div class="mt-4 pt-4 border-t border-border text-left space-y-2">
+<div class="flex justify-between text-sm"><span class="text-muted">Plan</span><span class="text-white font-medium">مجاني</span></div>
+<div class="flex justify-between text-sm"><span class="text-muted">العملاء</span><span id="account-clients-count" class="text-white font-medium">٠ نشط</span></div>
+<div class="flex justify-between text-sm"><span class="text-muted">عضو منذ</span><span id="account-member-since" class="text-white font-medium">—</span></div>
+</div>
+</div>
+<div class="lg:col-span-2 space-y-6">
+<div id="account-pending-banner" class="hidden"></div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-1">إعدادات الملف</h3>
+<p class="text-muted text-xs mb-4">تعديلات هذا النموذج تخص سجل مساحة العمل فقط؛ الاعتماد الفعلي موجود في قسم الحساب والشهادات.</p>
+<form id="form-account" class="space-y-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div><label class="text-xs text-muted mb-1 block">الاسم الكامل</label><input type="text" name="name" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">البريد الإلكتروني</label><input type="email" name="email" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+</div>
+<div><label class="text-xs text-muted mb-1 block">مجال التدريب</label>
+<select name="niche" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Fitness / Strength">لياقة وقوة</option><option value="Life & Mindset">عادات وأهداف</option><option value="Business / Executive">أعمال وإدارة</option><option value="Nutrition">التغذية</option><option value="Other">أخرى</option></select>
+</div>
+<div><label class="text-xs text-muted mb-1 block">نبذة تعريفية</label><textarea name="bio" rows="4" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Tell clients about your approach..."></textarea></div>
+<div><label class="text-xs text-muted mb-1 block">السعر بالساعة بالدولار</label><input type="number" name="rate" step="1" class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<button type="submit" id="account-submit-btn" class="px-6 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ طلب تعديل في السجل</button>
+</form>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-1">المظهر</h3>
+<p class="text-muted text-xs mb-4">اختار اللون المميز للداشبورد. تقدر تغيّره في أي وقت.</p>
+<div id="theme-swatches" class="flex flex-wrap gap-3"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== CLIENTS (CRM) ===== -->
+<div id="page-connected" class="page"><header class="mb-6" dir="rtl"><h2 class="display text-3xl font-bold text-white">العملاء والمتابعات</h2><p class="text-muted mt-1">طلبات الانضمام، الخطط وPDF، الإنجاز والمتابعات الأسبوعية لحسابات العملاء المرتبطة بك.</p></header><div id="connected-host" dir="rtl"></div></div>
+<div id="page-clients" class="page">
+<header class="mb-6"><h2 class="display text-3xl font-bold text-white">العملاء</h2><p class="text-muted mt-1">سجلات العملاء الخاصة بك. حسابات العملاء المرتبطة ومتابعاتهم موجودة في القسم المخصص لها.</p></header>
+<div class="flex flex-col sm:flex-row gap-3 mb-6">
+<input type="text" id="client-search" oninput="renderClients()" placeholder="ابحث عن عميل…" class="flex-1 input-dark rounded-lg px-4 py-2 text-sm">
+<select id="client-filter" onchange="renderClients()" class="input-dark rounded-lg px-4 py-2 text-sm">
+<option value="All">كل الحالات</option>
+<option value="Active">نشط</option>
+<option value="Paused">متوقف مؤقتًا</option>
+</select>
+</div>
+<div id="list-clients" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</div>
+<!-- ===== PIPELINE (LEADS) ===== -->
+<div id="page-pipeline" class="page">
+<header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div><h2 class="display text-3xl font-bold text-white">العملاء المحتملون</h2><p class="text-muted mt-1">نظّم العملاء المحتملين واسحب سجلاتهم بين المراحل.</p></div>
+<button onclick="openAddLead()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition glow whitespace-nowrap">+ إضافة عميل محتمل</button>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4" id="pipeline-board"></div>
+</div>
+<!-- ===== INVOICES ===== -->
+<div id="page-invoices" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">الفواتير</h2><p class="text-muted mt-1">تابع الفواتير المسجلة: المستحق والمدفوع والمتأخر.</p></header>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">المستحق</p><h3 class="display text-3xl font-bold text-gold mt-2" id="inv-outstanding">$0</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">المدفوع هذا الشهر</p><h3 class="display text-3xl font-bold text-green-400 mt-2" id="inv-paid">$0</h3></div>
+<div class="card rounded-2xl p-6 text-center"><p class="text-muted text-sm">متأخر</p><h3 class="display text-3xl font-bold text-red-400 mt-2" id="inv-overdue">$0</h3></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">فاتورة جديدة</h3>
+<form id="form-invoice" class="space-y-4">
+<div><label class="text-xs text-muted mb-1 block">عميل</label><select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option></select></div>
+<div><label class="text-xs text-muted mb-1 block">الوصف</label><input type="text" name="desc" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="مثلًا: باقة التدريب الشهرية"></div>
+<div><label class="text-xs text-muted mb-1 block">المبلغ بالدولار</label><input type="number" name="amount" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">تاريخ الاستحقاق</label><input type="date" name="due" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إنشاء فاتورة</button>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">كل الفواتير</h3>
+<div id="list-invoices" class="space-y-3 max-h-[520px] overflow-y-auto thin-scroll pr-2"></div>
+</div>
+</div>
+</div>
+<!-- ===== COHORTS (GROUP COACHING) ===== -->
+<div id="page-cohorts" class="page">
+<header class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+<div><h2 class="display text-3xl font-bold text-white">المجموعات</h2><p class="text-muted mt-1">نظّم برامج المجموعات بجانب المتابعة الفردية.</p></div>
+<button onclick="openAddCohort()" class="px-4 py-2 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition glow whitespace-nowrap">+ مجموعة جديدة</button>
+</header>
+<div id="list-cohorts" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+</div>
+<!-- ===== AUTOMATIONS ===== -->
+<div id="page-automations" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">التنظيم التلقائي</h2><p class="text-muted mt-1">نظّم قواعد المتابعة في سجلك الخاص.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">قاعدة جديدة</h3>
+<form id="form-automation" class="space-y-4">
+<div><label class="text-xs text-muted mb-1 block">عندما</label>
+<select name="trigger" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<option value="Client misses a check-in">العميل يفوّت متابعة</option>
+<option value="Readiness flagged red">تسجيل انخفاض الجاهزية</option>
+<option value="Invoice becomes overdue">تأخر موعد فاتورة</option>
+<option value="New lead enters pipeline">إضافة عميل محتمل</option>
+<option value="Client hits a 7-day streak">إكمال ٧ أيام متواصلة</option>
+</select>
+</div>
+<div><label class="text-xs text-muted mb-1 block">الإجراء</label>
+<select name="action" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<option value="Send a check-in reminder message">إعداد تذكير بالمتابعة</option>
+<option value="Send an encouragement message">إعداد رسالة تشجيع</option>
+<option value="Notify me only">تنبيهي فقط</option>
+<option value="Send a payment reminder">إعداد تذكير بالدفع</option>
+<option value="Post a shoutout in Community">إعداد إشادة في المجتمع</option>
+</select>
+</div>
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ القاعدة</button>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">القواعد النشطة</h3>
+<div id="list-automations" class="space-y-3"></div>
+</div>
+</div>
+</div>
+<!-- ===== REPORTS ===== -->
+<div id="page-reports" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">التقارير</h2><p class="text-muted mt-1">ملخص الاستمرارية والتفاعل والإيرادات المسجلة.</p></header>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="reports-stats"></div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">استمرارية العملاء</h3>
+<div class="h-56"><canvas id="retentionChart"></canvas></div>
+</div>
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">التفاعل ومتوسط إنجاز العادات</h3>
+<div class="h-56"><canvas id="engagementChart"></canvas></div>
+</div>
+</div>
+</div>
+<!-- ===== CONTRACTS ===== -->
+<div id="page-contracts" class="page">
+<header class="mb-8"><h2 class="display text-3xl font-bold text-white">العقود</h2><p class="text-muted mt-1">نظّم مسودات الاتفاقيات في سجلك الخاص. التوقيع الإلكتروني غير متصل.</p></header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إعداد مسودة اتفاقية</h3>
+<form id="form-contract" class="space-y-4">
+<select name="client" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option><option value="Client">عميل</option></select>
+<select name="title" class="w-full input-dark rounded-lg px-4 py-2 text-sm">
+<option value="Coaching Agreement">اتفاقية تدريب</option>
+<option value="Liability Waiver">إقرار مسؤولية</option>
+<option value="Nutrition Disclaimer">إقرار التغذية</option>
+<option value="Custom Agreement">اتفاقية مخصّصة</option>
+</select>
+<button type="submit" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ مسودة الاتفاقية</button>
+</form>
+</div>
+<div class="lg:col-span-2 card rounded-2xl p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">الاتفاقيات المسجلة</h3>
+<div id="list-contracts" class="space-y-3"></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
 <!-- ================= ADD COHORT MODAL ================= -->
 <div id="cohortModal" class="modal-overlay hidden" onclick="if(event.target===this)closeAddCohort()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">New Cohort</h3>
-    <form id="form-cohort" class="space-y-4">
-      <input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Cohort name, e.g. Spring Shred Squad">
-      <input type="text" name="schedule" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Schedule, e.g. Tue & Thu, 6PM">
-      <div>
-        <label class="text-xs text-muted mb-1 block">Members</label>
-        <div class="space-y-1.5" id="cohort-member-checks"></div>
-      </div>
-      <div class="flex gap-2">
-        <button type="button" onclick="closeAddCohort()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Create</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">مجموعة جديدة</h3>
+<form id="form-cohort" class="space-y-4">
+<input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Cohort name, e.g. Spring Shred Squad">
+<input type="text" name="schedule" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Schedule, e.g. Tue & Thu, 6PM">
+<div>
+<label class="text-xs text-muted mb-1 block">الأعضاء</label>
+<div class="space-y-1.5" id="cohort-member-checks"></div>
 </div>
-
+<div class="flex gap-2">
+<button type="button" onclick="closeAddCohort()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إنشاء</button>
+</div>
+</form>
+</div>
+</div>
 <!-- ================= NUTRITION TARGETS MODAL ================= -->
 <div id="nutritionModal" class="modal-overlay hidden" onclick="if(event.target===this)closeNutritionModal()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-1">Set Macro Targets</h3>
-    <p class="text-muted text-xs mb-4" id="nutrition-modal-client"></p>
-    <form id="form-nutrition-targets" class="space-y-4">
-      <div class="grid grid-cols-2 gap-3">
-        <div><label class="text-xs text-muted mb-1 block">Calories</label><input type="number" name="calories" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-        <div><label class="text-xs text-muted mb-1 block">Protein (g)</label><input type="number" name="protein" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-        <div><label class="text-xs text-muted mb-1 block">Carbs (g)</label><input type="number" name="carbs" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-        <div><label class="text-xs text-muted mb-1 block">Fats (g)</label><input type="number" name="fats" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-      </div>
-      <div><label class="text-xs text-muted mb-1 block">Notes for client</label><textarea name="notes" rows="2" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Any guidance to include..."></textarea></div>
-      <div class="flex gap-2">
-        <button type="button" onclick="closeNutritionModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Save Targets</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-1">تحديد أهداف التغذية</h3>
+<p class="text-muted text-xs mb-4" id="nutrition-modal-client"></p>
+<form id="form-nutrition-targets" class="space-y-4">
+<div class="grid grid-cols-2 gap-3">
+<div><label class="text-xs text-muted mb-1 block">السعرات</label><input type="number" name="calories" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">البروتين بالغرام</label><input type="number" name="protein" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">الكربوهيدرات بالغرام</label><input type="number" name="carbs" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">الدهون بالغرام</label><input type="number" name="fats" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
 </div>
-
+<div><label class="text-xs text-muted mb-1 block">ملاحظات العميل</label><textarea name="notes" rows="2" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Any guidance to include..."></textarea></div>
+<div class="flex gap-2">
+<button type="button" onclick="closeNutritionModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ الأهداف</button>
+</div>
+</form>
+</div>
+</div>
 <!-- ================= CLIENT PR MODAL ================= -->
 <div id="clientPrModal" class="modal-overlay hidden" onclick="if(event.target===this)closeClientPRModal()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">Log a Personal Record</h3>
-    <form id="form-client-pr" class="space-y-4">
-      <input type="text" name="exercise" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Exercise, e.g. Deadlift">
-      <div class="grid grid-cols-2 gap-3">
-        <input type="number" step="0.5" name="weight" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Weight (kg)">
-        <input type="number" name="reps" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Reps">
-      </div>
-      <div class="flex gap-2">
-        <button type="button" onclick="closeClientPRModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Save PR</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إضافة إنجاز شخصي</h3>
+<form id="form-client-pr" class="space-y-4">
+<input type="text" name="exercise" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Exercise, e.g. Deadlift">
+<div class="grid grid-cols-2 gap-3">
+<input type="number" step="0.5" name="weight" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Weight (kg)">
+<input type="number" name="reps" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Reps">
 </div>
-
+<div class="flex gap-2">
+<button type="button" onclick="closeClientPRModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ الإنجاز</button>
+</div>
+</form>
+</div>
+</div>
 <!-- ================= CLIENT GOAL MODAL ================= -->
 <div id="clientGoalModal" class="modal-overlay hidden" onclick="if(event.target===this)closeClientGoalModal()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">Add a Client Goal</h3>
-    <form id="form-client-goal" class="space-y-4">
-      <input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Goal, e.g. Bench Press 100kg">
-      <div class="grid grid-cols-2 gap-3">
-        <input type="number" step="0.1" name="current" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Current value">
-        <input type="number" step="0.1" name="target" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Target value">
-      </div>
-      <input type="text" name="unit" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Unit (e.g. kg, days, reps)">
-      <div class="flex gap-2">
-        <button type="button" onclick="closeClientGoalModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Add Goal</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إضافة هدف للعميل</h3>
+<form id="form-client-goal" class="space-y-4">
+<input type="text" name="title" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Goal, e.g. Bench Press 100kg">
+<div class="grid grid-cols-2 gap-3">
+<input type="number" step="0.1" name="current" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Current value">
+<input type="number" step="0.1" name="target" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Target value">
 </div>
-
+<input type="text" name="unit" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Unit (e.g. kg, days, reps)">
+<div class="flex gap-2">
+<button type="button" onclick="closeClientGoalModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إضافة هدف</button>
+</div>
+</form>
+</div>
+</div>
 <!-- ================= EDIT PRODUCT MODAL ================= -->
 <div id="editProductModal" class="modal-overlay hidden" onclick="if(event.target===this)closeEditProduct()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">Edit Product</h3>
-    <form id="form-edit-product" class="space-y-3">
-      <input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Product Name">
-      <div class="grid grid-cols-2 gap-3">
-        <input type="number" name="price" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Price ($)">
-        <input type="number" name="salePrice" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Sale price">
-      </div>
-      <select name="category" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option>Merch</option><option>Digital Product</option><option>Coaching Package</option><option>Brand Collab</option></select>
-      <div class="grid grid-cols-2 gap-3">
-        <input type="number" name="stock" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Stock">
-        <label class="flex items-center gap-2 px-3 bg-black border border-border rounded-lg text-xs text-muted"><input type="checkbox" name="featured" class="accent-accent"> Featured</label>
-      </div>
-      <input type="url" name="image" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Image URL">
-      <div class="flex gap-2">
-        <button type="button" onclick="closeEditProduct()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Save Changes</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">تعديل المنتج</h3>
+<form id="form-edit-product" class="space-y-3">
+<input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Product Name">
+<div class="grid grid-cols-2 gap-3">
+<input type="number" name="price" step="0.01" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="السعر بالدولار">
+<input type="number" name="salePrice" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Sale price">
 </div>
-
+<select name="category" class="w-full input-dark rounded-lg px-4 py-2 text-sm"><option value="Merch">منتج</option><option value="Digital Product">منتج رقمي</option><option value="Coaching Package">باقة تدريب</option><option value="Brand Collab">تعاون تجاري</option></select>
+<div class="grid grid-cols-2 gap-3">
+<input type="number" name="stock" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Stock">
+<label class="flex items-center gap-2 px-3 bg-black border border-border rounded-lg text-xs text-muted"><input type="checkbox" name="featured" class="accent-accent"> مميّز</label>
+</div>
+<input type="url" name="image" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Image URL">
+<div class="flex gap-2">
+<button type="button" onclick="closeEditProduct()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ التغييرات</button>
+</div>
+</form>
+</div>
+</div>
 <!-- ================= BUSINESS GOALS MODAL ================= -->
 <div id="goalsModal" class="modal-overlay hidden" onclick="if(event.target===this)closeGoalsModal()">
-  <div class="card rounded-2xl w-full max-w-sm mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">Set Business Targets</h3>
-    <form id="form-business-goals" class="space-y-4">
-      <div><label class="text-xs text-muted mb-1 block">Monthly Revenue Target ($)</label><input type="number" name="revenueTarget" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-      <div><label class="text-xs text-muted mb-1 block">Active Clients Target</label><input type="number" name="clientsTarget" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
-      <div class="flex gap-2">
-        <button type="button" onclick="closeGoalsModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Save</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-sm mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">تحديد أهداف العمل</h3>
+<form id="form-business-goals" class="space-y-4">
+<div><label class="text-xs text-muted mb-1 block">هدف الإيراد الشهري بالدولار</label><input type="number" name="revenueTarget" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div><label class="text-xs text-muted mb-1 block">هدف عدد العملاء النشطين</label><input type="number" name="clientsTarget" required class="w-full input-dark rounded-lg px-4 py-2 text-sm"></div>
+<div class="flex gap-2">
+<button type="button" onclick="closeGoalsModal()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">حفظ</button>
 </div>
-<div id="clientPreviewBar" class="client-preview-bar hidden">You're viewing Penguins as a client would see it — <button onclick="closeClientPreview()" class="underline font-bold">Exit Preview</button></div>
+</form>
+</div>
+</div>
+<div id="clientPreviewBar" class="client-preview-bar hidden">دي معاينة محلية لشكل واجهة العميل — <button onclick="closeClientPreview()" class="underline font-bold">إغلاق المعاينة</button></div>
 <div id="clientPreviewOverlay" class="modal-overlay hidden" style="padding-top:4vh;">
-  <div class="card rounded-2xl w-full max-w-lg mx-4 max-h-[88vh] overflow-y-auto thin-scroll">
-    <div id="clientPreviewBody" class="p-6"></div>
-  </div>
+<div class="card rounded-2xl w-full max-w-lg mx-4 max-h-[88vh] overflow-y-auto thin-scroll">
+<div id="clientPreviewBody" class="p-6"></div>
 </div>
-
+</div>
 <!-- ================= WELCOME / FIRST-TIME TOUR ================= -->
 <div id="welcomeModal" class="modal-overlay hidden">
-  <div class="card rounded-2xl w-full max-w-lg mx-4 p-7">
-    <h2 class="display text-2xl font-bold text-white mb-1">Welcome to Penguins 🐧</h2>
-    <p class="text-muted text-sm mb-5">Here's a 30-second overview before you dive in.</p>
-    <div class="space-y-3 mb-6">
-      <div class="flex items-start gap-3"><span class="text-accent">◆</span><p class="text-sm text-text"><b class="text-white">Dashboard</b> shows your earnings, activity, and Smart Insights — auto-flagged things worth your attention.</p></div>
-      <div class="flex items-start gap-3"><span class="text-accent">◇</span><p class="text-sm text-text"><b class="text-white">Clients</b> is your CRM — click any client for their full history in one place.</p></div>
-      <div class="flex items-start gap-3"><span class="text-accent">▤</span><p class="text-sm text-text"><b class="text-white">Plan Builder, Cohorts, Automations</b> and more help you run your coaching business day to day.</p></div>
-      <div class="flex items-start gap-3"><span class="text-accent">?</span><p class="text-sm text-text">Stuck on a page? Click <b class="text-white">Help & Guide</b> in the sidebar any time, or press <kbd>⌘K</kbd> to jump anywhere fast.</p></div>
-    </div>
-    <button onclick="closeWelcome()" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Let's go →</button>
-  </div>
+<div class="card rounded-2xl w-full max-w-lg mx-4 p-7">
+<h2 class="display text-2xl font-bold text-white mb-1">أهلًا بك في Penguins 🐧</h2>
+<p class="text-muted text-sm mb-5">دليل سريع قبل البداية.</p>
+<div class="space-y-3 mb-6">
+<div class="flex items-start gap-3"><span class="text-accent">◆</span><p class="text-sm text-text"><b class="text-white">الرئيسية</b> تعرض ملخص بيانات عملك والنشاطات المسجلة.</p></div>
+<div class="flex items-start gap-3"><span class="text-accent">◇</span><p class="text-sm text-text"><b class="text-white">العملاء</b> قسم لسجلات العملاء الخاصة. حسابات العملاء الحقيقية في العملاء والمتابعات.</p></div>
+<div class="flex items-start gap-3"><span class="text-accent">▤</span><p class="text-sm text-text"><b class="text-white">باني الخطط والمجموعات والتنظيم</b> وأدوات إضافية لتنظيم عملك اليومي.</p></div>
+<div class="flex items-start gap-3"><span class="text-accent">?</span><p class="text-sm text-text">لو محتاج مساعدة اضغط <b class="text-white">المساعدة والدليل</b> من القائمة الجانبية، أو استخدم <kbd>⌘K</kbd> للتنقّل السريع.</p></div>
 </div>
-
+<button onclick="closeWelcome()" class="w-full py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">ابدأ الآن ←</button>
+</div>
+</div>
 <!-- ================= HELP & GUIDE ================= -->
 <div id="helpOverlay" class="modal-overlay hidden" onclick="if(event.target===this)closeHelp()">
-  <div class="card rounded-2xl w-full max-w-2xl mx-4 max-h-[80vh] overflow-y-auto thin-scroll p-6">
-    <div class="flex items-center justify-between mb-5">
-      <h3 class="display text-xl font-bold text-white">Help & Guide</h3>
-      <button onclick="closeHelp()" class="text-muted hover:text-white text-xl leading-none">×</button>
-    </div>
-    <div id="help-content" class="space-y-4"></div>
-  </div>
+<div class="card rounded-2xl w-full max-w-2xl mx-4 max-h-[80vh] overflow-y-auto thin-scroll p-6">
+<div class="flex items-center justify-between mb-5">
+<h3 class="display text-xl font-bold text-white">المساعدة والدليل</h3>
+<button onclick="closeHelp()" class="text-muted hover:text-white text-xl leading-none">×</button>
 </div>
-
+<div id="help-content" class="space-y-4"></div>
+</div>
+</div>
 <!-- ================= TOASTS ================= -->
 <div id="toastWrap" class="toast-wrap"></div>
-
 <!-- ================= CLIENT DETAIL MODAL ================= -->
 <div id="clientModal" class="modal-overlay hidden" onclick="if(event.target===this)closeClientModal()">
-  <div class="card rounded-2xl w-full max-w-2xl mx-4 max-h-[80vh] overflow-y-auto thin-scroll">
-    <div id="clientModalBody" class="p-6"></div>
-  </div>
+<div class="card rounded-2xl w-full max-w-2xl mx-4 max-h-[80vh] overflow-y-auto thin-scroll">
+<div id="clientModalBody" class="p-6"></div>
 </div>
-
+</div>
 <!-- ================= ADD LEAD MODAL ================= -->
 <div id="leadModal" class="modal-overlay hidden" onclick="if(event.target===this)closeAddLead()">
-  <div class="card rounded-2xl w-full max-w-md mx-4 p-6">
-    <h3 class="display text-lg font-semibold text-white mb-4">Add Lead</h3>
-    <form id="form-lead" class="space-y-4">
-      <input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Full name">
-      <input type="email" name="email" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Email (optional)">
-      <input type="number" name="value" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Potential value ($)">
-      <textarea name="notes" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Notes"></textarea>
-      <div class="flex gap-2">
-        <button type="button" onclick="closeAddLead()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">Cancel</button>
-        <button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">Add Lead</button>
-      </div>
-    </form>
-  </div>
+<div class="card rounded-2xl w-full max-w-md mx-4 p-6">
+<h3 class="display text-lg font-semibold text-white mb-4">إضافة عميل محتمل</h3>
+<form id="form-lead" class="space-y-4">
+<input type="text" name="name" required class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="الاسم الكامل">
+<input type="email" name="email" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Email (optional)">
+<input type="number" name="value" step="0.01" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="Potential value ($)">
+<textarea name="notes" rows="3" class="w-full input-dark rounded-lg px-4 py-2 text-sm" placeholder="ملاحظات"></textarea>
+<div class="flex gap-2">
+<button type="button" onclick="closeAddLead()" class="flex-1 py-2.5 bg-black border border-border text-muted font-medium rounded-lg hover:text-white transition">إلغاء</button>
+<button type="submit" class="flex-1 py-2.5 bg-accent text-white font-semibold rounded-lg hover:bg-indigo-500 transition glow">إضافة عميل محتمل</button>
 </div>
-
+</form>
+</div>
+</div>
 <!-- ================= COMMAND PALETTE ================= -->
 <div id="paletteOverlay" class="modal-overlay hidden" onclick="if(event.target===this)closePalette()">
-  <div class="card rounded-2xl w-full max-w-lg overflow-hidden">
-    <input id="paletteInput" type="text" placeholder="Search pages, clients, actions…" class="w-full bg-card px-5 py-4 text-white text-sm outline-none border-b border-border sticky top-0" oninput="filterPalette()">
-    <div id="paletteResults" class="py-2"></div>
-  </div>
+<div class="card rounded-2xl w-full max-w-lg overflow-hidden">
+<input id="paletteInput" type="text" placeholder="Search pages, clients, actions…" class="w-full bg-card px-5 py-4 text-white text-sm outline-none border-b border-border sticky top-0" oninput="filterPalette()">
+<div id="paletteResults" class="py-2"></div>
 </div>
-
-
-
+</div>
 <!-- ================= QUICK ACTIONS FAB ================= -->
 <div id="quickActionsWrap" class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-  <div id="quick-actions-menu" class="hidden flex flex-col items-end gap-2.5 mb-1">
-    <button onclick="quickAction('plan')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>New Plan</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">▤</span></button>
-    <button onclick="quickAction('invoice')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>New Invoice</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">▥</span></button>
-    <button onclick="quickAction('lead')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>Add Lead</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">⬡</span></button>
-    <button onclick="quickAction('message')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>Message Client</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">✉</span></button>
-  </div>
-  <button id="quick-actions-fab" onclick="toggleQuickActions()" class="w-14 h-14 rounded-full bg-accent text-white text-2xl flex items-center justify-center hover:bg-indigo-500 transition">+</button>
+<div id="quick-actions-menu" class="hidden flex flex-col items-end gap-2.5 mb-1">
+<button onclick="quickAction('plan')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>خطة جديدة</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">▤</span></button>
+<button onclick="quickAction('invoice')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>فاتورة جديدة</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">▥</span></button>
+<button onclick="quickAction('lead')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>إضافة عميل محتمل</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">⬡</span></button>
+<button onclick="quickAction('message')" class="fab-item flex items-center gap-2 pl-4 pr-1.5 py-1.5 bg-card border border-border rounded-full text-white text-xs font-medium hover:border-accent/50 transition"><span>سجل محادثة العميل</span><span class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">✉</span></button>
 </div>
-
+<button id="quick-actions-fab" onclick="toggleQuickActions()" class="w-14 h-14 rounded-full bg-accent text-white text-2xl flex items-center justify-center hover:bg-indigo-500 transition">+</button>
+</div>
 <!-- ================= BOTTOM NAV (mobile) ================= -->
 <div id="bottomNav">
-  <a href="#" data-bn="dashboard" onclick="event.preventDefault();navigateTo('dashboard')" class="bottom-nav-item active"><span class="bn-icon">◆</span><span>Dashboard</span></a>
-  <a href="#" data-bn="clients" onclick="event.preventDefault();navigateTo('clients')" class="bottom-nav-item"><span class="bn-icon">◇</span><span>Clients</span></a>
-  <a href="#" data-bn="messages" onclick="event.preventDefault();navigateTo('messages')" class="bottom-nav-item"><span class="bn-icon">✉</span><span id="bn-msg-dot-wrap"></span><span>Messages</span></a>
-  <a href="#" data-bn="pipeline" onclick="event.preventDefault();navigateTo('pipeline')" class="bottom-nav-item"><span class="bn-icon">⬡</span><span>Pipeline</span></a>
-  <a href="#" data-bn="more" onclick="event.preventDefault();openSidebar()" class="bottom-nav-item"><span class="bn-icon">☰</span><span>Menu</span></a>
+<a href="#" data-bn="dashboard" onclick="event.preventDefault();navigateTo('dashboard')" class="bottom-nav-item active"><span class="bn-icon">◆</span><span>الرئيسية</span></a>
+<a href="#" data-bn="clients" onclick="event.preventDefault();navigateTo('clients')" class="bottom-nav-item"><span class="bn-icon">◇</span><span>العملاء</span></a>
+<a href="#" data-bn="messages" onclick="event.preventDefault();navigateTo('messages')" class="bottom-nav-item"><span class="bn-icon">✉</span><span id="bn-msg-dot-wrap"></span><span>الرسائل</span></a>
+<a href="#" data-bn="pipeline" onclick="event.preventDefault();navigateTo('pipeline')" class="bottom-nav-item"><span class="bn-icon">⬡</span><span>العملاء المحتملون</span></a>
+<a href="#" data-bn="more" onclick="event.preventDefault();openSidebar()" class="bottom-nav-item"><span class="bn-icon">☰</span><span>القائمة</span></a>
 </div>
-
-<div id="sync-alert" role="alert" hidden><p id="sync-alert-message"></p><button id="pg-retry">Retry save</button> · <button id="pg-export-alert">Export backup</button> · <button onclick="location.reload()">Reload</button></div><div id="pg-undo" hidden>Item removed <button id="pg-undo-button">Undo</button></div><dialog id="pg-dialog" aria-labelledby="pg-dialog-title"><h2 id="pg-dialog-title"></h2><div id="pg-dialog-body"></div><button id="pg-dialog-close">Close</button></dialog><input type="file" id="pg-import-file" accept=".json,application/json" hidden><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/core.js" defer></script><script src="assets/security.js" defer></script><script src="assets/client.js?v=original-entry" defer></script><script src="assets/demo-client.js?v=2" defer></script><script src="assets/store.js" defer></script><script src="assets/dashboard.js" defer></script><script src="assets/connected-dashboard.js?v=3" defer></script></body>
+<div id="sync-alert" role="alert" hidden><p id="sync-alert-message"></p><button id="pg-retry">إعادة الحفظ</button> · <button id="pg-export-alert">تصدير نسخة احتياطية</button> · <button onclick="location.reload()">إعادة تحميل</button></div><div id="pg-undo" hidden>تمت إزالة العنصر <button id="pg-undo-button">تراجع</button></div><dialog id="pg-dialog" aria-labelledby="pg-dialog-title"><h2 id="pg-dialog-title"></h2><div id="pg-dialog-body"></div><button id="pg-dialog-close">إغلاق</button></dialog><input type="file" id="pg-import-file" accept=".json,application/json" hidden><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/core.js" defer></script><script src="assets/security.js" defer></script><script src="assets/client.js?v=original-entry" defer></script><script src="assets/demo-client.js?v=2" defer></script><script src="assets/store.js" defer></script><script src="assets/exercise-studio.js?v=1" defer></script><script src="assets/dashboard.js" defer></script><script src="assets/connected-dashboard.js?v=4" defer></script><script src="assets/legacy-studio.js?v=1" defer></script></body>
 </html>

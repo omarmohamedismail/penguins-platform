@@ -1,3 +1,4 @@
+function uiLabel(value){return {"Active": "نشط", "Paused": "متوقف", "Paid": "مدفوع", "Free": "مجاني", "Training": "تدريب", "Workout": "تمرين", "Nutrition": "تغذية", "Mindset": "عادات وأهداف", "Business Goals": "أهداف العمل", "Sent": "مسجل", "Signed": "تم التوقيع", "Pending": "قيد الانتظار", "Lead": "عميل محتمل", "Contacted": "تم التواصل", "Qualified": "مؤهّل", "Won": "مكتمل", "Lost": "متوقف", "Scheduled": "محدد", "Completed": "مكتمل", "Cancelled": "ملغى"}[value]||value;}
 
 // ==========================================
 // STORAGE
@@ -9,7 +10,7 @@ function defaultData() { return PenguinsCore.normalize({}); }
 
 function blankData(name, email, niche) {
   const d = defaultData();
-  d.account = { name: name || 'New Coach', email: email || '', niche: niche || 'Fitness / Strength', bio: '', rate: 0 };
+  d.account = { name: name || 'New Coach', email: email || '', niche: niche || 'لياقة وقوة', bio: '', rate: 0 };
   d.pendingAccountChange = null;
   d.clients = [];
   d.leads = [];
@@ -55,7 +56,7 @@ async function logOut() {
 }
 async function loadData() {
  try {
-  db=await sync.load(blankData);
+  db=await sync.load(blankData);db.lang='ar';db.lang='ar';db.lang='ar';
   if(sync.draft) {
     const banner=document.getElementById('draft-banner');banner.hidden=false;
     document.getElementById('restore-draft').onclick=()=>{
@@ -212,59 +213,262 @@ function renderAll() {
   const pendingInvoices = (db.invoices||[]).filter(i=>i.status!=='Paid').length;
   const paidResources = (db.library||[]).filter(l=>l.tier==='Paid').length;
   document.getElementById('dash-stats').innerHTML = [
-    { l:'Total Revenue', v:'$'+Math.round(totalRevenue).toLocaleString(), i:'💰', c: pendingInvoices ? pendingInvoices+' invoice'+(pendingInvoices>1?'s':'')+' pending' : 'All invoices paid' },
-    { l:'Active Clients', v: activeClients, i:'👥', c: activeClients ? activeClients+' being coached' : 'Add your first client' },
-    { l:'Plans Sent', v: (db.plans||[]).length, i:'▤', c: (db.plans||[]).length ? 'Total sent' : 'Build one in Plan Builder' },
+    { l:'Total Revenue', v:'$'+Math.round(totalRevenue).toLocaleString(), i:'💰', c: pendingInvoices ? pendingInvoices+' invoice'+(pendingInvoices>1?'s':'')+' pending' : 'كل الفواتير مسددة' },
+    { l:'العملاء النشطون', v: activeClients, i:'👥', c: activeClients ? activeClients+' being coached' : 'أضف أول سجل عميل' },
+    { l:'Plans Sent', v: (db.plans||[]).length, i:'▤', c: (db.plans||[]).length ? 'Total sent' : 'جهّز خطة في باني الخطط' },
     { l:'Library Resources', v: (db.library||[]).length, i:'▦', c: paidResources+' paid' }
   ].map(s=>`<div class="card rounded-2xl p-6"><div class="flex justify-between mb-3"><span class="text-muted text-sm">${s.l}</span><span class="text-xl">${s.i}</span></div><h3 class="display text-3xl font-bold text-white">${s.v}</h3><span class="text-muted text-xs">${s.c}</span></div>`).join('');
 
   document.getElementById('dash-activity').innerHTML = db.feedback.length
     ? db.feedback.slice(0,4).map(f=>`<div class="flex items-start gap-3"><div class="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center text-accent text-xs font-bold shrink-0">${f.client[0]}</div><div><p class="text-sm text-white">${f.client}</p><p class="text-xs text-muted">${f.msg.substring(0,50)}...</p></div></div>`).join('')
-    : '<p class="text-muted text-sm text-center py-6">Nothing yet — client feedback will show up here.</p>';
+    : '<p class="text-muted text-sm text-center py-6">لا توجد تقييمات في السجل بعد.</p>';
 
   // Plans
   document.getElementById('list-plans').innerHTML = db.plans.length ? db.plans.map(p=>`
     <div class="bg-black border border-border rounded-xl p-4">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between items-start">
+        
+        
+        
+        
+        
+        
+        
         <div>
-          <div class="flex items-center gap-2"><h4 class="text-white font-semibold">${p.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${p.type}</span></div>
+          
+          
+          
+          
+          
+          
+          
+          <div class="flex items-center gap-2"><h4 class="text-white font-semibold">${p.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${uiLabel(p.type)}</span></div>
+          
+          
+          
+          
+          
+          
+          
           <p class="text-accent text-xs mt-1">→ Sent to: ${p.client}</p>
+          
+          
+          
+          
+          
+          
+          
           <p class="text-muted text-xs mt-1">${p.sent}</p>
+          
+          
+          
+          
+          
+          
+          
           <p class="text-text text-sm mt-2 whitespace-pre-line">${p.details}</p>
+        
+        
+        
+        
+        
+        
+        
         </div>
-        <button onclick="del('plans',${p.id})" class="text-red-400/60 hover:text-red-400 text-xs">Remove</button>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="del('plans',${p.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No plans sent yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد خطط في السجل بعد.</p>';
 
   // Live
   document.getElementById('list-live').innerHTML = db.sessions.length ? db.sessions.map(s=>`
     <div class="bg-black border border-border rounded-xl p-4 flex justify-between items-center">
+      
+      
+      
+      
+      
+      
+      
       <div><h4 class="text-white font-semibold">${s.topic}</h4><p class="text-muted text-xs">${new Date(s.time).toLocaleString()} · ${s.access}</p></div>
-      <div class="flex gap-2"><button class="px-3 py-1 bg-accent/15 text-accent text-xs rounded-lg">Start</button><button onclick="del('sessions',${s.id})" class="text-red-400 text-xs">Cancel</button></div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No sessions scheduled.</p>';
+      
+      
+      
+      
+      
+      
+      
+      <div class="flex gap-2"><button class="px-3 py-1 bg-accent/15 text-accent text-xs rounded-lg">ابدأ</button><button onclick="del('sessions',${s.id})" class="text-red-400 text-xs">إلغاء</button></div>
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد جلسات محددة.</p>';
 
   // Library
   document.getElementById('list-library').innerHTML = db.library.length ? db.library.map(r=>`
     <div class="bg-black border border-border rounded-xl p-4">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between items-start mb-2">
+        
+        
+        
+        
+        
+        
+        
         <span class="text-2xl">📄</span>
+        
+        
+        
+        
+        
+        
+        
         <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${r.tier==='Free'?'bg-green-500/15 text-green-400':'bg-gold/15 text-gold'}">${r.tier==='Free'?'FREE':'$'+r.price.toFixed(2)}</span>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <h4 class="text-white font-semibold text-sm">${r.title}</h4>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-xs mt-1">${r.desc||''}</p>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-[10px] mt-2 font-mono">${r.filename}</p>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between items-center mt-3">
-        <span class="text-muted text-xs">${r.downloads} downloads</span>
-        <button onclick="del('library',${r.id})" class="text-red-400/60 hover:text-red-400 text-xs">Remove</button>
+        
+        
+        
+        
+        
+        
+        
+        <span class="text-muted text-xs">${r.downloads} تنزيل</span>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="del('library',${r.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">No resources uploaded yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">لا توجد موارد مسجلة.</p>';
 
   // Feedback
   document.getElementById('list-feedback').innerHTML = db.feedback.map(f=>`
     <div class="bg-black border border-border rounded-xl p-4">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between"><div><h4 class="text-white font-semibold">${f.client}</h4><p class="text-muted text-xs">${f.date}</p></div><span class="text-gold text-sm">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</span></div>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-text text-sm mt-2">"${f.msg}"</p>
-      <div class="mt-3 flex gap-2"><input type="text" placeholder="Reply..." class="flex-1 input-dark rounded-lg px-3 py-1.5 text-xs"><button class="px-3 py-1.5 bg-accent/15 text-accent text-xs rounded-lg">Send</button></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="mt-3 flex gap-2"><input type="text" placeholder="Reply..." class="flex-1 input-dark rounded-lg px-3 py-1.5 text-xs"><button class="px-3 py-1.5 bg-accent/15 text-accent text-xs rounded-lg">إرسال</button></div>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
 
   // Store
@@ -273,27 +477,118 @@ function renderAll() {
   // Community
   document.getElementById('list-community').innerHTML = db.community.map(p=>`
     <div class="card rounded-2xl p-6">
-      <div class="flex justify-between items-start"><div><h4 class="text-white font-semibold">${p.user}</h4><span class="text-[10px] px-2 py-0.5 rounded-full ${p.type==='Challenge'?'bg-gold/15 text-gold':p.type==='Announcement'?'bg-accent/15 text-accent':'bg-border text-muted'}">${p.type}</span></div><span class="text-muted text-xs">${p.date}</span></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="flex justify-between items-start"><div><h4 class="text-white font-semibold">${p.user}</h4><span class="text-[10px] px-2 py-0.5 rounded-full ${p.type==='تحدٍّ'?'bg-gold/15 text-gold':p.type==='إعلان'?'bg-accent/15 text-accent':'bg-border text-muted'}">${uiLabel(p.type)}</span></div><span class="text-muted text-xs">${p.date}</span></div>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-text mt-3">${p.text}</p>
-      <div class="mt-3 flex justify-between items-center"><button onclick="likePost(${p.id})" class="text-sm text-accent hover:underline">❤️ ${p.likes}</button>${p.user!=='Coach'?`<button onclick="del('community',${p.id})" class="text-xs text-red-400/60 hover:text-red-400">Remove Post</button>`:''}</div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="mt-3 flex justify-between items-center"><button onclick="likePost(${p.id})" class="text-sm text-accent hover:underline">❤️ ${p.likes}</button>${p.user!=='Coach'?`<button onclick="del('community',${p.id})" class="text-xs text-red-400/60 hover:text-red-400">إزالة المنشور</button>`:''}</div>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
 
   // Submissions
   document.getElementById('list-submissions').innerHTML = db.submissions.map(s=>`
     <div class="bg-black border border-border rounded-xl p-3 cursor-pointer hover:border-accent/50 transition" onclick="loadSubmission(${s.id})">
+      
+      
+      
+      
+      
+      
+      
       <h4 class="text-white text-sm font-semibold">${s.client}</h4>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-xs">${s.exercise}</p>
-      <span class="text-[10px] px-2 py-0.5 rounded-full mt-1 inline-block ${s.status==='Pending Review'?'bg-gold/15 text-gold':'bg-green-500/15 text-green-400'}">${s.status}</span>
+      
+      
+      
+      
+      
+      
+      
+      <span class="text-[10px] px-2 py-0.5 rounded-full mt-1 inline-block ${s.status==='Pending Review'?'bg-gold/15 text-gold':'bg-green-500/15 text-green-400'}">${uiLabel(s.status)}</span>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
 
   // Points
   document.getElementById('total-points').innerText = db.pointsClients.reduce((a,b)=>a+b.points,0);
   document.getElementById('points-leaderboard').innerHTML = db.pointsClients.map((c,i)=>`
     <div class="flex items-center p-4 bg-black border border-border rounded-xl">
+      
+      
+      
+      
+      
+      
+      
       <span class="text-lg font-bold text-muted w-8">${i+1}</span>
+      
+      
+      
+      
+      
+      
+      
       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent/40 to-indigo-700/40 flex items-center justify-center text-white text-sm font-bold ml-2">${c.name[0]}</div>
-      <div class="ml-4 flex-1"><p class="text-white text-sm font-medium">${c.name}</p><p class="text-muted text-xs">${c.streak} day streak · ${c.completion}% completion</p></div>
-      <div class="text-right"><p class="text-accent font-bold">${c.points} pts</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="ml-4 flex-1"><p class="text-white text-sm font-medium">${c.name}</p><p class="text-muted text-xs">${c.streak} أيام متواصلة · ${c.completion}٪ إنجاز</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="text-right"><p class="text-accent font-bold">${c.points} نقطة</p></div>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
 
   // Readiness
@@ -302,10 +597,45 @@ function renderAll() {
     const labels = { green:'🟢 Go Hard', yellow:'🟡 Moderate', red:'🔴 Recovery' };
     const recs = { green:'Keep today\'s heavy compounds. Push for PR.', yellow:'Drop weight 10%. Focus on form & tempo.', red:'Auto-swapped to 30min mobility flow.' };
     return `<div class="p-4 border rounded-xl ${colors[r.status]}">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between items-center"><h4 class="text-white font-semibold">${r.name}</h4><span class="text-sm">${labels[r.status]}</span></div>
-      <div class="flex gap-4 mt-2 text-xs text-muted"><span>Sleep: ${r.sleep}/10</span><span>Sore: ${r.sore}/10</span><span>Stress: ${r.stress}/10</span></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="flex gap-4 mt-2 text-xs text-muted"><span>النوم: ${r.sleep}/10</span><span>الإجهاد: ${r.sore}/10</span><span>الضغط: ${r.stress}/10</span></div>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-text text-sm mt-2">${recs[r.status]}</p>
-      <button class="mt-2 text-xs text-accent hover:underline">Override Adjustment</button>
+      
+      
+      
+      
+      
+      
+      
+      <button class="mt-2 text-xs text-accent hover:underline">تعديل المؤشر</button>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
   }).join('');
 
@@ -354,7 +684,7 @@ function renderAll() {
 window.del = (t,id) => { db[t]=db[t].filter(i=>i.id!==id); saveData(); renderAll(); };
 window.likePost = (id) => { let p=db.community.find(x=>x.id===id); if(p){p.likes++;saveData();renderAll();} };
 window.loadSubmission = (id) => { let s=db.submissions.find(x=>x.id===id); if(s){s.status='Reviewed';saveData();renderAll();initCanvas();} };
-window.copyRef = () => { const el=document.getElementById('ref-link'); navigator.clipboard.writeText(el.value); event.target.innerText='Copied!'; setTimeout(()=>event.target.innerText='Copy',2000); };
+window.copyRef = () => { const el=document.getElementById('ref-link'); navigator.clipboard.writeText(el.value); event.target.innerText='Copied!'; setTimeout(()=>event.target.innerText='نسخ',2000); };
 
 document.getElementById('form-plan').onsubmit = e => {
   e.preventDefault();
@@ -362,7 +692,7 @@ document.getElementById('form-plan').onsubmit = e => {
   const workoutText = builtWorkout.length ? builtWorkout.map(ex => `${ex.name}: ${ex.scheme}`).join('\n') : '';
   const notes = f.get('details') || '';
   const details = [workoutText, notes].filter(Boolean).join('\n\n') || 'No details added.';
-  db.plans.unshift({id:Date.now(),client:f.get('client'),title:f.get('title'),type:f.get('type'),details,sent:'Just now'});
+  db.plans.unshift({id:Date.now(),client:f.get('client'),title:f.get('title'),type:f.get('type'),details,sent:'الآن'});
   saveData(); e.target.reset(); builtWorkout = []; renderAll();
   toast('✅ Plan recorded for ' + f.get('client') + '.');
 };
@@ -374,7 +704,7 @@ document.getElementById('form-shop').onsubmit = e => {
     salePrice: f.get('salePrice') ? parseFloat(f.get('salePrice')) : null,
     category: f.get('category'), image: f.get('image'),
     stock: f.get('stock') ? parseInt(f.get('stock')) : null,
-    featured: f.get('featured') === 'on', sold: 0
+    featured: f.get('featured') === 'on', مباع: 0
   });
   saveData(); e.target.reset(); renderAll();
   toast('✅ Product added to shop.');
@@ -384,7 +714,7 @@ document.getElementById('form-shop').onsubmit = e => {
 // SHOP (metallic UI, filters, stock, featured)
 // ==========================================
 let shopFilter = 'All';
-const SHOP_CATEGORIES = ['All','Merch','Digital Product','Coaching Package','Brand Collab'];
+const SHOP_CATEGORIES = ['All','منتج','منتج رقمي','باقة تدريب','تعاون تجاري'];
 window.setShopFilter = (cat) => { shopFilter = cat; renderShop(); };
 
 function renderShop() {
@@ -414,32 +744,123 @@ function renderShop() {
     const stockPct = p.stock !== null && p.stock !== undefined ? Math.min(100, (p.stock / 20) * 100) : null;
     return `
     <div class="metal-card overflow-hidden">
+      
+      
+      
+      
+      
+      
+      
       <div class="h-28 metal-icon-plate flex items-center justify-center text-3xl relative">
         ${p.image ? `<img src="${p.image}" class="w-full h-full object-cover">` : '📦'}
         <div class="absolute top-2 left-2 flex gap-1.5">
-          ${p.featured ? '<span class="metal-badge-gold text-[9px] font-bold px-2 py-0.5 rounded-full">★ FEATURED</span>' : ''}
-          ${onSale ? '<span class="metal-badge-silver text-[9px] font-bold px-2 py-0.5 rounded-full">SALE</span>' : ''}
+          ${p.featured ? '<span class="metal-badge-gold text-[9px] font-bold px-2 py-0.5 rounded-full">★ مميّز</span>' : ''}
+          ${onSale ? '<span class="metal-badge-silver text-[9px] font-bold px-2 py-0.5 rounded-full">عرض</span>' : ''}
         </div>
-        ${outOfStock ? '<div class="absolute inset-0 bg-black/70 flex items-center justify-center"><span class="text-red-400 text-xs font-bold tracking-wide">OUT OF STOCK</span></div>' : ''}
+        ${outOfStock ? '<div class="absolute inset-0 bg-black/70 flex items-center justify-center"><span class="text-red-400 text-xs font-bold tracking-wide">نفد المخزون</span></div>' : ''}
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div class="p-4">
+        
+        
+        
+        
+        
+        
+        
         <h4 class="text-white font-semibold text-sm">${p.name}</h4>
+        
+        
+        
+        
+        
+        
+        
         <div class="flex items-center gap-2 mt-1">
           ${onSale ? `<span class="text-muted text-xs line-through">$${p.price.toFixed(2)}</span><span class="text-accent font-bold text-sm">$${p.salePrice.toFixed(2)}</span>` : `<span class="text-accent font-bold text-sm">$${p.price.toFixed(2)}</span>`}
         </div>
-        <p class="text-muted text-[10px] mt-1">${p.category} · ${p.sold||0} sold</p>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-muted text-[10px] mt-1">${uiLabel(p.category)} · ${p.sold||0} مباع</p>
         ${stockPct !== null ? `
           <div class="mt-2">
-            <div class="flex justify-between text-[10px] text-muted mb-1"><span>${p.stock} in stock</span>${lowStockFlag?'<span class="text-gold">Low stock</span>':''}</div>
+            
+            
+            
+            
+            
+            
+            
+            <div class="flex justify-between text-[10px] text-muted mb-1"><span>${p.stock} في المخزون</span>${lowStockFlag?'<span class="text-gold">مخزون منخفض</span>':''}</div>
+            
+            
+            
+            
+            
+            
+            
             <div class="metal-stock-bar"><div class="metal-stock-fill" style="width:${stockPct}%"></div></div>
-          </div>` : '<p class="text-muted text-[10px] mt-2">Unlimited stock</p>'}
+          
+          
+          
+          
+          
+          
+          
+          </div>` : '<p class="text-muted text-[10px] mt-2">مخزون غير محدود</p>'}
         <div class="flex gap-2 mt-3">
-          <button onclick="openEditProduct(${p.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">Edit</button>
-          <button onclick="del('shop',${p.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">Remove</button>
+          
+          
+          
+          
+          
+          
+          
+          <button onclick="openEditProduct(${p.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">تعديل</button>
+          
+          
+          
+          
+          
+          
+          
+          <button onclick="del('shop',${p.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
+        
+        
+        
+        
+        
+        
+        
         </div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
-  }).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">No products in this category.</p>';
+  }).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">لا توجد منتجات في هذا القسم.</p>';
 }
 
 let editingProductId = null;
@@ -475,7 +896,7 @@ document.getElementById('form-edit-product').onsubmit = e => {
 };
 
 document.getElementById('form-live').onsubmit = e => { e.preventDefault(); let f=new FormData(e.target); db.sessions.push({id:Date.now(),topic:f.get('topic'),time:f.get('time'),access:f.get('access')}); saveData(); e.target.reset(); renderAll(); toast('✅ Session scheduled.'); };
-document.getElementById('form-community').onsubmit = e => { e.preventDefault(); let f=new FormData(e.target); db.community.unshift({id:Date.now(),user:'Coach',type:f.get('type'),text:f.get('post'),likes:0,date:'Just now'}); saveData(); e.target.reset(); renderAll(); };
+document.getElementById('form-community').onsubmit = e => { e.preventDefault(); let f=new FormData(e.target); db.community.unshift({id:Date.now(),user:'Coach',type:f.get('type'),text:f.get('post'),likes:0,date:'الآن'}); saveData(); e.target.reset(); renderAll(); };
 document.getElementById('form-account').onsubmit = e => {
   e.preventDefault();
   if (db.pendingAccountChange) { toast('You already have a request awaiting approval.'); return; }
@@ -489,7 +910,7 @@ document.getElementById('form-account').onsubmit = e => {
   };
   const changed = JSON.stringify(requested) !== JSON.stringify({ name: db.account.name, email: db.account.email, niche: db.account.niche, bio: db.account.bio, rate: db.account.rate });
   if (!changed) { toast('No changes to submit.'); return; }
-  db.pendingAccountChange = { ...requested, submittedAt: 'Just now' };
+  db.pendingAccountChange = { ...requested, submittedAt: 'الآن' };
   saveData(); renderAll();
   toast('Submitted — awaiting Penguins approval.');
 };
@@ -507,25 +928,137 @@ function renderAccountApproval() {
     banner.classList.remove('hidden');
     banner.innerHTML = `
       <div class="card rounded-2xl p-5 border-gold/40">
+        
+        
+        
+        
+        
+        
+        
         <div class="flex items-center gap-2 mb-3">
-          <span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-semibold">PENDING APPROVAL</span>
-          <span class="text-muted text-xs">Submitted ${p.submittedAt}</span>
+          
+          
+          
+          
+          
+          
+          
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-semibold">طلب تعديل في السجل</span>
+          
+          
+          
+          
+          
+          
+          
+          <span class="text-muted text-xs">تم التسجيل ${p.submittedAt}</span>
+        
+        
+        
+        
+        
+        
+        
         </div>
-        <p class="text-text text-sm mb-3">Your profile changes have been sent to the Penguins team for review. Nothing on your live profile changes until it's approved.</p>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-text text-sm mb-3">طلب مسجل داخل مساحة العمل فقط. الاعتماد الفعلي من قسم الحساب والشهادات.</p>
+        
+        
+        
+        
+        
+        
+        
         <div class="bg-black border border-border rounded-lg p-3 text-xs text-muted space-y-1 mb-4">
-          <p><span class="text-white">Name:</span> ${p.name}</p>
-          <p><span class="text-white">Email:</span> ${p.email || '—'}</p>
-          <p><span class="text-white">Niche:</span> ${p.niche}</p>
-          <p><span class="text-white">Rate:</span> $${p.rate}/hr</p>
+          
+          
+          
+          
+          
+          
+          
+          <p><span class="text-white">الاسم:</span> ${p.name}</p>
+          
+          
+          
+          
+          
+          
+          
+          <p><span class="text-white">البريد:</span> ${p.email || '—'}</p>
+          
+          
+          
+          
+          
+          
+          
+          <p><span class="text-white">المجال:</span> ${p.niche}</p>
+          
+          
+          
+          
+          
+          
+          
+          <p><span class="text-white">السعر:</span> $${p.rate}/hr</p>
+        
+        
+        
+        
+        
+        
+        
         </div>
+        
+        
+        
+        
+        
+        
+        
         <div class="flex gap-2">
-          <button onclick="cancelAccountRequest()" class="flex-1 py-2 bg-black border border-border text-muted text-xs font-medium rounded-lg hover:text-white transition">Withdraw Request</button>
-          <button onclick="approveAccountChange()" class="flex-1 py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">Simulate Penguins Approval</button>
+          
+          
+          
+          
+          
+          
+          
+          <button onclick="cancelAccountRequest()" class="flex-1 py-2 bg-black border border-border text-muted text-xs font-medium rounded-lg hover:text-white transition">سحب الطلب</button>
+          
+          
+          
+          
+          
+          
+          
+          <button onclick="approveAccountChange()" class="flex-1 py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">محاكاة تحديث السجل فقط</button>
+        
+        
+        
+        
+        
+        
+        
         </div>
+      
+      
+      
+      
+      
+      
+      
       </div>`;
   } else {
     fields.forEach(f => f.disabled = false);
-    if (btn) { btn.disabled = false; btn.innerText = 'Submit for Approval'; btn.classList.remove('opacity-50','cursor-not-allowed'); }
+    if (btn) { btn.disabled = false; btn.innerText = 'حفظ طلب تعديل في السجل'; btn.classList.remove('opacity-50','cursor-not-allowed'); }
     banner.classList.add('hidden');
     banner.innerHTML = '';
   }
@@ -556,7 +1089,7 @@ document.getElementById('form-library').onsubmit = e => {
     tier: tier,
     price: tier === 'Paid' ? (parseFloat(f.get('price')) || 0) : 0,
     filename: file && file.name ? file.name : 'resource.pdf',
-    downloads: 0
+    تنزيل: 0
   });
   saveData(); e.target.reset();
   document.getElementById('library-price-wrap').classList.add('hidden');
@@ -574,32 +1107,109 @@ function renderChatList() {
     const last = thread.length ? thread[thread.length-1] : null;
     const active = name === db.activeChat;
     return `<button onclick="openChat('${name.replace(/'/g,"\\'")}')" class="w-full text-left p-4 border-b border-border hover:bg-card2 transition ${active?'bg-card2':''}">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3">
+        
+        
+        
+        
+        
+        
+        
         <div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold shrink-0">${name[0]}</div>
+        
+        
+        
+        
+        
+        
+        
         <div class="flex-1 min-w-0">
+          
+          
+          
+          
+          
+          
+          
           <p class="text-white text-sm font-medium truncate">${name}</p>
-          <p class="text-muted text-xs truncate">${last ? (last.from==='me'?'You: ':'') + last.text : 'No messages yet'}</p>
+          
+          
+          
+          
+          
+          
+          
+          <p class="text-muted text-xs truncate">${last ? (last.from==='me'?'You: ':'') + last.text : 'لا توجد رسائل مسجلة'}</p>
+        
+        
+        
+        
+        
+        
+        
         </div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+    
+    
+    
+    
+    
+    
+    
     </button>`;
   }).join('');
 }
 function renderChatThread() {
   const name = db.activeChat;
   if (!name) {
-    document.getElementById('chat-header-info').textContent = 'Select a client';
-    document.getElementById('chat-thread').textContent = 'Add a client to get started.';
+    document.getElementById('chat-header-info').textContent = 'اختار عميلًا';
+    document.getElementById('chat-thread').textContent = 'أضف عميلًا للبدء.';
     return;
   }
   const thread = db.chats[name] || [];
-  document.getElementById('chat-header-info').innerHTML = `<div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold mr-3">${name[0]}</div><div><p class="text-white text-sm font-semibold">${name}</p><p class="text-muted text-xs">Client</p></div>`;
+  document.getElementById('chat-header-info').innerHTML = `<div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold mr-3">${name[0]}</div><div><p class="text-white text-sm font-semibold">${name}</p><p class="text-muted text-xs">عميل</p></div>`;
   document.getElementById('chat-thread').innerHTML = thread.length ? thread.map(m => `
     <div class="flex ${m.from==='me'?'justify-end':'justify-start'}">
+      
+      
+      
+      
+      
+      
+      
       <div class="max-w-[70%] px-4 py-2 text-sm ${m.from==='me'?'chat-bubble-me':'chat-bubble-them'}">
         ${m.text}
         <div class="text-[10px] opacity-60 mt-1">${m.time}</div>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">Start the conversation.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">ابدأ سجل المحادثة.</p>';
   const el = document.getElementById('chat-thread'); el.scrollTop = el.scrollHeight;
   renderQuickReplies();
 }
@@ -612,7 +1222,7 @@ function renderQuickReplies() {
 window.sendQuickReply = (text) => {
   const name = db.activeChat;
   if (!db.chats[name]) db.chats[name] = [];
-  db.chats[name].push({ from:'me', text, time: 'Just now' });
+  db.chats[name].push({ from:'me', text, time: 'الآن' });
   saveData(); renderChatThread();
 };
 window.openChat = (name) => {
@@ -634,13 +1244,13 @@ document.getElementById('form-chat').onsubmit = e => {
   if (!input.value.trim()) return;
   const name = db.activeChat;
   if (!db.chats[name]) db.chats[name] = [];
-  db.chats[name].push({ from:'me', text: input.value.trim(), time: 'Just now' });
+  db.chats[name].push({ from:'me', text: input.value.trim(), time: 'الآن' });
   input.value = '';
   saveData(); renderChatList(); renderChatThread();
 };
 
 // ==========================================
-// SMART INSIGHTS
+// ملخصات السجل
 // ==========================================
 function renderInsights() {
   const el = document.getElementById('dash-insights');
@@ -654,9 +1264,9 @@ function renderInsights() {
   lowFeedback.forEach(f => items.push({ color:'bg-gold', text: `${f.client} left a ${f.rating}-star review — worth a personal follow-up.` }));
 
   const unsoldPaid = db.library.filter(r => r.tier === 'Paid' && r.downloads === 0);
-  unsoldPaid.forEach(r => items.push({ color:'bg-accent', text: `"${r.title}" hasn't sold yet — try promoting it in Community or Messages.` }));
+  unsoldPaid.forEach(r => items.push({ color:'bg-accent', text: `"${r.title}" hasn't مباع yet — try promoting it in Community or Messages.` }));
 
-  const overdue = db.invoices.filter(i => i.status === 'Overdue');
+  const overdue = db.invoices.filter(i => i.status === 'متأخر');
   if (overdue.length) items.push({ color:'bg-red-400', text: `${overdue.length} invoice${overdue.length>1?'s are':' is'} overdue, totalling $${overdue.reduce((a,b)=>a+b.amount,0).toFixed(2)}.` });
 
   const topClient = [...db.pointsClients].sort((a,b)=>b.streak-a.streak)[0];
@@ -667,11 +1277,39 @@ function renderInsights() {
 
   el.innerHTML = `
     <div class="flex items-center justify-between mb-3">
-      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">Smart Insights</h3>
-      <span class="text-[10px] text-muted">Auto-generated from your data</span>
+      
+      
+      
+      
+      
+      
+      
+      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">ملخصات السجل</h3>
+      
+      
+      
+      
+      
+      
+      
+      <span class="text-[10px] text-muted">من بيانات مساحة العمل</span>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="space-y-2.5">
-      ${items.length ? items.slice(0,5).map(i => `<div class="flex items-start gap-3"><span class="insight-dot ${i.color} mt-1.5"></span><p class="text-sm text-text">${i.text}</p></div>`).join('') : '<p class="text-muted text-sm">All clear — nothing needs your attention right now.</p>'}
+      ${items.length ? items.slice(0,5).map(i => `<div class="flex items-start gap-3"><span class="insight-dot ${i.color} mt-1.5"></span><p class="text-sm text-text">${i.text}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد ملاحظات مسجلة حاليًا.</p>'}
     </div>`;
 }
 
@@ -685,78 +1323,351 @@ function renderClients() {
   const statusFilter = document.getElementById('client-filter')?.value || 'All';
   const filtered = db.clients.filter(c => [c.name,c.email,c.tag].join(' ').toLowerCase().includes(q) && (statusFilter==='All' || c.status===statusFilter));
   el.innerHTML = filtered.length ? filtered.map(c => {
-    const pts = db.pointsClients.find(p => p.name === c.name);
+    const نقطة = db.pointsClients.find(p => p.name === c.name);
     const rdy = db.readiness.find(r => r.name === c.name);
     const rdyColor = rdy ? ({green:'bg-green-400',yellow:'bg-gold',red:'bg-red-400'})[rdy.status] : 'bg-muted';
     return `<button onclick="openClientModal('${c.name.replace(/'/g,"\\'")}')" class="text-left card rounded-2xl p-5 hover:border-accent/50 transition">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center justify-between mb-3">
+        
+        
+        
+        
+        
+        
+        
         <div class="w-11 h-11 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${c.name[0]}</div>
-        <span class="w-2.5 h-2.5 rounded-full ${rdyColor}" title="Readiness"></span>
+        
+        
+        
+        
+        
+        
+        
+        <span class="w-2.5 h-2.5 rounded-full ${rdyColor}" title="الجاهزية"></span>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <h4 class="text-white font-semibold">${c.name}</h4>
-      <p class="text-muted text-xs mt-0.5">${c.tag} · ${c.status}</p>
+      
+      
+      
+      
+      
+      
+      
+      <p class="text-muted text-xs mt-0.5">${c.tag} · ${uiLabel(c.status)}</p>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between text-xs text-muted mt-3 pt-3 border-t border-border">
-        <span>${pts ? pts.streak+'d streak' : '—'}</span>
-        <span>Since ${c.joined}</span>
+        
+        
+        
+        
+        
+        
+        
+        <span>${pts ? نقطة.streak+'d streak' : '—'}</span>
+        
+        
+        
+        
+        
+        
+        
+        <span>منذ ${c.joined}</span>
+      
+      
+      
+      
+      
+      
+      
       </div>
+    
+    
+    
+    
+    
+    
+    
     </button>`;
-  }).join('') : '<p class="text-muted text-sm text-center py-10 sm:col-span-2 lg:col-span-3">No clients match your search.</p>';
+  }).join('') : '<p class="text-muted text-sm text-center py-10 sm:col-span-2 lg:col-span-3">لا توجد سجلات عملاء مطابقة.</p>';
 }
 
 function clientSummary(name) {
   const c = db.clients.find(x => x.name === name) || { name, email:'', status:'—', tag:'—', joined:'—', notes:'' };
-  const pts = db.pointsClients.find(p => p.name === name);
+  const نقطة = db.pointsClients.find(p => p.name === name);
   const rdy = db.readiness.find(r => r.name === name);
   const plans = db.plans.filter(p => p.client === name);
   const fb = db.feedback.filter(f => f.client === name);
   const prs = db.clientPRs[name] || [];
   const goals = db.clientGoals[name] || [];
-  return { c, pts, rdy, plans, fb, prs, goals };
+  return { c, نقطة, rdy, plans, fb, prs, goals };
 }
 
 let currentModalClient = null;
 
 window.openClientModal = (name) => {
   currentModalClient = name;
-  const { c, pts, rdy, plans, fb, prs, goals } = clientSummary(name);
+  const { c, نقطة, rdy, plans, fb, prs, goals } = clientSummary(name);
   const rdyLabel = rdy ? ({green:'🟢 Go Hard',yellow:'🟡 Moderate',red:'🔴 Recovery'})[rdy.status] : '—';
   const sortedPRs = [...prs].sort((a,b) => new Date(b.date) - new Date(a.date));
   document.getElementById('clientModalBody').innerHTML = `
     <div class="flex items-start justify-between mb-5">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-4">
+        
+        
+        
+        
+        
+        
+        
         <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold text-xl">${c.name[0]}</div>
+        
+        
+        
+        
+        
+        
+        
         <div>
+          
+          
+          
+          
+          
+          
+          
           <h3 class="display text-xl font-bold text-white">${c.name}</h3>
-          <p class="text-muted text-sm">${c.tag} · ${c.status} · Client since ${c.joined}</p>
+          
+          
+          
+          
+          
+          
+          
+          <p class="text-muted text-sm">${c.tag} · ${uiLabel(c.status)} · عميل منذ ${c.joined}</p>
+          
+          
+          
+          
+          
+          
+          
           <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="mt-1.5 inline-block text-[10px] px-2 py-0.5 rounded-full font-medium transition ${c.nutrition ? 'bg-accent/15 text-accent' : 'bg-border text-muted hover:text-accent'}">${c.nutrition ? '◍ Nutrition Enabled' : '◍ Enable Nutrition'}</button>
+        
+        
+        
+        
+        
+        
+        
         </div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <button onclick="closeClientModal()" class="text-muted hover:text-white text-xl leading-none">×</button>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="grid grid-cols-3 gap-3 mb-5">
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">Points</p><p class="text-white font-bold text-lg">${pts ? pts.points : '—'}</p></div>
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">Streak</p><p class="text-white font-bold text-lg">${pts ? pts.streak+'d' : '—'}</p></div>
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">Readiness</p><p class="text-white font-bold text-sm mt-1">${rdyLabel}</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">النقاط</p><p class="text-white font-bold text-lg">${pts ? نقطة.points : '—'}</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الاستمرارية</p><p class="text-white font-bold text-lg">${pts ? نقطة.streak+'d' : '—'}</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الجاهزية</p><p class="text-white font-bold text-sm mt-1">${rdyLabel}</p></div>
+    
+    
+    
+    
+    
+    
+    
     </div>
     ${c.email ? `<p class="text-muted text-xs mb-4">✉ ${c.email}</p>` : ''}
-    ${c.notes ? `<div class="mb-5"><p class="text-[11px] text-muted uppercase tracking-wide mb-1">Coach Notes</p><p class="text-sm text-text">${c.notes}</p></div>` : ''}
+    ${c.notes ? `<div class="mb-5"><p class="text-[11px] text-muted uppercase tracking-wide mb-1">ملاحظات الكوتش</p><p class="text-sm text-text">${c.notes}</p></div>` : ''}
 
     <div class="mb-5">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center justify-between mb-2">
-        <p class="text-[11px] text-muted uppercase tracking-wide">Personal Records (${sortedPRs.length})</p>
-        <button onclick="openClientPRModal()" class="text-accent text-[11px] hover:underline">+ Log PR</button>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-[11px] text-muted uppercase tracking-wide">الإنجازات (${sortedPRs.length})</p>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="openClientPRModal()" class="text-accent text-[11px] hover:underline">+ إضافة إنجاز</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
       ${sortedPRs.length ? sortedPRs.slice(0,4).map(p=>`
         <div class="bg-black border border-border rounded-lg p-3 mb-2 flex items-center justify-between">
-          <div><p class="text-sm text-white font-medium">${p.exercise} 🏆</p><p class="text-muted text-[11px] mt-0.5">${new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</p></div>
+          
+          
+          
+          
+          
+          
+          
+          <div><p class="text-sm text-white font-medium">${p.exercise} 🏆</p><p class="text-muted text-[11px] mt-0.5">${new Date(p.date).toLocaleDateString('ar-EG',{month:'short',day:'numeric'})}</p></div>
+          
+          
+          
+          
+          
+          
+          
           <div class="flex items-center gap-2"><span class="text-accent font-bold text-sm">${p.weight}kg × ${p.reps}</span><button onclick="delClientPR(${p.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button></div>
-        </div>`).join('') : '<p class="text-muted text-sm">No PRs logged yet.</p>'}
+        
+        
+        
+        
+        
+        
+        
+        </div>`).join('') : '<p class="text-muted text-sm">لا توجد إنجازات شخصية مسجلة.</p>'}
     </div>
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     <div class="mb-5">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center justify-between mb-2">
-        <p class="text-[11px] text-muted uppercase tracking-wide">Goals (${goals.length})</p>
-        <button onclick="openClientGoalModal()" class="text-accent text-[11px] hover:underline">+ Add Goal</button>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-[11px] text-muted uppercase tracking-wide">الأهداف (${goals.length})</p>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="openClientGoalModal()" class="text-accent text-[11px] hover:underline">+ إضافة هدف</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
       ${goals.length ? goals.map(g => {
         const start = g.startValue !== undefined ? g.startValue : g.current;
@@ -764,32 +1675,179 @@ window.openClientModal = (name) => {
         let pct = isIncreasing ? ((g.current - start) / ((g.target - start) || 1)) * 100 : ((start - g.current) / ((start - g.target) || 1)) * 100;
         pct = Math.max(0, Math.min(100, pct));
         return `<div class="bg-black border border-border rounded-lg p-3 mb-2">
+          
+          
+          
+          
+          
+          
+          
           <div class="flex justify-between items-center mb-1"><p class="text-sm text-white font-medium">${g.title}${pct>=100?' 🏆':''}</p><button onclick="delClientGoal(${g.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button></div>
-          <div class="flex justify-between text-[11px] text-muted mb-1"><span>${g.current} ${g.unit}</span><span>Goal: ${g.target} ${g.unit}</span></div>
+          
+          
+          
+          
+          
+          
+          
+          <div class="flex justify-between text-[11px] text-muted mb-1"><span>${g.current} ${g.unit}</span><span>الهدف: ${g.target} ${g.unit}</span></div>
+          
+          
+          
+          
+          
+          
+          
           <div class="w-full h-1.5 bg-border rounded-full overflow-hidden"><div class="h-full bg-accent rounded-full" style="width:${pct}%"></div></div>
+        
+        
+        
+        
+        
+        
+        
         </div>`;
-      }).join('') : '<p class="text-muted text-sm">No goals set yet.</p>'}
+      }).join('') : '<p class="text-muted text-sm">لا توجد أهداف مسجلة.</p>'}
     </div>
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     <div class="mb-5">
-      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Recent Plans (${plans.length})</p>
-      ${plans.length ? plans.slice(0,3).map(p=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-white font-medium">${p.title}</p><p class="text-muted text-xs">${p.type} · ${p.sent}</p></div>`).join('') : '<p class="text-muted text-sm">No plans sent yet.</p>'}
+      
+      
+      
+      
+      
+      
+      
+      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">الخطط الأخيرة (${plans.length})</p>
+      ${plans.length ? plans.slice(0,3).map(p=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-white font-medium">${p.title}</p><p class="text-muted text-xs">${uiLabel(p.type)} · ${p.sent}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد خطط في السجل بعد.</p>'}
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="mb-5">
-      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Feedback (${fb.length})</p>
-      ${fb.length ? fb.map(f=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-text">"${f.msg}"</p><p class="text-gold text-xs mt-1">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</p></div>`).join('') : '<p class="text-muted text-sm">No feedback yet.</p>'}
+      
+      
+      
+      
+      
+      
+      
+      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">التقييمات (${fb.length})</p>
+      ${fb.length ? fb.map(f=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-text">"${f.msg}"</p><p class="text-gold text-xs mt-1">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد تقييمات مسجلة بعد.</p>'}
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="mb-5">
-      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Private Session Notes <span class="normal-case text-muted">(only visible to you)</span></p>
+      
+      
+      
+      
+      
+      
+      
+      <p class="text-[11px] text-muted uppercase tracking-wide mb-2">ملاحظات الجلسة الخاصة <span class="normal-case text-muted">(تظهر لك فقط)</span></p>
+      
+      
+      
+      
+      
+      
+      
       <div id="session-notes-list" class="space-y-2 mb-2 max-h-40 overflow-y-auto thin-scroll"></div>
+      
+      
+      
+      
+      
+      
+      
       <form onsubmit="addSessionNote(event,'${c.name.replace(/'/g,"\\'")}')" class="flex gap-2">
+        
+        
+        
+        
+        
+        
+        
         <input type="text" id="session-note-input" placeholder="Add a private note…" class="flex-1 input-dark rounded-lg px-3 py-1.5 text-xs">
-        <button type="submit" class="px-3 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">Add</button>
+        
+        
+        
+        
+        
+        
+        
+        <button type="submit" class="px-3 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">إضافة</button>
+      
+      
+      
+      
+      
+      
+      
       </form>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="flex gap-2">
-      <button onclick="closeClientModal();openChat('${c.name.replace(/'/g,"\\'")}');navigateTo('messages')" class="flex-1 py-2.5 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">Message ${c.name.split(' ')[0]}</button>
-      <button onclick="closeClientModal()" class="px-4 py-2.5 bg-black border border-border text-muted text-sm font-medium rounded-lg hover:text-white transition">Close</button>
+      
+      
+      
+      
+      
+      
+      
+      <button onclick="closeClientModal();openChat('${c.name.replace(/'/g,"\\'")}');navigateTo('messages')" class="flex-1 py-2.5 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">سجل محادثة ${c.name.split(' ')[0]}</button>
+      
+      
+      
+      
+      
+      
+      
+      <button onclick="closeClientModal()" class="px-4 py-2.5 bg-black border border-border text-muted text-sm font-medium rounded-lg hover:text-white transition">إغلاق</button>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
   document.getElementById('clientModal').classList.remove('hidden');
   renderSessionNotes(name);
@@ -841,16 +1899,37 @@ function renderSessionNotes(name) {
   const notes = db.sessionNotes[name] || [];
   el.innerHTML = notes.length ? [...notes].reverse().map(n => `
     <div class="bg-black border border-border rounded-lg p-2.5">
+      
+      
+      
+      
+      
+      
+      
       <p class="text-text text-xs">${n.text}</p>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-[10px] mt-1">${n.date}</p>
-    </div>`).join('') : '<p class="text-muted text-xs">No private notes yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-xs">لا توجد ملاحظات خاصة بعد.</p>';
 }
 window.addSessionNote = (e, name) => {
   e.preventDefault();
   const input = document.getElementById('session-note-input');
   if (!input.value.trim()) return;
   if (!db.sessionNotes[name]) db.sessionNotes[name] = [];
-  db.sessionNotes[name].push({ date: 'Just now', text: input.value.trim() });
+  db.sessionNotes[name].push({ date: 'الآن', text: input.value.trim() });
   input.value = '';
   saveData(); renderSessionNotes(name);
 };
@@ -866,22 +1945,113 @@ function renderPipeline() {
   board.innerHTML = PIPELINE_STAGES.map(stage => {
     const items = db.leads.filter(l => l.stage === stage);
     const total = items.reduce((a,b)=>a+(b.value||0),0);
-    return `<div class="kanban-col p-3" data-stage="${stage}" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+    return `<div class="kanban-col p-3" data-stage="${uiLabel(stage)}" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center justify-between mb-3 px-1">
-        <h4 class="text-white text-xs font-semibold uppercase tracking-wide">${stage}</h4>
+        
+        
+        
+        
+        
+        
+        
+        <h4 class="text-white text-xs font-semibold uppercase tracking-wide">${uiLabel(stage)}</h4>
+        
+        
+        
+        
+        
+        
+        
         <span class="text-muted text-[10px]">$${total.toLocaleString()}</span>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div class="space-y-2">
         ${items.map(l => `
           <div class="kanban-card p-3" draggable="true" data-id="${l.id}" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">
+            
+            
+            
+            
+            
+            
+            
             <p class="text-white text-sm font-medium">${l.name}</p>
+            
+            
+            
+            
+            
+            
+            
             <p class="text-muted text-[11px] mt-0.5">${l.notes||''}</p>
+            
+            
+            
+            
+            
+            
+            
             <div class="flex justify-between items-center mt-2">
+              
+              
+              
+              
+              
+              
+              
               <span class="text-accent text-xs font-semibold">$${(l.value||0).toLocaleString()}</span>
+              
+              
+              
+              
+              
+              
+              
               <button onclick="del('leads',${l.id})" class="text-red-400/50 hover:text-red-400 text-[11px]">✕</button>
+            
+            
+            
+            
+            
+            
+            
             </div>
+          
+          
+          
+          
+          
+          
+          
           </div>`).join('')}
       </div>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
   }).join('');
 }
@@ -904,7 +2074,7 @@ window.closeAddLead = () => document.getElementById('leadModal').classList.add('
 document.getElementById('form-lead').onsubmit = e => {
   e.preventDefault();
   const f = new FormData(e.target);
-  db.leads.unshift({ id: Date.now(), name: f.get('name'), email: f.get('email'), stage: 'New', value: parseFloat(f.get('value'))||0, notes: f.get('notes'), date: 'Just now' });
+  db.leads.unshift({ id: Date.now(), name: f.get('name'), email: f.get('email'), stage: 'New', value: parseFloat(f.get('value'))||0, notes: f.get('notes'), date: 'الآن' });
   saveData(); e.target.reset(); closeAddLead(); renderAll();
   toast('✅ Lead added to Pipeline.');
 };
@@ -917,7 +2087,7 @@ function renderInvoices() {
   if (!list) return;
   const outstanding = db.invoices.filter(i=>i.status!=='Paid').reduce((a,b)=>a+b.amount,0);
   const paid = db.invoices.filter(i=>i.status==='Paid').reduce((a,b)=>a+b.amount,0);
-  const overdue = db.invoices.filter(i=>i.status==='Overdue').reduce((a,b)=>a+b.amount,0);
+  const overdue = db.invoices.filter(i=>i.status==='متأخر').reduce((a,b)=>a+b.amount,0);
   document.getElementById('inv-outstanding').innerText = '$'+outstanding.toFixed(2);
   document.getElementById('inv-paid').innerText = '$'+paid.toFixed(2);
   document.getElementById('inv-overdue').innerText = '$'+overdue.toFixed(2);
@@ -925,17 +2095,80 @@ function renderInvoices() {
   const statusColor = { Paid:'bg-green-500/15 text-green-400', Unpaid:'bg-gold/15 text-gold', Overdue:'bg-red-500/15 text-red-400' };
   list.innerHTML = db.invoices.length ? db.invoices.map(i => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
+      
+      
+      
+      
+      
+      
+      
       <div class="min-w-0">
+        
+        
+        
+        
+        
+        
+        
         <p class="text-white font-medium text-sm truncate">${i.desc}</p>
-        <p class="text-muted text-xs mt-0.5">${i.client} · Due ${i.due}</p>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-muted text-xs mt-0.5">${i.client} · الاستحقاق ${i.due}</p>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3 shrink-0">
+        
+        
+        
+        
+        
+        
+        
         <span class="text-white font-semibold text-sm">$${i.amount.toFixed(2)}</span>
-        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColor[i.status]}">${i.status}</span>
-        ${i.status!=='Paid' ? `<button onclick="markPaid(${i.id})" class="text-accent text-xs hover:underline">Mark Paid</button>` : ''}
+        
+        
+        
+        
+        
+        
+        
+        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColor[i.status]}">${uiLabel(i.status)}</span>
+        ${i.status!=='Paid' ? `<button onclick="markPaid(${i.id})" class="text-accent text-xs hover:underline">تسجيل السداد</button>` : ''}
         <button onclick="del('invoices',${i.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No invoices yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد فواتير مسجلة.</p>';
 }
 window.markPaid = (id) => { const inv = db.invoices.find(i=>i.id===id); if(inv){ inv.status='Paid'; saveData(); renderAll(); } };
 document.getElementById('form-invoice').onsubmit = e => {
@@ -949,23 +2182,7 @@ document.getElementById('form-invoice').onsubmit = e => {
 // ==========================================
 // EXERCISE LIBRARY + WORKOUT BUILDER
 // ==========================================
-const EXERCISE_LIBRARY = [
-  { name:'Barbell Back Squat', muscle:'Legs', default:'4 x 8' },
-  { name:'Romanian Deadlift', muscle:'Hamstrings/Glutes', default:'3 x 10' },
-  { name:'Bench Press', muscle:'Chest', default:'4 x 6' },
-  { name:'Overhead Press', muscle:'Shoulders', default:'3 x 10' },
-  { name:'Barbell Row', muscle:'Back', default:'4 x 8' },
-  { name:'Pull-Up', muscle:'Back', default:'3 x AMRAP' },
-  { name:'Walking Lunge', muscle:'Legs', default:'3 x 12/leg' },
-  { name:'Lateral Raise', muscle:'Shoulders', default:'3 x 15' },
-  { name:'Tricep Dip', muscle:'Arms', default:'3 x 12' },
-  { name:'Bicep Curl', muscle:'Arms', default:'3 x 12' },
-  { name:'Plank', muscle:'Core', default:'3 x 45s' },
-  { name:'Hanging Leg Raise', muscle:'Core', default:'3 x 12' },
-  { name:'Kettlebell Swing', muscle:'Full Body', default:'4 x 15' },
-  { name:'Box Jump', muscle:'Power', default:'4 x 6' },
-  { name:'Farmer\'s Carry', muscle:'Full Body', default:'3 x 40m' },
-];
+const EXERCISE_LIBRARY = PenguinsExerciseStudio.catalog.map(ex=>({name:ex.name,muscle:ex.category,default:'3 × 10'}));
 let builtWorkout = [];
 
 function renderExerciseLibrary() {
@@ -975,9 +2192,30 @@ function renderExerciseLibrary() {
   const list = EXERCISE_LIBRARY.filter(ex => ex.name.toLowerCase().includes(q) || ex.muscle.toLowerCase().includes(q));
   el.innerHTML = list.map(ex => `
     <div class="exercise-chip" onclick="addExerciseToWorkout('${ex.name.replace(/'/g,"\\'")}','${ex.default}')">
+      
+      
+      
+      
+      
+      
+      
       <p class="text-white text-sm font-medium">${ex.name}</p>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-[11px]">${ex.muscle} · ${ex.default}</p>
-    </div>`).join('') || '<p class="text-muted text-xs text-center py-4">No exercises match.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') || '<p class="text-muted text-xs text-center py-4">لا توجد تمارين مطابقة.</p>';
 }
 window.addExerciseToWorkout = (name, scheme) => {
   builtWorkout.push({ name, scheme });
@@ -989,13 +2227,34 @@ function renderBuiltWorkout() {
   const el = document.getElementById('built-workout');
   if (!el) return;
   if (!builtWorkout.length) {
-    el.innerHTML = '<p class="text-muted text-xs" id="built-workout-empty">Click exercises on the left to add them here.</p>';
+    el.innerHTML = '<p class="text-muted text-xs" id="built-workout-empty">اختار تمرينًا من المكتبة لإضافته هنا.</p>';
     return;
   }
   el.innerHTML = builtWorkout.map((ex,i) => `
     <div class="flex items-center justify-between bg-card2 rounded-lg px-3 py-2">
+      
+      
+      
+      
+      
+      
+      
       <div><p class="text-white text-sm">${ex.name}</p><p class="text-muted text-[11px]">${ex.scheme}</p></div>
+      
+      
+      
+      
+      
+      
+      
       <button type="button" onclick="removeBuiltExercise(${i})" class="text-red-400/60 hover:text-red-400 text-xs">✕</button>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
 }
 
@@ -1013,13 +2272,62 @@ function renderTemplates() {
   if (!el) return;
   el.innerHTML = db.planTemplates.length ? db.planTemplates.map(t => `
     <div class="bg-black border border-border rounded-xl p-4">
-      <div class="flex items-center gap-2 mb-1"><h4 class="text-white font-semibold text-sm">${t.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${t.type}</span></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="flex items-center gap-2 mb-1"><h4 class="text-white font-semibold text-sm">${t.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${uiLabel(t.type)}</span></div>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-muted text-xs whitespace-pre-line line-clamp-3">${t.details}</p>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex gap-2 mt-3">
-        <button onclick="useTemplate(${t.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">Use Template</button>
-        <button onclick="del('planTemplates',${t.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">Delete</button>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="useTemplate(${t.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">استخدام القالب</button>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="del('planTemplates',${t.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">حذف</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No templates saved yet — build a plan and click "Save as Template".</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد قوالب بعد. جهّز خطة واضغط حفظ كقالب.</p>';
 }
 window.saveAsTemplate = () => {
   const form = document.getElementById('form-plan');
@@ -1062,13 +2370,13 @@ window.setTimerPreset = (s) => {
   timerSeconds = s; timerTotal = s;
   renderTimerDisplay();
   const btn = document.getElementById('timer-toggle-btn');
-  if (btn) btn.innerText = 'Start';
+  if (btn) btn.innerText = 'ابدأ';
 };
 window.toggleTimer = () => {
   const btn = document.getElementById('timer-toggle-btn');
   if (timerRunning) {
     clearInterval(timerInterval); timerRunning = false;
-    if (btn) btn.innerText = 'Start';
+    if (btn) btn.innerText = 'ابدأ';
     return;
   }
   timerRunning = true;
@@ -1078,8 +2386,8 @@ window.toggleTimer = () => {
     renderTimerDisplay();
     if (timerSeconds <= 0) {
       clearInterval(timerInterval); timerRunning = false;
-      if (btn) btn.innerText = 'Start';
-      toast('⏱️ Rest complete.');
+      if (btn) btn.innerText = 'ابدأ';
+      toast('⏱️ Rest مكتمل.');
       timerSeconds = timerTotal;
       renderTimerDisplay();
     }
@@ -1090,11 +2398,11 @@ window.resetTimer = () => {
   timerSeconds = timerTotal;
   renderTimerDisplay();
   const btn = document.getElementById('timer-toggle-btn');
-  if (btn) btn.innerText = 'Start';
+  if (btn) btn.innerText = 'ابدأ';
 };
 
 // ==========================================
-// BUSINESS GOALS
+// أهداف العمل
 // ==========================================
 function renderBusinessGoals() {
   const el = document.getElementById('dash-business-goals');
@@ -1105,18 +2413,109 @@ function renderBusinessGoals() {
   const clientsPct = Math.min(100, Math.round((db.clients.length / (g.clientsTarget||1)) * 100));
   el.innerHTML = `
     <div class="flex items-center justify-between mb-4">
-      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">Business Goals</h3>
-      <button onclick="openGoalsModal()" class="text-[11px] text-accent hover:underline">Edit Targets</button>
+      
+      
+      
+      
+      
+      
+      
+      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">أهداف العمل</h3>
+      
+      
+      
+      
+      
+      
+      
+      <button onclick="openGoalsModal()" class="text-[11px] text-accent hover:underline">تعديل الأهداف</button>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      
+      
+      
+      
+      
+      
+      
       <div>
-        <div class="flex justify-between text-xs text-muted mb-1"><span>Monthly Revenue</span><span>$${Math.round(earnings).toLocaleString()} / $${g.revenueTarget.toLocaleString()}</span></div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="flex justify-between text-xs text-muted mb-1"><span>الإيراد الشهري</span><span>$${Math.round(earnings).toLocaleString()} / $${g.revenueTarget.toLocaleString()}</span></div>
+        
+        
+        
+        
+        
+        
+        
         <div class="w-full h-2 bg-border rounded-full overflow-hidden"><div class="h-full bg-accent rounded-full transition-all duration-500" style="width:${revenuePct}%"></div></div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div>
-        <div class="flex justify-between text-xs text-muted mb-1"><span>Active Clients</span><span>${db.clients.length} / ${g.clientsTarget}</span></div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="flex justify-between text-xs text-muted mb-1"><span>العملاء النشطون</span><span>${db.clients.length} / ${g.clientsTarget}</span></div>
+        
+        
+        
+        
+        
+        
+        
         <div class="w-full h-2 bg-border rounded-full overflow-hidden"><div class="h-full bg-gold rounded-full transition-all duration-500" style="width:${clientsPct}%"></div></div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
 }
 window.openGoalsModal = () => {
@@ -1153,11 +2552,25 @@ function renderLiveCalendar() {
   const days = Array.from({length:7}, (_,i) => { const d = new Date(startOfWeek); d.setDate(startOfWeek.getDate()+i); return d; });
   el.innerHTML = days.map(d => {
     const dayStr = d.toDateString();
-    const isToday = dayStr === today.toDateString();
+    const isاليوم = dayStr === today.toDateString();
     const daySessions = db.sessions.filter(s => new Date(s.time).toDateString() === dayStr);
     const daySlots = db.slots.filter(s => new Date(s.time).toDateString() === dayStr);
-    return `<div class="cal-day ${isToday?'today':''}">
-      <p class="text-[10px] text-muted uppercase">${d.toLocaleDateString('en-US',{weekday:'short'})}</p>
+    return `<div class="cal-day ${isاليوم?'today':''}">
+      
+      
+      
+      
+      
+      
+      
+      <p class="text-[10px] text-muted uppercase">${d.toLocaleDateString('ar-EG',{weekday:'short'})}</p>
+      
+      
+      
+      
+      
+      
+      
       <p class="text-white text-sm font-semibold mb-2">${d.getDate()}</p>
       ${daySessions.map(s=>`<div class="bg-accent/15 text-accent text-[10px] rounded px-1.5 py-0.5 mb-1 truncate">${s.topic}</div>`).join('')}
       ${daySlots.map(s=>`<div class="${s.booked?'bg-gold/15 text-gold':'bg-green-500/15 text-green-400'} text-[10px] rounded px-1.5 py-0.5 mb-1 truncate">${s.booked?'Booked: '+s.client:'Open slot'}</div>`).join('')}
@@ -1169,12 +2582,40 @@ function renderSlots() {
   if (!el) return;
   el.innerHTML = db.slots.length ? db.slots.map(s => `
     <div class="bg-black border border-border rounded-xl p-4 flex justify-between items-center">
+      
+      
+      
+      
+      
+      
+      
       <div><p class="text-white text-sm font-medium">${new Date(s.time).toLocaleString()}</p><p class="text-muted text-xs">${s.booked ? 'Booked by '+s.client : 'Open — clients can self-book'}</p></div>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex gap-2">
-        ${!s.booked ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 font-medium">Open</span>` : `<span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-medium">Booked</span>`}
-        <button onclick="del('slots',${s.id})" class="text-red-400/60 hover:text-red-400 text-xs">Remove</button>
+        ${!s.booked ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 font-medium">متاح</span>` : `<span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-medium">محجوز</span>`}
+        <button onclick="del('slots',${s.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-6">No open slots yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-6">لا توجد مواعيد متاحة.</p>';
 }
 document.getElementById('form-slot').onsubmit = e => {
   e.preventDefault();
@@ -1192,14 +2633,56 @@ function renderCohorts() {
   if (!el) return;
   el.innerHTML = db.cohorts.length ? db.cohorts.map(c => `
     <div class="card rounded-2xl p-6">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex justify-between items-start mb-3">
+        
+        
+        
+        
+        
+        
+        
         <div><h4 class="text-white font-semibold">${c.name}</h4><p class="text-muted text-xs mt-0.5">${c.schedule}</p></div>
-        <button onclick="del('cohorts',${c.id})" class="text-red-400/50 hover:text-red-400 text-xs">Remove</button>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="del('cohorts',${c.id})" class="text-red-400/50 hover:text-red-400 text-xs">إزالة</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex flex-wrap gap-2">
-        ${c.members.map(m=>`<span class="text-xs px-2.5 py-1 rounded-full bg-accent/15 text-accent">${m}</span>`).join('') || '<span class="text-muted text-xs">No members yet</span>'}
+        ${c.members.map(m=>`<span class="text-xs px-2.5 py-1 rounded-full bg-accent/15 text-accent">${m}</span>`).join('') || '<span class="text-muted text-xs">لا يوجد أعضاء بعد</span>'}
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10 lg:col-span-2">No cohorts yet — create your first group program.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10 lg:col-span-2">لا توجد مجموعات بعد. أضف أول مجموعة.</p>';
 }
 window.openAddCohort = () => {
   document.getElementById('cohort-member-checks').innerHTML = db.clients.map(c => `
@@ -1224,15 +2707,78 @@ function renderAutomations() {
   if (!el) return;
   el.innerHTML = db.automations.length ? db.automations.map(a => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
+      
+      
+      
+      
+      
+      
+      
       <div class="min-w-0">
-        <p class="text-white text-sm font-medium">When <span class="text-accent">${a.trigger}</span></p>
+        
+        
+        
+        
+        
+        
+        
+        <p class="text-white text-sm font-medium">عندما <span class="text-accent">${a.trigger}</span></p>
+        
+        
+        
+        
+        
+        
+        
         <p class="text-muted text-xs mt-0.5">→ ${a.action}</p>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3 shrink-0">
+        
+        
+        
+        
+        
+        
+        
         <div class="toggle-switch ${a.enabled?'on':''}" onclick="toggleAutomation(${a.id})"></div>
+        
+        
+        
+        
+        
+        
+        
         <button onclick="del('automations',${a.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No automations yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد قواعد مسجلة.</p>';
 }
 window.toggleAutomation = (id) => { const a = db.automations.find(x=>x.id===id); if(a){ a.enabled = !a.enabled; saveData(); renderAutomations(); } };
 document.getElementById('form-automation').onsubmit = e => {
@@ -1251,18 +2797,46 @@ function renderContracts() {
   if (!el) return;
   el.innerHTML = db.contracts.length ? db.contracts.map(c => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
+      
+      
+      
+      
+      
+      
+      
       <div><p class="text-white text-sm font-medium">${c.title}</p><p class="text-muted text-xs mt-0.5">${c.client} · ${c.date}</p></div>
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3">
-        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${c.status==='Signed'?'bg-green-500/15 text-green-400':'bg-gold/15 text-gold'}">${c.status}</span>
-        ${c.status!=='Signed' ? `<button onclick="markSigned(${c.id})" class="text-accent text-xs hover:underline">Simulate Sign</button>` : ''}
+        
+        
+        
+        
+        
+        
+        
+        <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${c.status==='Signed'?'bg-green-500/15 text-green-400':'bg-gold/15 text-gold'}">${uiLabel(c.status)}</span>
+        ${c.status!=='Signed' ? `<button onclick="markSigned(${c.id})" class="text-accent text-xs hover:underline">محاكاة التوقيع فقط</button>` : ''}
       </div>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">No contracts sent yet.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد اتفاقيات مسجلة.</p>';
 }
 window.markSigned = (id) => { const c = db.contracts.find(x=>x.id===id); if(c){ c.status='Signed'; saveData(); renderAll(); } };
 document.getElementById('form-contract').onsubmit = e => {
   e.preventDefault();
   const f = new FormData(e.target);
-  db.contracts.unshift({ id: Date.now(), client: f.get('client'), title: f.get('title'), status: 'Sent', date: 'Just now' });
+  db.contracts.unshift({ id: Date.now(), client: f.get('client'), title: f.get('title'), status: 'Sent', date: 'الآن' });
   saveData(); e.target.reset(); renderAll();
   toast('✅ Contract sent for signature.');
 };
@@ -1276,7 +2850,7 @@ document.getElementById('form-metrics').onsubmit = e => {
   const f = new FormData(e.target);
   const client = f.get('client');
   if (!db.metrics[client]) db.metrics[client] = [];
-  db.metrics[client].push({ date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}), weight: parseFloat(f.get('weight')), waist: parseFloat(f.get('waist'))||null });
+  db.metrics[client].push({ date: new Date().toLocaleDateString('ar-EG',{month:'short',day:'numeric'}), weight: parseFloat(f.get('weight')), waist: parseFloat(f.get('waist'))||null });
   saveData(); e.target.reset();
   document.getElementById('metrics-client-select').value = client;
   renderMetricsChart();
@@ -1305,7 +2879,7 @@ function renderReports() {
   const avgCompletion = db.pointsClients.length ? Math.round(db.pointsClients.reduce((a,b)=>a+b.completion,0)/db.pointsClients.length) : 0;
   const wonLeads = db.leads.filter(l=>l.stage==='Won').length;
   statsEl.innerHTML = [
-    { l:'Active Clients', v: active, i:'●' },
+    { l:'العملاء النشطون', v: active, i:'●' },
     { l:'Paused Clients', v: paused, i:'○' },
     { l:'Avg Engagement', v: avgCompletion+'%', i:'◈' },
     { l:'Leads Won (all-time)', v: wonLeads, i:'⬡' }
@@ -1328,25 +2902,123 @@ function renderReports() {
 // ==========================================
 window.openClientPreview = () => {
   const name = db.clients[0] ? db.clients[0].name : 'Client';
-  const { pts, rdy, plans, fb } = clientSummary(name);
+  const { نقطة, rdy, plans, fb } = clientSummary(name);
   const freeResources = db.library.filter(r=>r.tier==='Free');
   document.getElementById('clientPreviewBody').innerHTML = `
     <div class="flex items-center justify-between mb-5">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3">
+        
+        
+        
+        
+        
+        
+        
         <div class="w-11 h-11 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${name[0]}</div>
-        <div><p class="text-white font-semibold">${name}'s Portal</p><p class="text-muted text-xs">Simulated client view</p></div>
+        
+        
+        
+        
+        
+        
+        
+        <div><p class="text-white font-semibold">مساحة ${name}</p><p class="text-muted text-xs">معاينة محلية لواجهة العميل</p></div>
+      
+      
+      
+      
+      
+      
+      
       </div>
+      
+      
+      
+      
+      
+      
+      
       <button onclick="closeClientPreview()" class="text-muted hover:text-white text-xl leading-none">×</button>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="grid grid-cols-2 gap-3 mb-5">
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">Points</p><p class="text-white font-bold text-lg">${pts?pts.points:0}</p></div>
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">Streak</p><p class="text-white font-bold text-lg">${pts?pts.streak+'d':'0d'}</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">النقاط</p><p class="text-white font-bold text-lg">${pts?pts.points:0}</p></div>
+      
+      
+      
+      
+      
+      
+      
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الاستمرارية</p><p class="text-white font-bold text-lg">${pts?pts.streak+'d':'0d'}</p></div>
+    
+    
+    
+    
+    
+    
+    
     </div>
-    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">My Current Plan</p>
-    ${plans[0] ? `<div class="bg-black border border-border rounded-lg p-3 mb-5"><p class="text-sm text-white font-medium">${plans[0].title}</p><p class="text-muted text-xs whitespace-pre-line mt-1">${plans[0].details}</p></div>` : '<p class="text-muted text-sm mb-5">No plan assigned yet.</p>'}
-    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Free Resources</p>
-    <div class="space-y-2 mb-5">${freeResources.map(r=>`<div class="bg-black border border-border rounded-lg p-3 text-sm text-white">${r.title}</div>`).join('') || '<p class="text-muted text-sm">None available.</p>'}</div>
-    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Readiness Today</p>
+    
+    
+    
+    
+    
+    
+    
+    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">خطتي الحالية</p>
+    ${plans[0] ? `<div class="bg-black border border-border rounded-lg p-3 mb-5"><p class="text-sm text-white font-medium">${plans[0].title}</p><p class="text-muted text-xs whitespace-pre-line mt-1">${plans[0].details}</p></div>` : '<p class="text-muted text-sm mb-5">لم تُضف خطة في هذا السجل بعد.</p>'}
+    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">الموارد المجانية</p>
+    
+    
+    
+    
+    
+    
+    
+    <div class="space-y-2 mb-5">${freeResources.map(r=>`<div class="bg-black border border-border rounded-lg p-3 text-sm text-white">${r.title}</div>`).join('') || '<p class="text-muted text-sm">غير متاح حاليًا.</p>'}</div>
+    
+    
+    
+    
+    
+    
+    
+    <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Readiness اليوم</p>
+    
+    
+    
+    
+    
+    
+    
     <p class="text-sm text-text">${rdy ? ({green:'🟢 Cleared for a full session.',yellow:'🟡 Take it a bit lighter today.',red:'🔴 Recovery day recommended.'})[rdy.status] : 'Not checked in yet.'}</p>
   `;
   document.getElementById('clientPreviewOverlay').classList.remove('hidden');
@@ -1386,36 +3058,57 @@ function maybeShowWelcome() {
 // HELP & GUIDE
 // ==========================================
 const PAGE_INFO = [
-  { label:'Dashboard', icon:'◆', text:'Your home base — earnings chart, Smart Insights (auto-flagged things needing attention), a getting-started checklist, Business Goals (set your own revenue/client targets and track progress), and your task list.' },
-  { label:'Messages', icon:'✉', text:'Direct chat with each client. Pick a client on the left, type in the box, hit send.' },
-  { label:'Clients', icon:'◇', text:'Every client in one place — the full dossier. Click a card to see their plans, feedback, points, readiness, personal records, goals with progress bars, and private session notes only you can see.' },
-  { label:'Plan Builder', icon:'▤', text:'Build a structured program using the searchable exercise library on the left (click an exercise to add it), or just add freeform notes. Save any plan as a reusable template so you don\'t have to rebuild it next time — switch to the Templates tab to reuse or delete one.' },
+  { label:'الرئيسية', icon:'◆', text:'Your home base — earnings chart, Smart Insights (auto-flagged things needing attention), a getting-started checklist, Business Goals (set your own revenue/client targets and track progress), and your task list.' },
+  { label:'الرسائل', icon:'✉', text:'Direct chat with each client. Pick a client on the left, type in the box, hit send.' },
+  { label:'العملاء', icon:'◇', text:'Every client in one place — the full dossier. Click a card to see their plans, feedback, points, readiness, personal records, goals with progress bars, and private session notes only you can see.' },
+  { label:'باني الخطط', icon:'▤', text:'Build a structured program using the searchable exercise library on the left (click an exercise to add it), or just add freeform notes. Save any plan as a reusable template so you don\'t have to rebuild it next time — switch to the Templates tab to reuse or delete one.' },
   { label:'Nutrition', icon:'◍', text:'Set macro targets (calories, protein, carbs, fats) for clients on the Nutrition add-on. Clients without the add-on won\'t appear here until you enable it for them.' },
-  { label:'Live Sessions', icon:'●', text:'Schedule 1:1 or group calls, or open bookable time slots your clients can claim themselves. Switch to Calendar view to see the week at a glance.' },
-  { label:'Resource Library', icon:'▦', text:'Upload PDF guides and programs. Mark each Free or Paid with a price. Note: this is a demo uploader — actual file hosting needs a backend.' },
-  { label:'Client Feedback', icon:'★', text:'Reviews and messages clients leave you. Reply inline to keep the conversation going.' },
-  { label:'Vision Review', icon:'▶', text:'Review a client\'s submitted form-check video, draw annotations directly on the frame, then send your notes back.' },
-  { label:'Points & Streaks', icon:'◈', text:'A leaderboard of client habit completion — total points, day streaks, and completion percentage.' },
-  { label:'Readiness', icon:'◎', text:'See each client\'s daily readiness (sleep, soreness, stress) and the auto-suggested adjustment to today\'s plan.' },
-  { label:'Progress Vault', icon:'▣', text:'Before/after photo comparisons, plus a body-metrics log (weight, waist) with a trend chart per client.' },
-  { label:'Community', icon:'◐', text:'Your private client community feed. Post announcements or challenges, moderate what clients post.' },
-  { label:'Cohorts', icon:'⬢', text:'Group coaching — bundle multiple clients into a shared program with its own schedule.' },
-  { label:'Automations', icon:'⚡', text:'Set "when X happens, do Y" rules — e.g. auto-remind a client who misses a check-in. Toggle rules on/off anytime.' },
-  { label:'Reports', icon:'▩', text:'Business-level view: active vs paused clients, average engagement, retention trend, and per-client completion rates.' },
-  { label:'Contracts', icon:'✎', text:'Send agreements or waivers to a client and track whether they\'ve signed.' },
-  { label:'Pipeline', icon:'⬡', text:'Your sales funnel for prospective clients — drag cards between New → Contacted → Proposal Sent → Won/Lost.' },
-  { label:'Invoices', icon:'▥', text:'Create invoices, track what\'s outstanding, paid, or overdue, and mark them paid.' },
-  { label:'Shop', icon:'▨', text:'List merch, digital products, or brand collabs for sale.' },
-  { label:'Referrals', icon:'↗', text:'Your referral link — track clicks, signups, and the revenue they generated.' },
-  { label:'Verification', icon:'✓', text:'Your identity/certification verification status. Read-only — managed by the Penguins team.' },
-  { label:'Account', icon:'◉', text:'Your coach profile: name, niche, bio, hourly rate — plus an Appearance section to pick your own accent color for the whole dashboard (purple by default).' },
-  { label:'View as Client', icon:'◑', text:'Preview what a client sees in their portal — their plan, points, free resources, and today\'s readiness note.' },
+  { label:'الجلسات المباشرة', icon:'●', text:'Schedule 1:1 or group calls, or open bookable time slots your clients can claim themselves. Switch to Calendar view to see the week at a glance.' },
+  { label:'مكتبة الموارد', icon:'▦', text:'Upload PDF guides and programs. Mark each Free or Paid with a price. Note: this is a demo uploader — actual file hosting needs a backend.' },
+  { label:'تقييمات العملاء', icon:'★', text:'Reviews and messages clients leave you. Reply inline to keep the conversation going.' },
+  { label:'مراجعة الأداء', icon:'▶', text:'Review a client\'s submitted form-check video, draw annotations directly on the frame, then send your notes back.' },
+  { label:'النقاط والاستمرارية', icon:'◈', text:'A leaderboard of client habit completion — total points, day streaks, and completion percentage.' },
+  { label:'الجاهزية', icon:'◎', text:'See each client\'s daily readiness (sleep, soreness, stress) and the auto-suggested adjustment to today\'s plan.' },
+  { label:'سجل التقدّم', icon:'▣', text:'Before/after photo comparisons, plus a body-metrics log (weight, waist) with a trend chart per client.' },
+  { label:'المجتمع', icon:'◐', text:'Your private client community feed. Post announcements or challenges, moderate what clients post.' },
+  { label:'المجموعات', icon:'⬢', text:'Group coaching — bundle multiple clients into a shared program with its own schedule.' },
+  { label:'التنظيم التلقائي', icon:'⚡', text:'Set "when X happens, do Y" rules — e.g. auto-remind a client who misses a check-in. Toggle rules on/off anytime.' },
+  { label:'التقارير', icon:'▩', text:'Business-level view: active vs paused clients, average engagement, retention trend, and per-client completion rates.' },
+  { label:'العقود', icon:'✎', text:'Send agreements or waivers to a client and track whether they\'ve signed.' },
+  { label:'العملاء المحتملون', icon:'⬡', text:'Your sales funnel for prospective clients — drag cards between New → Contacted → Proposal Sent → Won/Lost.' },
+  { label:'الفواتير', icon:'▥', text:'Create invoices, track what\'s outstanding, paid, or overdue, and mark them paid.' },
+  { label:'المتجر', icon:'▨', text:'List merch, digital products, or brand collabs for sale.' },
+  { label:'الإحالات', icon:'↗', text:'Your referral link — track clicks, signups, and the revenue they generated.' },
+  { label:'التحقق', icon:'✓', text:'Your identity/certification verification status. Read-only — managed by the Penguins team.' },
+  { label:'الحساب', icon:'◉', text:'Your coach profile: name, niche, bio, hourly rate — plus an Appearance section to pick your own accent color for the whole dashboard (purple by default).' },
+  { label:'معاينة واجهة العميل', icon:'◑', text:'Preview what a client sees in their portal — their plan, points, free resources, and today\'s readiness note.' },
 ];
 window.openHelp = () => {
   document.getElementById('help-content').innerHTML = PAGE_INFO.map(p => `
     <div class="flex items-start gap-3 pb-3 border-b border-border last:border-0">
+      
+      
+      
+      
+      
+      
+      
       <span class="text-accent w-5 text-center shrink-0">${p.icon}</span>
+      
+      
+      
+      
+      
+      
+      
       <div><p class="text-white text-sm font-semibold">${p.label}</p><p class="text-muted text-xs mt-0.5">${p.text}</p></div>
+    
+    
+    
+    
+    
+    
+    
     </div>`).join('');
   document.getElementById('helpOverlay').classList.remove('hidden');
 };
@@ -1429,8 +3122,8 @@ function renderNotifBell() {
   const list = [];
   db.readiness.filter(r=>r.status==='red').forEach(r => list.push(`${r.name} flagged red on readiness.`));
   db.feedback.filter(f=>f.rating<=3).forEach(f => list.push(`${f.client} left a ${f.rating}-star review.`));
-  db.invoices.filter(i=>i.status==='Overdue').forEach(i => list.push(`Invoice for ${i.client} is overdue.`));
-  db.library.filter(r=>r.tier==='Paid' && r.downloads===0).forEach(r => list.push(`"${r.title}" hasn't sold yet.`));
+  db.invoices.filter(i=>i.status==='متأخر').forEach(i => list.push(`Invoice for ${i.client} is overdue.`));
+  db.library.filter(r=>r.tier==='Paid' && r.downloads===0).forEach(r => list.push(`"${r.title}" hasn't مباع yet.`));
 
   const dot = document.getElementById('notif-dot');
   if (dot) dot.classList.toggle('hidden', list.length === 0);
@@ -1441,31 +3134,80 @@ function renderNotifBell() {
 }
 
 // ==========================================
-// GETTING STARTED CHECKLIST
+// خطوات البداية CHECKLIST
 // ==========================================
 function renderChecklist() {
   const el = document.getElementById('dash-checklist');
   if (!el) return;
   const items = [
-    { done: db.clients.length > 0, label: 'Add your first client', page:'clients' },
-    { done: db.plans.length > 0, label: 'Send a plan', page:'planner' },
-    { done: db.library.length > 0, label: 'Upload a resource', page:'library' },
-    { done: db.invoices.length > 0, label: 'Create an invoice', page:'invoices' },
-    { done: db.cohorts.length > 0, label: 'Try a cohort or automation', page:'cohorts' },
+    { done: db.clients.length > 0, label: 'أضف أول سجل عميل', page:'clients' },
+    { done: db.plans.length > 0, label: 'حفظ خطة في السجل', page:'planner' },
+    { done: db.library.length > 0, label: 'إضافة مورد', page:'library' },
+    { done: db.invoices.length > 0, label: 'إنشاء فاتورة', page:'invoices' },
+    { done: db.cohorts.length > 0, label: 'جرّب المجموعات والتنظيم', page:'cohorts' },
   ];
   const doneCount = items.filter(i=>i.done).length;
   if (doneCount === items.length) { el.innerHTML = ''; el.classList.add('hidden'); return; }
   el.classList.remove('hidden');
   el.innerHTML = `
     <div class="flex items-center justify-between mb-3">
-      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">Getting Started</h3>
-      <span class="text-[10px] text-muted">${doneCount}/${items.length} complete</span>
+      
+      
+      
+      
+      
+      
+      
+      <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">خطوات البداية</h3>
+      
+      
+      
+      
+      
+      
+      
+      <span class="text-[10px] text-muted">${doneCount}/${items.length} مكتمل</span>
+    
+    
+    
+    
+    
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
     <div class="divide-y divide-border">
       ${items.map(i => `
         <button onclick="navigateTo('${i.page}')" class="checklist-item w-full text-left">
+          
+          
+          
+          
+          
+          
+          
           <span class="checklist-check ${i.done?'done':''}">${i.done?'✓':''}</span>
+          
+          
+          
+          
+          
+          
+          
           <span class="text-sm ${i.done?'text-muted line-through':'text-text'}">${i.label}</span>
+        
+        
+        
+        
+        
+        
+        
         </button>`).join('')}
     </div>`;
 }
@@ -1478,10 +3220,38 @@ function renderTasks() {
   if (!el) return;
   el.innerHTML = db.tasks.length ? db.tasks.map(t => `
     <div class="flex items-center gap-3 bg-black border border-border rounded-lg px-3 py-2.5">
+      
+      
+      
+      
+      
+      
+      
       <span class="checklist-check ${t.done?'done':''} cursor-pointer" onclick="toggleTask(${t.id})">${t.done?'✓':''}</span>
+      
+      
+      
+      
+      
+      
+      
       <span class="text-sm flex-1 ${t.done?'text-muted line-through':'text-text'}">${t.text}</span>
+      
+      
+      
+      
+      
+      
+      
       <button onclick="del('tasks',${t.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-6">No tasks yet — add one above.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-6">لا توجد مهام بعد. أضف مهمة.</p>';
 }
 window.toggleTask = (id) => { const t = db.tasks.find(x=>x.id===id); if(t){ t.done = !t.done; saveData(); renderTasks(); } };
 document.getElementById('form-task').onsubmit = e => {
@@ -1507,34 +3277,167 @@ function renderNutritionPage() {
     const logs = db.nutritionLogs[c.name] || [];
     const last = logs[logs.length - 1];
     return `<div class="card rounded-2xl p-5">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center justify-between mb-3">
+        
+        
+        
+        
+        
+        
+        
         <div class="flex items-center gap-3">
+          
+          
+          
+          
+          
+          
+          
           <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${c.name[0]}</div>
+          
+          
+          
+          
+          
+          
+          
           <div><p class="text-white font-semibold text-sm">${c.name}</p><p class="text-muted text-xs">${c.tag}</p></div>
+        
+        
+        
+        
+        
+        
+        
         </div>
-        <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="text-red-400/60 hover:text-red-400 text-[11px]">Disable</button>
+        
+        
+        
+        
+        
+        
+        
+        <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="text-red-400/60 hover:text-red-400 text-[11px]">إيقاف</button>
+      
+      
+      
+      
+      
+      
+      
       </div>
       ${tgt ? `
         <div class="grid grid-cols-4 gap-2 text-center mb-3">
+          
+          
+          
+          
+          
+          
+          
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.calories}</p><p class="text-muted text-[10px]">kcal</p></div>
+          
+          
+          
+          
+          
+          
+          
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.protein}g</p><p class="text-muted text-[10px]">protein</p></div>
+          
+          
+          
+          
+          
+          
+          
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.carbs}g</p><p class="text-muted text-[10px]">carbs</p></div>
+          
+          
+          
+          
+          
+          
+          
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.fats}g</p><p class="text-muted text-[10px]">fats</p></div>
+        
+        
+        
+        
+        
+        
+        
         </div>
-        ${last ? `<p class="text-muted text-[11px] mb-3">Last logged (${last.date}): ${last.calories} kcal, P${last.protein} C${last.carbs} F${last.fats}</p>` : '<p class="text-muted text-[11px] mb-3">No intake logged by client yet.</p>'}
-      ` : '<p class="text-muted text-xs mb-3">No macro targets set yet.</p>'}
-      <button onclick="openNutritionModal('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">${tgt ? 'Edit Targets' : 'Set Targets'}</button>
+        ${last ? `<p class="text-muted text-[11px] mb-3">Last logged (${last.date}): ${last.calories} kcal, P${last.protein} C${last.carbs} F${last.fats}</p>` : '<p class="text-muted text-[11px] mb-3">لا توجد سجلات تغذية بعد.</p>'}
+      ` : '<p class="text-muted text-xs mb-3">لا توجد أهداف تغذية مسجلة.</p>'}
+      <button onclick="openNutritionModal('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">${tgt ? 'تعديل الأهداف' : 'Set Targets'}</button>
+    
+    
+    
+    
+    
+    
+    
     </div>`;
-  }).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">No clients subscribed to Nutrition yet.</p>';
+  }).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">لا توجد سجلات تغذية مفعّلة.</p>';
 
   unsubEl.innerHTML = unsubscribed.length ? unsubscribed.map(c => `
     <div class="card rounded-2xl p-5 opacity-70">
+      
+      
+      
+      
+      
+      
+      
       <div class="flex items-center gap-3 mb-3">
+        
+        
+        
+        
+        
+        
+        
         <div class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-muted font-bold">${c.name[0]}</div>
+        
+        
+        
+        
+        
+        
+        
         <div><p class="text-white font-semibold text-sm">${c.name}</p><p class="text-muted text-xs">${c.tag}</p></div>
+      
+      
+      
+      
+      
+      
+      
       </div>
-      <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-black border border-dashed border-border text-muted text-xs font-medium rounded-lg hover:border-accent/50 hover:text-accent transition">+ Enable Nutrition Add-on</button>
-    </div>`).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">Every client is subscribed to Nutrition.</p>';
+      
+      
+      
+      
+      
+      
+      
+      <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-black border border-dashed border-border text-muted text-xs font-medium rounded-lg hover:border-accent/50 hover:text-accent transition">+ تفعيل سجل التغذية</button>
+    
+    
+    
+    
+    
+    
+    
+    </div>`).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">سجل التغذية مفعّل لكل العملاء.</p>';
 }
 window.toggleNutritionSub = (name) => {
   const c = db.clients.find(x => x.name === name);
@@ -1577,26 +3480,26 @@ document.getElementById('form-nutrition-targets').onsubmit = e => {
 // ==========================================
 const I18N = {
   en: {
-    "sidebar.search":"Quick search","sidebar.help":"Help & Guide","sidebar.overview":"Overview",
-    "nav.dashboard":"Dashboard","nav.messages":"Messages","nav.clients":"Clients",
-    "sidebar.coachingTools":"Coaching Tools","nav.planner":"Plan Builder","nav.nutrition":"Nutrition",
-    "nav.live":"Live Sessions","nav.library":"Resource Library","nav.feedback":"Client Feedback","nav.review":"Vision Review",
-    "sidebar.clientMonitoring":"Client Monitoring","nav.points":"Points & Streaks","nav.readiness":"Readiness",
-    "nav.vault":"Progress Vault","nav.community":"Community","nav.cohorts":"Cohorts",
-    "sidebar.automation":"Automation & Insight","nav.automations":"Automations","nav.reports":"Reports","nav.contracts":"Contracts",
-    "sidebar.business":"Business","nav.pipeline":"Pipeline","nav.invoices":"Invoices","nav.shop":"Shop",
-    "nav.referrals":"Referrals","nav.verification":"Verification","nav.account":"Account",
-    "sidebar.viewAsClient":"View as Client"
+    "sidebar.search":"بحث سريع","sidebar.help":"المساعدة والدليل","sidebar.overview":"نظرة عامة",
+    "nav.dashboard":"الرئيسية","nav.messages":"الرسائل","nav.clients":"العملاء",
+    "sidebar.coachingTools":"أدوات التدريب","nav.planner":"باني الخطط","nav.nutrition":"Nutrition",
+    "nav.live":"الجلسات المباشرة","nav.library":"مكتبة الموارد","nav.feedback":"تقييمات العملاء","nav.review":"مراجعة الأداء",
+    "sidebar.clientMonitoring":"متابعة العملاء","nav.points":"النقاط والاستمرارية","nav.readiness":"الجاهزية",
+    "nav.vault":"سجل التقدّم","nav.community":"المجتمع","nav.cohorts":"المجموعات",
+    "sidebar.automation":"التنظيم والتقارير","nav.automations":"التنظيم التلقائي","nav.reports":"التقارير","nav.contracts":"العقود",
+    "sidebar.business":"إدارة الأعمال","nav.pipeline":"العملاء المحتملون","nav.invoices":"الفواتير","nav.shop":"المتجر",
+    "nav.referrals":"الإحالات","nav.verification":"التحقق","nav.account":"الحساب",
+    "sidebar.viewAsClient":"معاينة واجهة العميل"
   },
   de: {
     "sidebar.search":"Schnellsuche","sidebar.help":"Hilfe & Anleitung","sidebar.overview":"Übersicht",
-    "nav.dashboard":"Dashboard","nav.messages":"Nachrichten","nav.clients":"Klienten",
+    "nav.dashboard":"الرئيسية","nav.messages":"Nachrichten","nav.clients":"Klienten",
     "sidebar.coachingTools":"Coaching-Tools","nav.planner":"Plan-Ersteller","nav.nutrition":"Ernährung",
     "nav.live":"Live-Sitzungen","nav.library":"Ressourcen","nav.feedback":"Kundenfeedback","nav.review":"Video-Analyse",
     "sidebar.clientMonitoring":"Klienten-Überwachung","nav.points":"Punkte & Serien","nav.readiness":"Bereitschaft",
-    "nav.vault":"Fortschritt","nav.community":"Community","nav.cohorts":"Gruppen",
+    "nav.vault":"Fortschritt","nav.community":"المجتمع","nav.cohorts":"Gruppen",
     "sidebar.automation":"Automatisierung","nav.automations":"Automatisierungen","nav.reports":"Berichte","nav.contracts":"Verträge",
-    "sidebar.business":"Geschäftliches","nav.pipeline":"Pipeline","nav.invoices":"Rechnungen","nav.shop":"Shop",
+    "sidebar.business":"Geschäftliches","nav.pipeline":"العملاء المحتملون","nav.invoices":"Rechnungen","nav.shop":"المتجر",
     "nav.referrals":"Empfehlungen","nav.verification":"Verifizierung","nav.account":"Konto",
     "sidebar.viewAsClient":"Als Klient ansehen"
   },
@@ -1614,13 +3517,13 @@ const I18N = {
   },
   fr: {
     "sidebar.search":"Recherche rapide","sidebar.help":"Aide et guide","sidebar.overview":"Aperçu",
-    "nav.dashboard":"Tableau de bord","nav.messages":"Messages","nav.clients":"Clients",
+    "nav.dashboard":"Tableau de bord","nav.messages":"الرسائل","nav.clients":"العملاء",
     "sidebar.coachingTools":"Outils de coaching","nav.planner":"Créateur de programme","nav.nutrition":"Nutrition",
     "nav.live":"Séances en direct","nav.library":"Bibliothèque","nav.feedback":"Avis clients","nav.review":"Analyse vidéo",
     "sidebar.clientMonitoring":"Suivi des clients","nav.points":"Points et séries","nav.readiness":"Forme",
     "nav.vault":"Suivi des progrès","nav.community":"Communauté","nav.cohorts":"Groupes",
     "sidebar.automation":"Automatisation","nav.automations":"Automatisations","nav.reports":"Rapports","nav.contracts":"Contrats",
-    "sidebar.business":"Affaires","nav.pipeline":"Pipeline","nav.invoices":"Factures","nav.shop":"Boutique",
+    "sidebar.business":"Affaires","nav.pipeline":"العملاء المحتملون","nav.invoices":"Factures","nav.shop":"Boutique",
     "nav.referrals":"Parrainage","nav.verification":"Vérification","nav.account":"Compte",
     "sidebar.viewAsClient":"Voir comme client"
   },
@@ -1632,18 +3535,18 @@ const I18N = {
     "sidebar.clientMonitoring":"Seguimiento de clientes","nav.points":"Puntos y rachas","nav.readiness":"Preparación",
     "nav.vault":"Progreso","nav.community":"Comunidad","nav.cohorts":"Grupos",
     "sidebar.automation":"Automatización","nav.automations":"Automatizaciones","nav.reports":"Informes","nav.contracts":"Contratos",
-    "sidebar.business":"Negocio","nav.pipeline":"Pipeline","nav.invoices":"Facturas","nav.shop":"Tienda",
+    "sidebar.business":"Negocio","nav.pipeline":"العملاء المحتملون","nav.invoices":"Facturas","nav.shop":"Tienda",
     "nav.referrals":"Referidos","nav.verification":"Verificación","nav.account":"Cuenta",
     "sidebar.viewAsClient":"Ver como cliente"
   }
 };
 
 function t(key) {
-  const lang = (db && db.lang) || 'en';
+  const lang = 'ar';
   return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
 }
 function applyTranslations() {
-  const lang = (db && db.lang) || 'en';
+  const lang = 'ar';
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1696,13 +3599,13 @@ function navigateTo(page) {
 
 function paletteItems() {
   const pages = [
-    ['dashboard','Dashboard','◆'],['messages','Messages','✉'],['clients','Clients','◇'],
-    ['planner','Plan Builder','▤'],['nutrition','Nutrition','◍'],['live','Live Sessions','●'],['library','Resource Library','▦'],
-    ['feedback','Client Feedback','★'],['review','Vision Review','▶'],['points','Points & Streaks','◈'],
-    ['readiness','Readiness','◎'],['vault','Progress Vault','▣'],['community','Community','◐'],
-    ['cohorts','Cohorts','⬢'],['automations','Automations','⚡'],['reports','Reports','▩'],['contracts','Contracts','✎'],
-    ['pipeline','Pipeline','⬡'],['invoices','Invoices','▥'],['shop','Shop','▨'],
-    ['referrals','Referrals','↗'],['verification','Verification','✓'],['account','Account','◉']
+    ['dashboard','الرئيسية','◆'],['messages','الرسائل','✉'],['clients','العملاء','◇'],
+    ['planner','باني الخطط','▤'],['nutrition','Nutrition','◍'],['live','الجلسات المباشرة','●'],['library','مكتبة الموارد','▦'],
+    ['feedback','تقييمات العملاء','★'],['review','مراجعة الأداء','▶'],['points','النقاط والاستمرارية','◈'],
+    ['readiness','الجاهزية','◎'],['vault','سجل التقدّم','▣'],['community','المجتمع','◐'],
+    ['cohorts','المجموعات','⬢'],['automations','التنظيم التلقائي','⚡'],['reports','التقارير','▩'],['contracts','العقود','✎'],
+    ['pipeline','العملاء المحتملون','⬡'],['invoices','الفواتير','▥'],['shop','المتجر','▨'],
+    ['referrals','الإحالات','↗'],['verification','التحقق','✓'],['account','الحساب','◉']
   ].map(([page,label,icon]) => ({ type:'page', page, label, icon, sub:'Go to page' }));
 
   const clients = db.clients.map(c => ({ type:'client', name:c.name, label:c.name, icon:'◇', sub:'Open client profile' }));
@@ -1723,10 +3626,38 @@ window.filterPalette = () => {
   const items = paletteItems().filter(i => i.label.toLowerCase().includes(q));
   document.getElementById('paletteResults').innerHTML = items.length ? items.map(i => `
     <button onclick="paletteSelect('${i.type}','${(i.page||i.name).replace(/'/g,"\\'")}')" class="w-full flex items-center gap-3 px-5 py-2.5 hover:bg-card2 text-left transition">
+      
+      
+      
+      
+      
+      
+      
       <span class="text-accent w-5 text-center">${i.icon}</span>
+      
+      
+      
+      
+      
+      
+      
       <span class="text-white text-sm flex-1">${i.label}</span>
+      
+      
+      
+      
+      
+      
+      
       <span class="text-muted text-[11px]">${i.sub}</span>
-    </button>`).join('') : '<p class="text-muted text-sm px-5 py-6 text-center">No matches.</p>';
+    
+    
+    
+    
+    
+    
+    
+    </button>`).join('') : '<p class="text-muted text-sm px-5 py-6 text-center">لا توجد نتائج مطابقة.</p>';
 };
 window.paletteSelect = (type, value) => {
   closePalette();
@@ -1789,7 +3720,7 @@ function buildChart() {
   const now = new Date();
   for (let i = 5; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    months.push({ label: d.toLocaleDateString('en-US', { month: 'short' }), year: d.getFullYear(), month: d.getMonth() });
+    months.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), year: d.getFullYear(), month: d.getMonth() });
   }
   const paid = (db.invoices || []).filter(inv => inv.status === 'Paid' && inv.due);
   const monthlyTotals = months.map(m => {

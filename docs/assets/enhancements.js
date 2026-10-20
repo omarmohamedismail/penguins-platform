@@ -19,42 +19,42 @@ document.getElementById('pg-import-file').onchange=async event=>{
  try{
   if(file.size>2000000)throw new Error('Choose a JSON backup smaller than 2 MB.');
   const parsed=JSON.parse(await file.text());const data=PenguinsCore.normalize(parsed.format==='penguins-workspace'?parsed.data:parsed);
-  const body=showDialog('Restore a backup');
+  const body=showDialog('استعادة نسخة احتياطية');
   addText(body,'p',`${data.clients.length} clients · ${data.plans.length} plans · ${data.invoices.length} invoices · ${data.tasks.length} tasks`);
   addText(body,'p','This replaces your workspace. Your current data is downloaded first. Login email and account access will stay with the signed-in user.');
-  addButton(body,'Export current data and restore',()=>{
-    exportWorkspace();data.account.email=sync.user.email;db=data;logActivity('Restored a JSON backup');saveData();applyTheme();applyColorMode();applyTranslations();renderAll();dialog.close();toast('Backup restored. Check the save status.');
+  addButton(body,'تصدير النسخة الحالية والاستعادة',()=>{
+    exportWorkspace();data.account.email=sync.user.email;db=data;logActivity('Restored a JSON backup');saveData();applyTheme();applyColorMode();applyTranslations();renderAll();dialog.close();toast('تمت الاستعادة. راجع حالة الحفظ.');
   });
- }catch(error){toast(error.message||'Could not read this backup.');}
+ }catch(error){toast(error.message||'تعذر قراءة النسخة الاحتياطية.');}
 };
 document.getElementById('pg-history').onclick=async()=>{
- const body=showDialog('Recent versions & activity');const loading=addText(body,'p','Loading cloud versions…');
+ const body=showDialog('النسخ الأخيرة والنشاط');const loading=addText(body,'p','جارٍ تحميل النسخ المحفوظة…');
  try{
   const history=await sync.history();loading.remove();
-  if(!history.length)addText(body,'p','Versions appear after your first save. Up to ten are kept.');
+  if(!history.length)addText(body,'p','تظهر النسخ بعد أول حفظ، حتى ١٠ نسخ.');
   for(const entry of history){
    const row=document.createElement('div');row.className='history-entry';body.append(row);
    addText(row,'span','Version '+entry.version+' · '+new Date(entry.created_at).toLocaleString());
-   addButton(row,'Restore',async()=>{
+   addButton(row,'استعادة',async()=>{
     if(!confirm('Restore this cloud version? Your current workspace is downloaded first.'))return;
     try{const snapshot=await sync.snapshot(entry.version);exportWorkspace();db=snapshot;logActivity('Restored cloud version '+entry.version);saveData();applyTheme();applyColorMode();applyTranslations();renderAll();dialog.close();}catch(error){toast(error.message);}
    });
   }
  }catch(error){loading.textContent='Could not load history: '+error.message;}
- addText(body,'h3','Workspace activity');
+ addText(body,'h3','نشاط مساحة العمل');
  for(const entry of (db.activity||[]).slice(0,15))addText(body,'p',new Date(entry.at).toLocaleString()+' — '+entry.message);
 };
 document.getElementById('pg-csv').onclick=()=>{
- const body=showDialog('Export a spreadsheet');addText(body,'p','Download your records as CSV. Formula-like text is neutralized for safer spreadsheet import.');
+ const body=showDialog('تصدير جدول');addText(body,'p','نزّل سجلاتك بصيغة جدول CSV.');
  for(const [collection,fields] of [['clients',['name','email','status','tag','joined','rate','notes']],['invoices',['client','amount','status','due','desc']],['leads',['name','email','stage','value','source']],['tasks',['text','done','due','priority']]]){
   addButton(body,'Export '+collection,()=>downloadFile('penguins-'+collection+'.csv',PenguinsCore.csv(db[collection],fields),'text/csv;charset=utf-8'));
  }
 };
 function clientEditor(name){
  const client=name?db.clients.find(item=>item.name===name):null;
- const body=showDialog(client?'Edit client':'Add a client');const form=document.createElement('form');body.append(form);
+ const body=showDialog(client?'تعديل سجل العميل':'إضافة سجل عميل');const form=document.createElement('form');body.append(form);
  const fields={};
- for(const [key,label,type] of [['name','Full name','text'],['email','Email','email'],['tag','Coaching focus','text'],['rate','Monthly rate','number'],['notes','Notes','textarea']]){
+ for(const [key,label,type] of [['name','الاسم الكامل','text'],['email','البريد الإلكتروني','email'],['tag','مجال المتابعة','text'],['rate','السعر الشهري','number'],['notes','ملاحظات','textarea']]){
   const labelElement=addText(form,'label',label);labelElement.htmlFor='edit-client-'+key;
   const input=document.createElement(type==='textarea'?'textarea':'input');if(type!=='textarea')input.type=type;
   input.id='edit-client-'+key;input.name=key;input.value=client?.[key]??(key==='rate'?0:'');input.style.cssText='display:block;width:100%;background:#090910;color:white;border:1px solid #444;padding:10px;border-radius:8px;margin:6px 0 14px';
@@ -62,14 +62,14 @@ function clientEditor(name){
   form.append(input);fields[key]=input;
  }
  const status=document.createElement('select');status.setAttribute('aria-label','Client status');for(const value of ['Active','Paused']){const option=new Option(value,value);status.add(option);}status.value=client?.status||'Active';form.append(status);
- const nutrition=document.createElement('input');nutrition.type='checkbox';nutrition.checked=Boolean(client?.nutrition);nutrition.id='edit-client-nutrition';form.append(nutrition);const nutritionLabel=addText(form,'label',' Includes nutrition coaching');nutritionLabel.htmlFor=nutrition.id;
- const submit=addText(form,'button',client?'Save client':'Add client');submit.type='submit';
+ const nutrition=document.createElement('input');nutrition.type='checkbox';nutrition.checked=Boolean(client?.nutrition);nutrition.id='edit-client-nutrition';form.append(nutrition);const nutritionLabel=addText(form,'label',' يشمل سجل التغذية');nutritionLabel.htmlFor=nutrition.id;
+ const submit=addText(form,'button',client?'حفظ العميل':'إضافة العميل');submit.type='submit';
  const message=addText(form,'p','');message.setAttribute('role','alert');
  form.onsubmit=event=>{
   event.preventDefault();const newName=fields.name.value.trim();
   if(!newName)return;
-  if(db.clients.some(item=>item.name.toLowerCase()===newName.toLowerCase()&&item!==client)){message.textContent='A client with this name already exists.';return;}
-  const values={id:client?.id||Date.now(),name:newName,email:fields.email.value.trim(),tag:fields.tag.value.trim()||'Coaching',rate:Number(fields.rate.value)||0,notes:fields.notes.value.trim(),status:status.value,nutrition:nutrition.checked,joined:client?.joined||new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'})};
+  if(db.clients.some(item=>item.name.toLowerCase()===newName.toLowerCase()&&item!==client)){message.textContent='يوجد سجل عميل بهذا الاسم.';return;}
+  const values={id:client?.id||Date.now(),name:newName,email:fields.email.value.trim(),tag:fields.tag.value.trim()||'Coaching',rate:Number(fields.rate.value)||0,notes:fields.notes.value.trim(),status:status.value,nutrition:nutrition.checked,joined:client?.joined||new Date().toLocaleDateString('ar-EG',{month:'short',year:'numeric'})};
   if(client){
    if(client.name!==newName){
     for(const key of ['chats','metrics','nutritionTargets','nutritionLogs','sessionNotes','clientPRs','clientGoals'])if(Object.hasOwn(db[key],client.name)){db[key][newName]=db[key][client.name];delete db[key][client.name];}
@@ -80,7 +80,7 @@ function clientEditor(name){
    }
    Object.assign(client,values);
   }else{db.clients.push(values);db.chats[newName]=[];}
-  logActivity((client?'Updated client: ':'Added client: ')+newName);saveData();renderAll();dialog.close();toast('Client saved.');
+  logActivity((client?'Updated client: ':'Added client: ')+newName);saveData();renderAll();dialog.close();toast('تم حفظ سجل العميل.');
  };
  setTimeout(()=>fields.name.focus(),0);
 }
@@ -88,7 +88,7 @@ document.getElementById('pg-add-client').onclick=()=>clientEditor();
 const originalOpenClientModal=window.openClientModal;
 window.openClientModal=name=>{
  originalOpenClientModal(name);const body=document.getElementById('clientModalBody');
- const button=document.createElement('button');button.className='pg-button';button.textContent='Edit client';button.onclick=()=>{closeClientModal();clientEditor(name);};body.prepend(button);
+ const button=document.createElement('button');button.className='pg-button';button.textContent='تعديل سجل العميل';button.onclick=()=>{closeClientModal();clientEditor(name);};body.prepend(button);
 };
 let undoState=null,undoTimer;
 const originalDelete=window.del;
@@ -115,8 +115,8 @@ renderTasks=function(){
   const row=document.createElement('div');row.className='flex items-center gap-3 bg-black border border-border rounded-lg px-3 py-2.5';list.append(row);
   const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=task.done;checkbox.setAttribute('aria-label','Complete '+task.text);checkbox.onchange=()=>toggleTask(task.id);row.append(checkbox);
   const label=addText(row,'span',task.text);label.className='text-sm flex-1'+(task.done?' line-through text-muted':'');
-  const detail=addText(row,'span',[task.priority||'Normal',task.due||'',!task.done&&task.due&&task.due<today?'Overdue':''].filter(Boolean).join(' · '));detail.className='text-xs text-muted';if(!task.done&&task.due&&task.due<today)detail.style.color='#ffb15a';
-  addButton(row,'Remove',()=>window.del('tasks',task.id));
+  const detail=addText(row,'span',[task.priority||'Normal',task.due||'',!task.done&&task.due&&task.due<today?'متأخر':''].filter(Boolean).join(' · '));detail.className='text-xs text-muted';if(!task.done&&task.due&&task.due<today)detail.style.color='#ffb15a';
+  addButton(row,'إزالة',()=>window.del('tasks',task.id));
  }
 };
 function refreshClientChoices(){
