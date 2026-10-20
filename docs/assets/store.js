@@ -1,6 +1,6 @@
 class PenguinsStore {
   constructor(client,onStatus){
-    this.client=client;this.onStatus=onStatus;this.version=0;this.revision=0;this.savedRevision=0;this.pending=null;this.busy=false;this.conflict=false;this.loaded=false;this.lastتم الحفظ='';
+    this.client=client;this.onStatus=onStatus;this.version=0;this.revision=0;this.savedRevision=0;this.pending=null;this.busy=false;this.conflict=false;this.loaded=false;this.lastSaved='';
     window.addEventListener('online',()=>this.flush());
     window.addEventListener('offline',()=>this.status('offline','غير متصل — التغييرات محفوظة على الجهاز'));
     window.addEventListener('beforeunload',event=>{if(this.dirty){event.preventDefault();event.returnValue='';}});
@@ -25,8 +25,8 @@ class PenguinsStore {
     if(error)throw new Error('Could not load your workspace. '+error.message);
     const account={name:user.user_metadata?.name||user.email.split('@')[0],email:user.email,niche:user.user_metadata?.niche||'Fitness / Strength'};
     const data=PenguinsCore.normalize(row?.data||makeBlank(account.name,account.email,account.niche),account);
-    this.version=row?.version||0;this.lastتم الحفظ=JSON.stringify(data);this.loaded=true;
-    try {const draft=JSON.parse(localStorage.getItem(this.draftKey)||'null');if(draft?.data && JSON.stringify(draft.data)!==this.lastتم الحفظ)this.draft=draft;}catch{}
+    this.version=row?.version||0;this.lastSaved=JSON.stringify(data);this.loaded=true;
+    try {const draft=JSON.parse(localStorage.getItem(this.draftKey)||'null');if(draft?.data && JSON.stringify(draft.data)!==this.lastSaved)this.draft=draft;}catch{}
     this.status('saved',row?'كل التغييرات محفوظة':'مساحتك جاهزة');
     return data;
   }
@@ -45,7 +45,7 @@ class PenguinsStore {
     try{
       const {data:version,error}=await this.client.rpc('save_workspace',{p_data:snapshot,p_expected:this.version});
       if(error){if(error.code==='40001')this.conflict=true;throw error;}
-      this.version=Number(version);this.savedRevision=revision;this.lastتم الحفظ=JSON.stringify(snapshot);
+      this.version=Number(version);this.savedRevision=revision;this.lastSaved=JSON.stringify(snapshot);
       if(this.revision===revision){try{localStorage.removeItem(this.draftKey);}catch{}this.status('saved','كل التغييرات محفوظة · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));}
     }catch(error){
       if(!this.pending)this.pending=snapshot;

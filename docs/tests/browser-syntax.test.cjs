@@ -1,0 +1,2 @@
+const test=require('node:test'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+test('all browser scripts parse before deployment, including storage and translated UI',()=>{const assets=path.join(__dirname,'../assets');for(const name of fs.readdirSync(assets).filter(n=>n.endsWith('.js')&&n!=='vendor-entry.js'))new vm.Script(fs.readFileSync(path.join(assets,name),'utf8'),{filename:name});});
