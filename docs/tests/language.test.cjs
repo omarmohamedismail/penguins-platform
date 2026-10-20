@@ -1,0 +1,4 @@
+const test=require('node:test'),assert=require('node:assert/strict'),{translate}=require('../assets/language.js');
+test('language switching is reversible and supports decorated controls and counts',()=>{assert.equal(translate('خطتي الحالية','en'),'My current plan');assert.equal(translate('My current plan','ar'),'خطتي الحالية');assert.equal(translate('◆ نظرة عامة','en'),'◆ Overview');assert.equal(translate('1 / 2 خطط مكتملة','en'),'1 / 2 plans complete');});
+test('unknown personal text is preserved and unsupported locales fall back safely',()=>{assert.equal(translate('اسم عميل غير موجود في القاموس','en'),'اسم عميل غير موجود في القاموس');assert.equal(translate('خطتي الحالية','unsupported'),'خطتي الحالية');assert.equal(translate('قرفصاء بوزن الجسم','en'),'Bodyweight squat');});
+test('translation lookup ignores inherited object properties',()=>{assert.equal(translate('constructor','en'),'constructor');assert.equal(translate('__proto__','en'),'__proto__');});

@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),{weeklyStreak}=require('../assets/client-classic.js');
+test('weekly streak deduplicates coaches in the same week and stops at gaps',()=>{assert.equal(weeklyStreak([{week:'2026-10-19'},{week:'2026-10-19'},{week:'2026-10-12'},{week:'2026-09-28'}],new Date('2026-10-20T10:00:00Z')),2);assert.equal(weeklyStreak([{week:'2026-10-12'}],new Date('2026-10-20T10:00:00Z')),1);assert.equal(weeklyStreak([{week:'2026-09-28'}],new Date('2026-10-20T10:00:00Z')),0);});

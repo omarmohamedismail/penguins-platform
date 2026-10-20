@@ -56,7 +56,7 @@ async function logOut() {
 }
 async function loadData() {
  try {
-  db=await sync.load(blankData);db.lang='ar';db.lang='ar';db.lang='ar';
+  db=await sync.load(blankData);db.lang='ar';
   if(sync.draft) {
     const banner=document.getElementById('draft-banner');banner.hidden=false;
     document.getElementById('restore-draft').onclick=()=>{
@@ -226,249 +226,75 @@ function renderAll() {
   // Plans
   document.getElementById('list-plans').innerHTML = db.plans.length ? db.plans.map(p=>`
     <div class="bg-black border border-border rounded-xl p-4">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-start">
-        
-        
-        
-        
-        
-        
-        
+
         <div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="flex items-center gap-2"><h4 class="text-white font-semibold">${p.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${uiLabel(p.type)}</span></div>
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-accent text-xs mt-1">→ Sent to: ${p.client}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-muted text-xs mt-1">${p.sent}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-text text-sm mt-2 whitespace-pre-line">${p.details}</p>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="del('plans',${p.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد خطط في السجل بعد.</p>';
 
   // Live
   document.getElementById('list-live').innerHTML = db.sessions.length ? db.sessions.map(s=>`
     <div class="bg-black border border-border rounded-xl p-4 flex justify-between items-center">
-      
-      
-      
-      
-      
-      
-      
+
       <div><h4 class="text-white font-semibold">${s.topic}</h4><p class="text-muted text-xs">${new Date(s.time).toLocaleString()} · ${s.access}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex gap-2"><button class="px-3 py-1 bg-accent/15 text-accent text-xs rounded-lg">ابدأ</button><button onclick="del('sessions',${s.id})" class="text-red-400 text-xs">إلغاء</button></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد جلسات محددة.</p>';
 
   // Library
   document.getElementById('list-library').innerHTML = db.library.length ? db.library.map(r=>`
     <div class="bg-black border border-border rounded-xl p-4">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-start mb-2">
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-2xl">📄</span>
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold ${r.tier==='Free'?'bg-green-500/15 text-green-400':'bg-gold/15 text-gold'}">${r.tier==='Free'?'FREE':'$'+r.price.toFixed(2)}</span>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <h4 class="text-white font-semibold text-sm">${r.title}</h4>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-xs mt-1">${r.desc||''}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-[10px] mt-2 font-mono">${r.filename}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-center mt-3">
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-muted text-xs">${r.downloads} تنزيل</span>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="del('library',${r.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">لا توجد موارد مسجلة.</p>';
 
   // Feedback
   document.getElementById('list-feedback').innerHTML = db.feedback.map(f=>`
     <div class="bg-black border border-border rounded-xl p-4">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between"><div><h4 class="text-white font-semibold">${f.client}</h4><p class="text-muted text-xs">${f.date}</p></div><span class="text-gold text-sm">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</span></div>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-text text-sm mt-2">"${f.msg}"</p>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="mt-3 flex gap-2"><input type="text" placeholder="Reply..." class="flex-1 input-dark rounded-lg px-3 py-1.5 text-xs"><button class="px-3 py-1.5 bg-accent/15 text-accent text-xs rounded-lg">إرسال</button></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
 
   // Store
@@ -477,118 +303,40 @@ function renderAll() {
   // Community
   document.getElementById('list-community').innerHTML = db.community.map(p=>`
     <div class="card rounded-2xl p-6">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-start"><div><h4 class="text-white font-semibold">${p.user}</h4><span class="text-[10px] px-2 py-0.5 rounded-full ${p.type==='تحدٍّ'?'bg-gold/15 text-gold':p.type==='إعلان'?'bg-accent/15 text-accent':'bg-border text-muted'}">${uiLabel(p.type)}</span></div><span class="text-muted text-xs">${p.date}</span></div>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-text mt-3">${p.text}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="mt-3 flex justify-between items-center"><button onclick="likePost(${p.id})" class="text-sm text-accent hover:underline">❤️ ${p.likes}</button>${p.user!=='Coach'?`<button onclick="del('community',${p.id})" class="text-xs text-red-400/60 hover:text-red-400">إزالة المنشور</button>`:''}</div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
 
   // Submissions
   document.getElementById('list-submissions').innerHTML = db.submissions.map(s=>`
     <div class="bg-black border border-border rounded-xl p-3 cursor-pointer hover:border-accent/50 transition" onclick="loadSubmission(${s.id})">
-      
-      
-      
-      
-      
-      
-      
+
       <h4 class="text-white text-sm font-semibold">${s.client}</h4>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-xs">${s.exercise}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-[10px] px-2 py-0.5 rounded-full mt-1 inline-block ${s.status==='Pending Review'?'bg-gold/15 text-gold':'bg-green-500/15 text-green-400'}">${uiLabel(s.status)}</span>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
 
   // Points
   document.getElementById('total-points').innerText = db.pointsClients.reduce((a,b)=>a+b.points,0);
   document.getElementById('points-leaderboard').innerHTML = db.pointsClients.map((c,i)=>`
     <div class="flex items-center p-4 bg-black border border-border rounded-xl">
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-lg font-bold text-muted w-8">${i+1}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent/40 to-indigo-700/40 flex items-center justify-center text-white text-sm font-bold ml-2">${c.name[0]}</div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="ml-4 flex-1"><p class="text-white text-sm font-medium">${c.name}</p><p class="text-muted text-xs">${c.streak} أيام متواصلة · ${c.completion}٪ إنجاز</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="text-right"><p class="text-accent font-bold">${c.points} نقطة</p></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
 
   // Readiness
@@ -597,45 +345,15 @@ function renderAll() {
     const labels = { green:'🟢 Go Hard', yellow:'🟡 Moderate', red:'🔴 Recovery' };
     const recs = { green:'Keep today\'s heavy compounds. Push for PR.', yellow:'Drop weight 10%. Focus on form & tempo.', red:'Auto-swapped to 30min mobility flow.' };
     return `<div class="p-4 border rounded-xl ${colors[r.status]}">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-center"><h4 class="text-white font-semibold">${r.name}</h4><span class="text-sm">${labels[r.status]}</span></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex gap-4 mt-2 text-xs text-muted"><span>النوم: ${r.sleep}/10</span><span>الإجهاد: ${r.sore}/10</span><span>الضغط: ${r.stress}/10</span></div>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-text text-sm mt-2">${recs[r.status]}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <button class="mt-2 text-xs text-accent hover:underline">تعديل المؤشر</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
   }).join('');
 
@@ -744,13 +462,7 @@ function renderShop() {
     const stockPct = p.stock !== null && p.stock !== undefined ? Math.min(100, (p.stock / 20) * 100) : null;
     return `
     <div class="metal-card overflow-hidden">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="h-28 metal-icon-plate flex items-center justify-center text-3xl relative">
         ${p.image ? `<img src="${p.image}" class="w-full h-full object-cover">` : '📦'}
         <div class="absolute top-2 left-2 flex gap-1.5">
@@ -759,106 +471,34 @@ function renderShop() {
         </div>
         ${outOfStock ? '<div class="absolute inset-0 bg-black/70 flex items-center justify-center"><span class="text-red-400 text-xs font-bold tracking-wide">نفد المخزون</span></div>' : ''}
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="p-4">
-        
-        
-        
-        
-        
-        
-        
+
         <h4 class="text-white font-semibold text-sm">${p.name}</h4>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex items-center gap-2 mt-1">
           ${onSale ? `<span class="text-muted text-xs line-through">$${p.price.toFixed(2)}</span><span class="text-accent font-bold text-sm">$${p.salePrice.toFixed(2)}</span>` : `<span class="text-accent font-bold text-sm">$${p.price.toFixed(2)}</span>`}
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-muted text-[10px] mt-1">${uiLabel(p.category)} · ${p.sold||0} مباع</p>
         ${stockPct !== null ? `
           <div class="mt-2">
-            
-            
-            
-            
-            
-            
-            
+
             <div class="flex justify-between text-[10px] text-muted mb-1"><span>${p.stock} في المخزون</span>${lowStockFlag?'<span class="text-gold">مخزون منخفض</span>':''}</div>
-            
-            
-            
-            
-            
-            
-            
+
             <div class="metal-stock-bar"><div class="metal-stock-fill" style="width:${stockPct}%"></div></div>
-          
-          
-          
-          
-          
-          
-          
+
           </div>` : '<p class="text-muted text-[10px] mt-2">مخزون غير محدود</p>'}
         <div class="flex gap-2 mt-3">
-          
-          
-          
-          
-          
-          
-          
+
           <button onclick="openEditProduct(${p.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">تعديل</button>
-          
-          
-          
-          
-          
-          
-          
+
           <button onclick="del('shop',${p.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
   }).join('') : '<p class="text-muted text-sm text-center py-10 col-span-2">لا توجد منتجات في هذا القسم.</p>';
 }
@@ -928,133 +568,37 @@ function renderAccountApproval() {
     banner.classList.remove('hidden');
     banner.innerHTML = `
       <div class="card rounded-2xl p-5 border-gold/40">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex items-center gap-2 mb-3">
-          
-          
-          
-          
-          
-          
-          
+
           <span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-semibold">طلب تعديل في السجل</span>
-          
-          
-          
-          
-          
-          
-          
+
           <span class="text-muted text-xs">تم التسجيل ${p.submittedAt}</span>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-text text-sm mb-3">طلب مسجل داخل مساحة العمل فقط. الاعتماد الفعلي من قسم الحساب والشهادات.</p>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="bg-black border border-border rounded-lg p-3 text-xs text-muted space-y-1 mb-4">
-          
-          
-          
-          
-          
-          
-          
+
           <p><span class="text-white">الاسم:</span> ${p.name}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p><span class="text-white">البريد:</span> ${p.email || '—'}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p><span class="text-white">المجال:</span> ${p.niche}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p><span class="text-white">السعر:</span> $${p.rate}/hr</p>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex gap-2">
-          
-          
-          
-          
-          
-          
-          
+
           <button onclick="cancelAccountRequest()" class="flex-1 py-2 bg-black border border-border text-muted text-xs font-medium rounded-lg hover:text-white transition">سحب الطلب</button>
-          
-          
-          
-          
-          
-          
-          
+
           <button onclick="approveAccountChange()" class="flex-1 py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">محاكاة تحديث السجل فقط</button>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>`;
   } else {
     fields.forEach(f => f.disabled = false);
@@ -1107,69 +651,21 @@ function renderChatList() {
     const last = thread.length ? thread[thread.length-1] : null;
     const active = name === db.activeChat;
     return `<button onclick="openChat('${name.replace(/'/g,"\\'")}')" class="w-full text-left p-4 border-b border-border hover:bg-card2 transition ${active?'bg-card2':''}">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold shrink-0">${name[0]}</div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex-1 min-w-0">
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-white text-sm font-medium truncate">${name}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-muted text-xs truncate">${last ? (last.from==='me'?'You: ':'') + last.text : 'لا توجد رسائل مسجلة'}</p>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </button>`;
   }).join('');
 }
@@ -1184,31 +680,13 @@ function renderChatThread() {
   document.getElementById('chat-header-info').innerHTML = `<div class="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-bold mr-3">${name[0]}</div><div><p class="text-white text-sm font-semibold">${name}</p><p class="text-muted text-xs">عميل</p></div>`;
   document.getElementById('chat-thread').innerHTML = thread.length ? thread.map(m => `
     <div class="flex ${m.from==='me'?'justify-end':'justify-start'}">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="max-w-[70%] px-4 py-2 text-sm ${m.from==='me'?'chat-bubble-me':'chat-bubble-them'}">
         ${m.text}
         <div class="text-[10px] opacity-60 mt-1">${m.time}</div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">ابدأ سجل المحادثة.</p>';
   const el = document.getElementById('chat-thread'); el.scrollTop = el.scrollHeight;
   renderQuickReplies();
@@ -1266,7 +744,7 @@ function renderInsights() {
   const unsoldPaid = db.library.filter(r => r.tier === 'Paid' && r.downloads === 0);
   unsoldPaid.forEach(r => items.push({ color:'bg-accent', text: `"${r.title}" hasn't مباع yet — try promoting it in Community or Messages.` }));
 
-  const overdue = db.invoices.filter(i => i.status === 'متأخر');
+  const overdue = db.invoices.filter(i => i.status === 'Overdue');
   if (overdue.length) items.push({ color:'bg-red-400', text: `${overdue.length} invoice${overdue.length>1?'s are':' is'} overdue, totalling $${overdue.reduce((a,b)=>a+b.amount,0).toFixed(2)}.` });
 
   const topClient = [...db.pointsClients].sort((a,b)=>b.streak-a.streak)[0];
@@ -1277,37 +755,13 @@ function renderInsights() {
 
   el.innerHTML = `
     <div class="flex items-center justify-between mb-3">
-      
-      
-      
-      
-      
-      
-      
+
       <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">ملخصات السجل</h3>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-[10px] text-muted">من بيانات مساحة العمل</span>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="space-y-2.5">
       ${items.length ? items.slice(0,5).map(i => `<div class="flex items-start gap-3"><span class="insight-dot ${i.color} mt-1.5"></span><p class="text-sm text-text">${i.text}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد ملاحظات مسجلة حاليًا.</p>'}
     </div>`;
@@ -1323,351 +777,115 @@ function renderClients() {
   const statusFilter = document.getElementById('client-filter')?.value || 'All';
   const filtered = db.clients.filter(c => [c.name,c.email,c.tag].join(' ').toLowerCase().includes(q) && (statusFilter==='All' || c.status===statusFilter));
   el.innerHTML = filtered.length ? filtered.map(c => {
-    const نقطة = db.pointsClients.find(p => p.name === c.name);
+    const pts = db.pointsClients.find(p => p.name === c.name);
     const rdy = db.readiness.find(r => r.name === c.name);
     const rdyColor = rdy ? ({green:'bg-green-400',yellow:'bg-gold',red:'bg-red-400'})[rdy.status] : 'bg-muted';
     return `<button onclick="openClientModal('${c.name.replace(/'/g,"\\'")}')" class="text-left card rounded-2xl p-5 hover:border-accent/50 transition">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center justify-between mb-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-11 h-11 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${c.name[0]}</div>
-        
-        
-        
-        
-        
-        
-        
+
         <span class="w-2.5 h-2.5 rounded-full ${rdyColor}" title="الجاهزية"></span>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <h4 class="text-white font-semibold">${c.name}</h4>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-xs mt-0.5">${c.tag} · ${uiLabel(c.status)}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between text-xs text-muted mt-3 pt-3 border-t border-border">
-        
-        
-        
-        
-        
-        
-        
-        <span>${pts ? نقطة.streak+'d streak' : '—'}</span>
-        
-        
-        
-        
-        
-        
-        
+
+        <span>${pts ? pts.streak+'d streak' : '—'}</span>
+
         <span>منذ ${c.joined}</span>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </button>`;
   }).join('') : '<p class="text-muted text-sm text-center py-10 sm:col-span-2 lg:col-span-3">لا توجد سجلات عملاء مطابقة.</p>';
 }
 
 function clientSummary(name) {
   const c = db.clients.find(x => x.name === name) || { name, email:'', status:'—', tag:'—', joined:'—', notes:'' };
-  const نقطة = db.pointsClients.find(p => p.name === name);
+  const pts = db.pointsClients.find(p => p.name === name);
   const rdy = db.readiness.find(r => r.name === name);
   const plans = db.plans.filter(p => p.client === name);
   const fb = db.feedback.filter(f => f.client === name);
   const prs = db.clientPRs[name] || [];
   const goals = db.clientGoals[name] || [];
-  return { c, نقطة, rdy, plans, fb, prs, goals };
+  return { c, pts, rdy, plans, fb, prs, goals };
 }
 
 let currentModalClient = null;
 
 window.openClientModal = (name) => {
   currentModalClient = name;
-  const { c, نقطة, rdy, plans, fb, prs, goals } = clientSummary(name);
+  const { c, pts, rdy, plans, fb, prs, goals } = clientSummary(name);
   const rdyLabel = rdy ? ({green:'🟢 Go Hard',yellow:'🟡 Moderate',red:'🔴 Recovery'})[rdy.status] : '—';
   const sortedPRs = [...prs].sort((a,b) => new Date(b.date) - new Date(a.date));
   document.getElementById('clientModalBody').innerHTML = `
     <div class="flex items-start justify-between mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-4">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-14 h-14 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold text-xl">${c.name[0]}</div>
-        
-        
-        
-        
-        
-        
-        
+
         <div>
-          
-          
-          
-          
-          
-          
-          
+
           <h3 class="display text-xl font-bold text-white">${c.name}</h3>
-          
-          
-          
-          
-          
-          
-          
+
           <p class="text-muted text-sm">${c.tag} · ${uiLabel(c.status)} · عميل منذ ${c.joined}</p>
-          
-          
-          
-          
-          
-          
-          
+
           <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="mt-1.5 inline-block text-[10px] px-2 py-0.5 rounded-full font-medium transition ${c.nutrition ? 'bg-accent/15 text-accent' : 'bg-border text-muted hover:text-accent'}">${c.nutrition ? '◍ Nutrition Enabled' : '◍ Enable Nutrition'}</button>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="closeClientModal()" class="text-muted hover:text-white text-xl leading-none">×</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="grid grid-cols-3 gap-3 mb-5">
-      
-      
-      
-      
-      
-      
-      
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">النقاط</p><p class="text-white font-bold text-lg">${pts ? نقطة.points : '—'}</p></div>
-      
-      
-      
-      
-      
-      
-      
-      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الاستمرارية</p><p class="text-white font-bold text-lg">${pts ? نقطة.streak+'d' : '—'}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">النقاط</p><p class="text-white font-bold text-lg">${pts ? pts.points : '—'}</p></div>
+
+      <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الاستمرارية</p><p class="text-white font-bold text-lg">${pts ? pts.streak+'d' : '—'}</p></div>
+
       <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الجاهزية</p><p class="text-white font-bold text-sm mt-1">${rdyLabel}</p></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
     ${c.email ? `<p class="text-muted text-xs mb-4">✉ ${c.email}</p>` : ''}
     ${c.notes ? `<div class="mb-5"><p class="text-[11px] text-muted uppercase tracking-wide mb-1">ملاحظات الكوتش</p><p class="text-sm text-text">${c.notes}</p></div>` : ''}
 
     <div class="mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center justify-between mb-2">
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-[11px] text-muted uppercase tracking-wide">الإنجازات (${sortedPRs.length})</p>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="openClientPRModal()" class="text-accent text-[11px] hover:underline">+ إضافة إنجاز</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
       ${sortedPRs.length ? sortedPRs.slice(0,4).map(p=>`
         <div class="bg-black border border-border rounded-lg p-3 mb-2 flex items-center justify-between">
-          
-          
-          
-          
-          
-          
-          
+
           <div><p class="text-sm text-white font-medium">${p.exercise} 🏆</p><p class="text-muted text-[11px] mt-0.5">${new Date(p.date).toLocaleDateString('ar-EG',{month:'short',day:'numeric'})}</p></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="flex items-center gap-2"><span class="text-accent font-bold text-sm">${p.weight}kg × ${p.reps}</span><button onclick="delClientPR(${p.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button></div>
-        
-        
-        
-        
-        
-        
-        
+
         </div>`).join('') : '<p class="text-muted text-sm">لا توجد إنجازات شخصية مسجلة.</p>'}
     </div>
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     <div class="mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center justify-between mb-2">
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-[11px] text-muted uppercase tracking-wide">الأهداف (${goals.length})</p>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="openClientGoalModal()" class="text-accent text-[11px] hover:underline">+ إضافة هدف</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
       ${goals.length ? goals.map(g => {
         const start = g.startValue !== undefined ? g.startValue : g.current;
@@ -1675,179 +893,51 @@ window.openClientModal = (name) => {
         let pct = isIncreasing ? ((g.current - start) / ((g.target - start) || 1)) * 100 : ((start - g.current) / ((start - g.target) || 1)) * 100;
         pct = Math.max(0, Math.min(100, pct));
         return `<div class="bg-black border border-border rounded-lg p-3 mb-2">
-          
-          
-          
-          
-          
-          
-          
+
           <div class="flex justify-between items-center mb-1"><p class="text-sm text-white font-medium">${g.title}${pct>=100?' 🏆':''}</p><button onclick="delClientGoal(${g.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="flex justify-between text-[11px] text-muted mb-1"><span>${g.current} ${g.unit}</span><span>الهدف: ${g.target} ${g.unit}</span></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="w-full h-1.5 bg-border rounded-full overflow-hidden"><div class="h-full bg-accent rounded-full" style="width:${pct}%"></div></div>
-        
-        
-        
-        
-        
-        
-        
+
         </div>`;
       }).join('') : '<p class="text-muted text-sm">لا توجد أهداف مسجلة.</p>'}
     </div>
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     <div class="mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-[11px] text-muted uppercase tracking-wide mb-2">الخطط الأخيرة (${plans.length})</p>
       ${plans.length ? plans.slice(0,3).map(p=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-white font-medium">${p.title}</p><p class="text-muted text-xs">${uiLabel(p.type)} · ${p.sent}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد خطط في السجل بعد.</p>'}
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-[11px] text-muted uppercase tracking-wide mb-2">التقييمات (${fb.length})</p>
       ${fb.length ? fb.map(f=>`<div class="bg-black border border-border rounded-lg p-3 mb-2"><p class="text-sm text-text">"${f.msg}"</p><p class="text-gold text-xs mt-1">${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</p></div>`).join('') : '<p class="text-muted text-sm">لا توجد تقييمات مسجلة بعد.</p>'}
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-[11px] text-muted uppercase tracking-wide mb-2">ملاحظات الجلسة الخاصة <span class="normal-case text-muted">(تظهر لك فقط)</span></p>
-      
-      
-      
-      
-      
-      
-      
+
       <div id="session-notes-list" class="space-y-2 mb-2 max-h-40 overflow-y-auto thin-scroll"></div>
-      
-      
-      
-      
-      
-      
-      
+
       <form onsubmit="addSessionNote(event,'${c.name.replace(/'/g,"\\'")}')" class="flex gap-2">
-        
-        
-        
-        
-        
-        
-        
+
         <input type="text" id="session-note-input" placeholder="Add a private note…" class="flex-1 input-dark rounded-lg px-3 py-1.5 text-xs">
-        
-        
-        
-        
-        
-        
-        
+
         <button type="submit" class="px-3 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">إضافة</button>
-      
-      
-      
-      
-      
-      
-      
+
       </form>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="flex gap-2">
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="closeClientModal();openChat('${c.name.replace(/'/g,"\\'")}');navigateTo('messages')" class="flex-1 py-2.5 bg-accent text-white text-sm font-semibold rounded-lg hover:bg-indigo-500 transition">سجل محادثة ${c.name.split(' ')[0]}</button>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="closeClientModal()" class="px-4 py-2.5 bg-black border border-border text-muted text-sm font-medium rounded-lg hover:text-white transition">إغلاق</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
   document.getElementById('clientModal').classList.remove('hidden');
   renderSessionNotes(name);
@@ -1899,29 +989,11 @@ function renderSessionNotes(name) {
   const notes = db.sessionNotes[name] || [];
   el.innerHTML = notes.length ? [...notes].reverse().map(n => `
     <div class="bg-black border border-border rounded-lg p-2.5">
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-text text-xs">${n.text}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-[10px] mt-1">${n.date}</p>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-xs">لا توجد ملاحظات خاصة بعد.</p>';
 }
 window.addSessionNote = (e, name) => {
@@ -1946,112 +1018,34 @@ function renderPipeline() {
     const items = db.leads.filter(l => l.stage === stage);
     const total = items.reduce((a,b)=>a+(b.value||0),0);
     return `<div class="kanban-col p-3" data-stage="${uiLabel(stage)}" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center justify-between mb-3 px-1">
-        
-        
-        
-        
-        
-        
-        
+
         <h4 class="text-white text-xs font-semibold uppercase tracking-wide">${uiLabel(stage)}</h4>
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-muted text-[10px]">$${total.toLocaleString()}</span>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="space-y-2">
         ${items.map(l => `
           <div class="kanban-card p-3" draggable="true" data-id="${l.id}" ondragstart="onDragStart(event)" ondragend="onDragEnd(event)">
-            
-            
-            
-            
-            
-            
-            
+
             <p class="text-white text-sm font-medium">${l.name}</p>
-            
-            
-            
-            
-            
-            
-            
+
             <p class="text-muted text-[11px] mt-0.5">${l.notes||''}</p>
-            
-            
-            
-            
-            
-            
-            
+
             <div class="flex justify-between items-center mt-2">
-              
-              
-              
-              
-              
-              
-              
+
               <span class="text-accent text-xs font-semibold">$${(l.value||0).toLocaleString()}</span>
-              
-              
-              
-              
-              
-              
-              
+
               <button onclick="del('leads',${l.id})" class="text-red-400/50 hover:text-red-400 text-[11px]">✕</button>
-            
-            
-            
-            
-            
-            
-            
+
             </div>
-          
-          
-          
-          
-          
-          
-          
+
           </div>`).join('')}
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
   }).join('');
 }
@@ -2087,7 +1081,7 @@ function renderInvoices() {
   if (!list) return;
   const outstanding = db.invoices.filter(i=>i.status!=='Paid').reduce((a,b)=>a+b.amount,0);
   const paid = db.invoices.filter(i=>i.status==='Paid').reduce((a,b)=>a+b.amount,0);
-  const overdue = db.invoices.filter(i=>i.status==='متأخر').reduce((a,b)=>a+b.amount,0);
+  const overdue = db.invoices.filter(i=>i.status==='Overdue').reduce((a,b)=>a+b.amount,0);
   document.getElementById('inv-outstanding').innerText = '$'+outstanding.toFixed(2);
   document.getElementById('inv-paid').innerText = '$'+paid.toFixed(2);
   document.getElementById('inv-overdue').innerText = '$'+overdue.toFixed(2);
@@ -2095,79 +1089,25 @@ function renderInvoices() {
   const statusColor = { Paid:'bg-green-500/15 text-green-400', Unpaid:'bg-gold/15 text-gold', Overdue:'bg-red-500/15 text-red-400' };
   list.innerHTML = db.invoices.length ? db.invoices.map(i => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="min-w-0">
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-white font-medium text-sm truncate">${i.desc}</p>
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-muted text-xs mt-0.5">${i.client} · الاستحقاق ${i.due}</p>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3 shrink-0">
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-white font-semibold text-sm">$${i.amount.toFixed(2)}</span>
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${statusColor[i.status]}">${uiLabel(i.status)}</span>
         ${i.status!=='Paid' ? `<button onclick="markPaid(${i.id})" class="text-accent text-xs hover:underline">تسجيل السداد</button>` : ''}
         <button onclick="del('invoices',${i.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد فواتير مسجلة.</p>';
 }
 window.markPaid = (id) => { const inv = db.invoices.find(i=>i.id===id); if(inv){ inv.status='Paid'; saveData(); renderAll(); } };
@@ -2192,29 +1132,11 @@ function renderExerciseLibrary() {
   const list = EXERCISE_LIBRARY.filter(ex => ex.name.toLowerCase().includes(q) || ex.muscle.toLowerCase().includes(q));
   el.innerHTML = list.map(ex => `
     <div class="exercise-chip" onclick="addExerciseToWorkout('${ex.name.replace(/'/g,"\\'")}','${ex.default}')">
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-white text-sm font-medium">${ex.name}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-[11px]">${ex.muscle} · ${ex.default}</p>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') || '<p class="text-muted text-xs text-center py-4">لا توجد تمارين مطابقة.</p>';
 }
 window.addExerciseToWorkout = (name, scheme) => {
@@ -2232,29 +1154,11 @@ function renderBuiltWorkout() {
   }
   el.innerHTML = builtWorkout.map((ex,i) => `
     <div class="flex items-center justify-between bg-card2 rounded-lg px-3 py-2">
-      
-      
-      
-      
-      
-      
-      
+
       <div><p class="text-white text-sm">${ex.name}</p><p class="text-muted text-[11px]">${ex.scheme}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <button type="button" onclick="removeBuiltExercise(${i})" class="text-red-400/60 hover:text-red-400 text-xs">✕</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
 }
 
@@ -2272,61 +1176,19 @@ function renderTemplates() {
   if (!el) return;
   el.innerHTML = db.planTemplates.length ? db.planTemplates.map(t => `
     <div class="bg-black border border-border rounded-xl p-4">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-2 mb-1"><h4 class="text-white font-semibold text-sm">${t.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${uiLabel(t.type)}</span></div>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-muted text-xs whitespace-pre-line line-clamp-3">${t.details}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex gap-2 mt-3">
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="useTemplate(${t.id})" class="flex-1 py-1.5 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">استخدام القالب</button>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="del('planTemplates',${t.id})" class="px-3 py-1.5 text-red-400/60 hover:text-red-400 text-xs">حذف</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد قوالب بعد. جهّز خطة واضغط حفظ كقالب.</p>';
 }
 window.saveAsTemplate = () => {
@@ -2413,109 +1275,31 @@ function renderBusinessGoals() {
   const clientsPct = Math.min(100, Math.round((db.clients.length / (g.clientsTarget||1)) * 100));
   el.innerHTML = `
     <div class="flex items-center justify-between mb-4">
-      
-      
-      
-      
-      
-      
-      
+
       <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">أهداف العمل</h3>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="openGoalsModal()" class="text-[11px] text-accent hover:underline">تعديل الأهداف</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex justify-between text-xs text-muted mb-1"><span>الإيراد الشهري</span><span>$${Math.round(earnings).toLocaleString()} / $${g.revenueTarget.toLocaleString()}</span></div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-full h-2 bg-border rounded-full overflow-hidden"><div class="h-full bg-accent rounded-full transition-all duration-500" style="width:${revenuePct}%"></div></div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex justify-between text-xs text-muted mb-1"><span>العملاء النشطون</span><span>${db.clients.length} / ${g.clientsTarget}</span></div>
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-full h-2 bg-border rounded-full overflow-hidden"><div class="h-full bg-gold rounded-full transition-all duration-500" style="width:${clientsPct}%"></div></div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
 }
 window.openGoalsModal = () => {
@@ -2552,25 +1336,13 @@ function renderLiveCalendar() {
   const days = Array.from({length:7}, (_,i) => { const d = new Date(startOfWeek); d.setDate(startOfWeek.getDate()+i); return d; });
   el.innerHTML = days.map(d => {
     const dayStr = d.toDateString();
-    const isاليوم = dayStr === today.toDateString();
+    const isToday = dayStr === today.toDateString();
     const daySessions = db.sessions.filter(s => new Date(s.time).toDateString() === dayStr);
     const daySlots = db.slots.filter(s => new Date(s.time).toDateString() === dayStr);
-    return `<div class="cal-day ${isاليوم?'today':''}">
-      
-      
-      
-      
-      
-      
-      
+    return `<div class="cal-day ${isToday?'today':''}">
+
       <p class="text-[10px] text-muted uppercase">${d.toLocaleDateString('ar-EG',{weekday:'short'})}</p>
-      
-      
-      
-      
-      
-      
-      
+
       <p class="text-white text-sm font-semibold mb-2">${d.getDate()}</p>
       ${daySessions.map(s=>`<div class="bg-accent/15 text-accent text-[10px] rounded px-1.5 py-0.5 mb-1 truncate">${s.topic}</div>`).join('')}
       ${daySlots.map(s=>`<div class="${s.booked?'bg-gold/15 text-gold':'bg-green-500/15 text-green-400'} text-[10px] rounded px-1.5 py-0.5 mb-1 truncate">${s.booked?'Booked: '+s.client:'Open slot'}</div>`).join('')}
@@ -2582,39 +1354,15 @@ function renderSlots() {
   if (!el) return;
   el.innerHTML = db.slots.length ? db.slots.map(s => `
     <div class="bg-black border border-border rounded-xl p-4 flex justify-between items-center">
-      
-      
-      
-      
-      
-      
-      
+
       <div><p class="text-white text-sm font-medium">${new Date(s.time).toLocaleString()}</p><p class="text-muted text-xs">${s.booked ? 'Booked by '+s.client : 'Open — clients can self-book'}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex gap-2">
         ${!s.booked ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 font-medium">متاح</span>` : `<span class="text-[10px] px-2 py-0.5 rounded-full bg-gold/15 text-gold font-medium">محجوز</span>`}
         <button onclick="del('slots',${s.id})" class="text-red-400/60 hover:text-red-400 text-xs">إزالة</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-6">لا توجد مواعيد متاحة.</p>';
 }
 document.getElementById('form-slot').onsubmit = e => {
@@ -2633,55 +1381,19 @@ function renderCohorts() {
   if (!el) return;
   el.innerHTML = db.cohorts.length ? db.cohorts.map(c => `
     <div class="card rounded-2xl p-6">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex justify-between items-start mb-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div><h4 class="text-white font-semibold">${c.name}</h4><p class="text-muted text-xs mt-0.5">${c.schedule}</p></div>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="del('cohorts',${c.id})" class="text-red-400/50 hover:text-red-400 text-xs">إزالة</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex flex-wrap gap-2">
         ${c.members.map(m=>`<span class="text-xs px-2.5 py-1 rounded-full bg-accent/15 text-accent">${m}</span>`).join('') || '<span class="text-muted text-xs">لا يوجد أعضاء بعد</span>'}
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10 lg:col-span-2">لا توجد مجموعات بعد. أضف أول مجموعة.</p>';
 }
 window.openAddCohort = () => {
@@ -2707,77 +1419,23 @@ function renderAutomations() {
   if (!el) return;
   el.innerHTML = db.automations.length ? db.automations.map(a => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="min-w-0">
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-white text-sm font-medium">عندما <span class="text-accent">${a.trigger}</span></p>
-        
-        
-        
-        
-        
-        
-        
+
         <p class="text-muted text-xs mt-0.5">→ ${a.action}</p>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3 shrink-0">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="toggle-switch ${a.enabled?'on':''}" onclick="toggleAutomation(${a.id})"></div>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="del('automations',${a.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد قواعد مسجلة.</p>';
 }
 window.toggleAutomation = (id) => { const a = db.automations.find(x=>x.id===id); if(a){ a.enabled = !a.enabled; saveData(); renderAutomations(); } };
@@ -2797,39 +1455,15 @@ function renderContracts() {
   if (!el) return;
   el.innerHTML = db.contracts.length ? db.contracts.map(c => `
     <div class="bg-black border border-border rounded-xl p-4 flex items-center justify-between gap-3">
-      
-      
-      
-      
-      
-      
-      
+
       <div><p class="text-white text-sm font-medium">${c.title}</p><p class="text-muted text-xs mt-0.5">${c.client} · ${c.date}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3">
-        
-        
-        
-        
-        
-        
-        
+
         <span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${c.status==='Signed'?'bg-green-500/15 text-green-400':'bg-gold/15 text-gold'}">${uiLabel(c.status)}</span>
         ${c.status!=='Signed' ? `<button onclick="markSigned(${c.id})" class="text-accent text-xs hover:underline">محاكاة التوقيع فقط</button>` : ''}
       </div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-10">لا توجد اتفاقيات مسجلة.</p>';
 }
 window.markSigned = (id) => { const c = db.contracts.find(x=>x.id===id); if(c){ c.status='Signed'; saveData(); renderAll(); } };
@@ -2902,123 +1536,39 @@ function renderReports() {
 // ==========================================
 window.openClientPreview = () => {
   const name = db.clients[0] ? db.clients[0].name : 'Client';
-  const { نقطة, rdy, plans, fb } = clientSummary(name);
+  const { pts, rdy, plans, fb } = clientSummary(name);
   const freeResources = db.library.filter(r=>r.tier==='Free');
   document.getElementById('clientPreviewBody').innerHTML = `
     <div class="flex items-center justify-between mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-11 h-11 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${name[0]}</div>
-        
-        
-        
-        
-        
-        
-        
+
         <div><p class="text-white font-semibold">مساحة ${name}</p><p class="text-muted text-xs">معاينة محلية لواجهة العميل</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="closeClientPreview()" class="text-muted hover:text-white text-xl leading-none">×</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="grid grid-cols-2 gap-3 mb-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">النقاط</p><p class="text-white font-bold text-lg">${pts?pts.points:0}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       <div class="bg-black border border-border rounded-xl p-3 text-center"><p class="text-muted text-[11px]">الاستمرارية</p><p class="text-white font-bold text-lg">${pts?pts.streak+'d':'0d'}</p></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <p class="text-[11px] text-muted uppercase tracking-wide mb-2">خطتي الحالية</p>
     ${plans[0] ? `<div class="bg-black border border-border rounded-lg p-3 mb-5"><p class="text-sm text-white font-medium">${plans[0].title}</p><p class="text-muted text-xs whitespace-pre-line mt-1">${plans[0].details}</p></div>` : '<p class="text-muted text-sm mb-5">لم تُضف خطة في هذا السجل بعد.</p>'}
     <p class="text-[11px] text-muted uppercase tracking-wide mb-2">الموارد المجانية</p>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="space-y-2 mb-5">${freeResources.map(r=>`<div class="bg-black border border-border rounded-lg p-3 text-sm text-white">${r.title}</div>`).join('') || '<p class="text-muted text-sm">غير متاح حاليًا.</p>'}</div>
-    
-    
-    
-    
-    
-    
-    
+
     <p class="text-[11px] text-muted uppercase tracking-wide mb-2">Readiness اليوم</p>
-    
-    
-    
-    
-    
-    
-    
+
     <p class="text-sm text-text">${rdy ? ({green:'🟢 Cleared for a full session.',yellow:'🟡 Take it a bit lighter today.',red:'🔴 Recovery day recommended.'})[rdy.status] : 'Not checked in yet.'}</p>
   `;
   document.getElementById('clientPreviewOverlay').classList.remove('hidden');
@@ -3086,29 +1636,11 @@ const PAGE_INFO = [
 window.openHelp = () => {
   document.getElementById('help-content').innerHTML = PAGE_INFO.map(p => `
     <div class="flex items-start gap-3 pb-3 border-b border-border last:border-0">
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-accent w-5 text-center shrink-0">${p.icon}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <div><p class="text-white text-sm font-semibold">${p.label}</p><p class="text-muted text-xs mt-0.5">${p.text}</p></div>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('');
   document.getElementById('helpOverlay').classList.remove('hidden');
 };
@@ -3122,7 +1654,7 @@ function renderNotifBell() {
   const list = [];
   db.readiness.filter(r=>r.status==='red').forEach(r => list.push(`${r.name} flagged red on readiness.`));
   db.feedback.filter(f=>f.rating<=3).forEach(f => list.push(`${f.client} left a ${f.rating}-star review.`));
-  db.invoices.filter(i=>i.status==='متأخر').forEach(i => list.push(`Invoice for ${i.client} is overdue.`));
+  db.invoices.filter(i=>i.status==='Overdue').forEach(i => list.push(`Invoice for ${i.client} is overdue.`));
   db.library.filter(r=>r.tier==='Paid' && r.downloads===0).forEach(r => list.push(`"${r.title}" hasn't مباع yet.`));
 
   const dot = document.getElementById('notif-dot');
@@ -3151,63 +1683,21 @@ function renderChecklist() {
   el.classList.remove('hidden');
   el.innerHTML = `
     <div class="flex items-center justify-between mb-3">
-      
-      
-      
-      
-      
-      
-      
+
       <h3 class="display text-sm font-semibold text-white tracking-wide uppercase">خطوات البداية</h3>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-[10px] text-muted">${doneCount}/${items.length} مكتمل</span>
-    
-    
-    
-    
-    
-    
-    
+
     </div>
-    
-    
-    
-    
-    
-    
-    
+
     <div class="divide-y divide-border">
       ${items.map(i => `
         <button onclick="navigateTo('${i.page}')" class="checklist-item w-full text-left">
-          
-          
-          
-          
-          
-          
-          
+
           <span class="checklist-check ${i.done?'done':''}">${i.done?'✓':''}</span>
-          
-          
-          
-          
-          
-          
-          
+
           <span class="text-sm ${i.done?'text-muted line-through':'text-text'}">${i.label}</span>
-        
-        
-        
-        
-        
-        
-        
+
         </button>`).join('')}
     </div>`;
 }
@@ -3220,37 +1710,13 @@ function renderTasks() {
   if (!el) return;
   el.innerHTML = db.tasks.length ? db.tasks.map(t => `
     <div class="flex items-center gap-3 bg-black border border-border rounded-lg px-3 py-2.5">
-      
-      
-      
-      
-      
-      
-      
+
       <span class="checklist-check ${t.done?'done':''} cursor-pointer" onclick="toggleTask(${t.id})">${t.done?'✓':''}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-sm flex-1 ${t.done?'text-muted line-through':'text-text'}">${t.text}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="del('tasks',${t.id})" class="text-red-400/50 hover:text-red-400 text-xs">✕</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-6">لا توجد مهام بعد. أضف مهمة.</p>';
 }
 window.toggleTask = (id) => { const t = db.tasks.find(x=>x.id===id); if(t){ t.done = !t.done; saveData(); renderTasks(); } };
@@ -3277,166 +1743,52 @@ function renderNutritionPage() {
     const logs = db.nutritionLogs[c.name] || [];
     const last = logs[logs.length - 1];
     return `<div class="card rounded-2xl p-5">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center justify-between mb-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="flex items-center gap-3">
-          
-          
-          
-          
-          
-          
-          
+
           <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold">${c.name[0]}</div>
-          
-          
-          
-          
-          
-          
-          
+
           <div><p class="text-white font-semibold text-sm">${c.name}</p><p class="text-muted text-xs">${c.tag}</p></div>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
-        
-        
-        
-        
-        
-        
-        
+
         <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="text-red-400/60 hover:text-red-400 text-[11px]">إيقاف</button>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
       ${tgt ? `
         <div class="grid grid-cols-4 gap-2 text-center mb-3">
-          
-          
-          
-          
-          
-          
-          
+
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.calories}</p><p class="text-muted text-[10px]">kcal</p></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.protein}g</p><p class="text-muted text-[10px]">protein</p></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.carbs}g</p><p class="text-muted text-[10px]">carbs</p></div>
-          
-          
-          
-          
-          
-          
-          
+
           <div class="bg-black border border-border rounded-lg py-2"><p class="text-white text-sm font-bold">${tgt.fats}g</p><p class="text-muted text-[10px]">fats</p></div>
-        
-        
-        
-        
-        
-        
-        
+
         </div>
         ${last ? `<p class="text-muted text-[11px] mb-3">Last logged (${last.date}): ${last.calories} kcal, P${last.protein} C${last.carbs} F${last.fats}</p>` : '<p class="text-muted text-[11px] mb-3">لا توجد سجلات تغذية بعد.</p>'}
       ` : '<p class="text-muted text-xs mb-3">لا توجد أهداف تغذية مسجلة.</p>'}
       <button onclick="openNutritionModal('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-accent/15 text-accent text-xs font-semibold rounded-lg hover:bg-accent/25 transition">${tgt ? 'تعديل الأهداف' : 'Set Targets'}</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`;
   }).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">لا توجد سجلات تغذية مفعّلة.</p>';
 
   unsubEl.innerHTML = unsubscribed.length ? unsubscribed.map(c => `
     <div class="card rounded-2xl p-5 opacity-70">
-      
-      
-      
-      
-      
-      
-      
+
       <div class="flex items-center gap-3 mb-3">
-        
-        
-        
-        
-        
-        
-        
+
         <div class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-muted font-bold">${c.name[0]}</div>
-        
-        
-        
-        
-        
-        
-        
+
         <div><p class="text-white font-semibold text-sm">${c.name}</p><p class="text-muted text-xs">${c.tag}</p></div>
-      
-      
-      
-      
-      
-      
-      
+
       </div>
-      
-      
-      
-      
-      
-      
-      
+
       <button onclick="toggleNutritionSub('${c.name.replace(/'/g,"\\'")}')" class="w-full py-2 bg-black border border-dashed border-border text-muted text-xs font-medium rounded-lg hover:border-accent/50 hover:text-accent transition">+ تفعيل سجل التغذية</button>
-    
-    
-    
-    
-    
-    
-    
+
     </div>`).join('') : '<p class="text-muted text-sm text-center py-8 sm:col-span-2 lg:col-span-3">سجل التغذية مفعّل لكل العملاء.</p>';
 }
 window.toggleNutritionSub = (name) => {
@@ -3546,6 +1898,7 @@ function t(key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
 }
 function applyTranslations() {
+  if(window.PenguinsLanguage){window.PenguinsLanguage.apply();return;}
   const lang = 'ar';
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -3571,6 +1924,7 @@ document.addEventListener('click', e => {
   }
 });
 window.setLang = (lang) => {
+  if(window.PenguinsLanguage){window.PenguinsLanguage.set(lang);return;}
   db.lang = lang;
   saveData();
   document.getElementById('lang-panel').classList.add('hidden');
@@ -3626,37 +1980,13 @@ window.filterPalette = () => {
   const items = paletteItems().filter(i => i.label.toLowerCase().includes(q));
   document.getElementById('paletteResults').innerHTML = items.length ? items.map(i => `
     <button onclick="paletteSelect('${i.type}','${(i.page||i.name).replace(/'/g,"\\'")}')" class="w-full flex items-center gap-3 px-5 py-2.5 hover:bg-card2 text-left transition">
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-accent w-5 text-center">${i.icon}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-white text-sm flex-1">${i.label}</span>
-      
-      
-      
-      
-      
-      
-      
+
       <span class="text-muted text-[11px]">${i.sub}</span>
-    
-    
-    
-    
-    
-    
-    
+
     </button>`).join('') : '<p class="text-muted text-sm px-5 py-6 text-center">لا توجد نتائج مطابقة.</p>';
 };
 window.paletteSelect = (type, value) => {
