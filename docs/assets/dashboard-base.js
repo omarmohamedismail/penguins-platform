@@ -56,7 +56,7 @@ async function logOut() {
 }
 async function loadData() {
  try {
-  db=await sync.load(blankData);db.lang='ar';
+  db=await sync.load(blankData);
   if(sync.draft) {
     const banner=document.getElementById('draft-banner');banner.hidden=false;
     document.getElementById('restore-draft').onclick=()=>{
