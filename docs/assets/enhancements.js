@@ -61,7 +61,7 @@ function clientEditor(name){
   if(key==='name'){input.required=true;input.maxLength=80;}if(key==='rate'){input.min='0';input.step='0.01';}
   form.append(input);fields[key]=input;
  }
- const status=document.createElement('select');status.setAttribute('aria-label','Client status');for(const value of ['Active','Paused']){const option=new Option(value,value);status.add(option);}status.value=client?.status||'Active';form.append(status);
+ const status=document.createElement('select');status.setAttribute('aria-label','Client status');for(const value of ['Active','Paused']){const option=new Option(({Normal:'عادية',High:'عالية',Low:'منخفضة',Active:'نشط',Paused:'متوقف'})[value]||value,value);status.add(option);}status.value=client?.status||'Active';form.append(status);
  const nutrition=document.createElement('input');nutrition.type='checkbox';nutrition.checked=Boolean(client?.nutrition);nutrition.id='edit-client-nutrition';form.append(nutrition);const nutritionLabel=addText(form,'label',' يشمل سجل التغذية');nutritionLabel.htmlFor=nutrition.id;
  const submit=addText(form,'button',client?'حفظ العميل':'إضافة العميل');submit.type='submit';
  const message=addText(form,'p','');message.setAttribute('role','alert');
@@ -102,8 +102,8 @@ document.getElementById('pg-undo-button').onclick=()=>{
  if(!undoState)return;db[undoState.type].splice(undoState.index,0,undoState.item);logActivity('Undid removal from '+undoState.type);saveData();renderAll();undoState=null;document.getElementById('pg-undo').hidden=true;clearTimeout(undoTimer);
 };
 const taskForm=document.getElementById('form-task');
-const due=document.createElement('input');due.type='date';due.name='due';due.setAttribute('aria-label','Task due date');due.className='input-dark rounded-lg px-2 text-xs';
-const priority=document.createElement('select');priority.name='priority';priority.setAttribute('aria-label','Task priority');priority.className='input-dark rounded-lg px-2 text-xs';for(const value of ['Normal','High','Low'])priority.add(new Option(value,value));
+const due=document.createElement('input');due.type='date';due.name='due';due.setAttribute('aria-label','موعد المهمة');due.className='input-dark rounded-lg px-2 text-xs';
+const priority=document.createElement('select');priority.name='priority';priority.setAttribute('aria-label','أولوية المهمة');priority.className='input-dark rounded-lg px-2 text-xs';for(const value of ['Normal','High','Low'])priority.add(new Option(({Normal:'عادية',High:'عالية',Low:'منخفضة',Active:'نشط',Paused:'متوقف'})[value]||value,value));
 taskForm.style.flexWrap='wrap';taskForm.insertBefore(due,taskForm.lastElementChild);taskForm.insertBefore(priority,taskForm.lastElementChild);
 taskForm.onsubmit=event=>{event.preventDefault();const data=new FormData(taskForm);const text=String(data.get('text')||'').trim();if(!text)return;db.tasks.unshift({id:Date.now(),text,done:false,due:data.get('due'),priority:data.get('priority')});logActivity('Added a task');saveData();taskForm.reset();renderTasks();};
 renderTasks=function(){
@@ -115,7 +115,7 @@ renderTasks=function(){
   const row=document.createElement('div');row.className='flex items-center gap-3 bg-black border border-border rounded-lg px-3 py-2.5';list.append(row);
   const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=task.done;checkbox.setAttribute('aria-label','Complete '+task.text);checkbox.onchange=()=>toggleTask(task.id);row.append(checkbox);
   const label=addText(row,'span',task.text);label.className='text-sm flex-1'+(task.done?' line-through text-muted':'');
-  const detail=addText(row,'span',[task.priority||'Normal',task.due||'',!task.done&&task.due&&task.due<today?'متأخر':''].filter(Boolean).join(' · '));detail.className='text-xs text-muted';if(!task.done&&task.due&&task.due<today)detail.style.color='#ffb15a';
+  const detail=addText(row,'span',[({Normal:'عادية',High:'عالية',Low:'منخفضة'})[task.priority||'Normal'],task.due||'',!task.done&&task.due&&task.due<today?'متأخر':''].filter(Boolean).join(' · '));detail.className='text-xs text-muted';if(!task.done&&task.due&&task.due<today)detail.style.color='#ffb15a';
   addButton(row,'إزالة',()=>window.del('tasks',task.id));
  }
 };

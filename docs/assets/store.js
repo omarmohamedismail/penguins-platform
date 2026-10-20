@@ -33,14 +33,14 @@ class PenguinsStore {
   queue(data){
     if(!this.loaded)throw new Error('Load the workspace before saving.');
     this.pending=PenguinsCore.normalize(data);this.revision++;
-    try{localStorage.setItem(this.draftKey,JSON.stringify({data:this.pending,baseVersion:this.version,updatedAt:new Date().toISOString()}));}catch{this.status('error','Device draft unavailable — keep this tab open until saved');}
+    try{localStorage.setItem(this.draftKey,JSON.stringify({data:this.pending,baseVersion:this.version,updatedAt:new Date().toISOString()}));}catch{this.status('error','تعذر حفظ المسودة على الجهاز — اترك الصفحة مفتوحة حتى اكتمال الحفظ');}
     this.status(this.conflict?'conflict':'pending',this.conflict?'توجد نسخة أحدث — صدّر تغييراتك قبل إعادة التحميل':'تغييرات تنتظر الحفظ');
     clearTimeout(this.timer);if(!this.conflict)this.timer=setTimeout(()=>this.flush(),550);
   }
   async flush(){
     clearTimeout(this.timer);
     if(!this.pending||this.busy||this.conflict)return;
-    if(!navigator.onLine){this.status('offline','Offline — draft kept on this device');return;}
+    if(!navigator.onLine){this.status('offline','غير متصل — المسودة محفوظة على الجهاز');return;}
     this.busy=true;const revision=this.revision;const snapshot=this.pending;this.pending=null;this.status('saving','جارٍ الحفظ…');
     try{
       const {data:version,error}=await this.client.rpc('save_workspace',{p_data:snapshot,p_expected:this.version});
@@ -49,7 +49,7 @@ class PenguinsStore {
       if(this.revision===revision){try{localStorage.removeItem(this.draftKey);}catch{}this.status('saved','كل التغييرات محفوظة · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));}
     }catch(error){
       if(!this.pending)this.pending=snapshot;
-      this.status(this.conflict?'conflict':'error',this.conflict?'Another tab saved newer data. Export your changes, then reload.':'Not saved yet. Your draft is kept on this device. Retry when connected.');
+      this.status(this.conflict?'conflict':'error',this.conflict?'توجد نسخة أحدث من تبويب آخر. صدّر تغييراتك ثم أعد التحميل.':'لم يكتمل الحفظ. المسودة محفوظة على الجهاز. حاول بعد الاتصال.');
     }finally{this.busy=false;if(this.pending&&!this.conflict&&this.revision!==revision)this.timer=setTimeout(()=>this.flush(),550);}
   }
   async history(){
