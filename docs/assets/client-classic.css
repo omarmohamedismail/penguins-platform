@@ -31,3 +31,5 @@
 @media print{.classic-client #member-navigation,.classic-client .site-header{display:none!important}.classic-client main{margin:0!important;padding:0!important}}
 
 .client-sidebar-profile>div{flex:1;min-width:0}.classic-client .client-sidebar-logout{min-width:32px;min-height:32px;padding:5px;font-size:18px;border:0}
+
+@media(min-width:1000px) and (max-width:1150px){.classic-stats{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.classic-stats>article,.classic-stats>.stat{padding:14px 12px}}
