@@ -21,6 +21,7 @@ const sections=[
  ['التصدير والاستيراد والحفظ','Export, import & saving','التصدير ينزّل نسخة من مساحة الكوتش الخاصة. الاستيراد يستبدل محتواها بعد المراجعة. إعادة الحفظ تحاول مزامنة آخر تعديل عند خطأ الاتصال. نسخة الكوتش ليست تصديرًا لكل حسابات المنصة.','Export downloads the private coach workspace. Import replaces its contents after review. Retry save attempts to sync changes after a connection error. A workspace backup does not export all platform accounts.']
 ];
 function explain(label){const s=String(label).trim();const rules=[
+ [/أدوات إضافية|more tools/i,['يفتح قائمة النسخ الاحتياطي والاستعادة وسجل النسخ وتصدير الجدول والطباعة؛ اختر الإجراء الذي تحتاجه.','Opens backup, restore, version history, spreadsheet export and print actions. Choose the action you need.']],
  [/تغيير اللغة|change language|🇸🇦|🇬🇧/i,['يغيّر لغة الواجهة بين العربية والإنجليزية ويحفظ اختيارك دون تغيير نصوصك الشخصية.','Switches between Arabic and English and remembers your choice without rewriting personal text.']],
  [/تغيير المظهر|change theme/i,['يبدّل بين المظهر الداكن والفاتح ويحفظ تفضيل المظهر على الجهاز.','Switches between dark and light appearance and saves the preference on this device.']],
  [/المساعدة|help.*guide/i,['يفتح هذا الدليل؛ ابحث باسم الزر أو افتح شرح القسم.','Opens this guide; search for a control or expand a section.']],
