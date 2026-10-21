@@ -5,3 +5,5 @@ test('translation lookup ignores inherited object properties',()=>{assert.equal(
 test('system dates and readiness explanations translate without changing personal notes',()=>{assert.equal(translate('الثلاثاء، ٢٠ أكتوبر','en'),'Tuesday, 20 October');assert.equal(translate('بيانات متابعة ذاتية للأسبوع 2026-10-19؛ لا تمثل تقييمًا طبيًا.','en'),'Self-reported check-in for week 2026-10-19. This is not a medical assessment.');});
 
 test('weekly check-in counts and Arabic numeric dates use the selected English interface',()=>{assert.equal(translate('أيام تدريب: 3 / ٧ · الطاقة: 4 / ٥','en'),'Training days: 3 / 7 · Energy: 4 / 5');assert.equal(translate('أسبوع ١٩\u200f/١٠\u200f/٢٠٢٦','en'),'Week of 19/10/2026');});
+
+test('last-updated clock is translated with readable digits and meridiem',()=>{assert.equal(translate('آخر تحديث ٠٨:٤٢ ص','en'),'Last updated 08:42 AM');assert.equal(translate('آخر تحديث ٠٨:٤٢ م','en'),'Last updated 08:42 PM');});

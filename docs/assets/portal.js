@@ -6,7 +6,7 @@ const state={adminFilter:'pending',adminSearch:'',adminPage:0,planPage:0};
 let selectedPerson='',user,profile,admin=false,view=root,rendering=false,queued=false;
 function el(tag,text,parent=view,className){const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(className)n.className=className;parent.append(n);return n;}
 function section(title,parent=view){const box=el('section',undefined,parent);box.dataset.group=window.PenguinsRelationships.group(title);el('h2',title,box);return box;}
-function message(text,tone='info'){notice.textContent=text;notice.dataset.tone=tone;}
+function message(text,tone='info'){notice.textContent=text;notice.dataset.tone=tone;notice.classList.toggle('notice-ready',profile?.role==='client'&&text==='بياناتك محدثة.');}
 async function checked(p){const r=await p;if(r.error)throw r.error;return r.data;}
 function button(text,parent,fn,style=''){const b=el('button',text,parent,style);b.type='button';b.addEventListener('click',async()=>{b.disabled=true;try{await fn();}catch(e){message(C.errorMessage(e),'error');notice.scrollIntoView({block:'nearest',behavior:'auto'});}finally{b.disabled=false;}});return b;}
 function field(parent,label,type='text'){const l=el('label',label,parent);const i=el(type==='textarea'?'textarea':type==='select'?'select':'input',undefined,l);if(i.tagName==='INPUT')i.type=type;return i;}
