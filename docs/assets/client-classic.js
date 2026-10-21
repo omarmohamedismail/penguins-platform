@@ -8,7 +8,7 @@ const group=nav.querySelector('[data-section-tab="all"]')?.previousElementSiblin
 const stats=document.querySelector('.classic-stats'),points=stats?.querySelector('article');if(points){const details=document.createElement('details');details.className='client-achievement';const summary=document.createElement('summary');const amount=document.createElement('strong');amount.textContent=points.querySelector('strong').textContent;const label=document.createElement('span');label.textContent=points.querySelector('.eyebrow').textContent;summary.append(amount,label);details.append(summary,points.querySelector('.helper'));nav.insertBefore(details,nav.querySelector('.client-sidebar-profile'));points.remove();}
 }
 
-window.PenguinsClientClassic={decorateNavigation({nav,profile}){
+window.PenguinsClientClassic={weeklyStreak,decorateNavigation({nav,profile}){
 const make=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
 const brand=make('a','Penguins 🐧.','client-sidebar-brand');brand.href='index.html';const brandWrap=make('div',null,'client-sidebar-heading');brandWrap.append(brand,make('small','عميل'));nav.prepend(brandWrap);
 const buttons=[...nav.querySelectorAll('[data-section-tab]')];for(const [key,title]of [['overview','نظرة عامة'],['plans','أدوات التدريب'],['all','التنظيم والتقارير']]){const b=buttons.find(x=>x.dataset.sectionTab===key);if(b)nav.insertBefore(make('p',title,'client-nav-group'),b);}

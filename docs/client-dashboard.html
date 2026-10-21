@@ -1,0 +1,67 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://batjqwxvjkjjbggfnnct.supabase.co wss://batjqwxvjkjjbggfnnct.supabase.co; img-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'"><title>حسابي · Penguins</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/coach-original-preview.css?v=1"><link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/training.css"><link rel="stylesheet" href="assets/exercise-studio.css"><link rel="stylesheet" href="assets/language.css"><link rel="stylesheet" href="assets/client-live.css?v=1"></head><body class="text-text antialiased original-live"><div id="app" class="flex h-screen overflow-hidden relative z-10">
+
+  <!-- SIDEBAR BACKDROP (mobile only) -->
+  <div id="sidebarBackdrop" data-action="close-menu" class="hidden fixed inset-0 bg-black/60 z-40 md:hidden"></div>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="w-64 bg-card border-r border-border flex-col flex shrink-0">
+    <div class="p-6 border-b border-border flex items-center justify-between">
+      <div>
+        <h1 class="display text-2xl font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
+        <p class="text-[11px] text-muted mt-1 tracking-wide uppercase"><span class="" data-ar="مساحة العميل" data-en="Client workspace">مساحة العميل</span></p>
+      </div>
+      <button data-action="close-menu" class="md:hidden w-8 h-8 flex items-center justify-center text-muted hover:text-white text-lg">×</button>
+    </div>
+    <div class="px-6 pt-4 space-y-2">
+      <button data-action="search" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
+        <span class="flex items-center"><span class="mr-2">⌕</span><span data-i18n="sidebar.search"><span class="" data-ar="بحث سريع" data-en="Quick search">بحث سريع</span></span></span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button data-action="help" class="w-full flex items-center justify-between px-3 py-2 bg-black border border-border rounded-lg text-muted text-xs hover:border-accent/50 transition">
+        <span class="flex items-center"><span class="mr-2">?</span><span data-i18n="sidebar.help"><span class="" data-ar="المساعدة والدليل" data-en="Help &amp; Guide">المساعدة والدليل</span></span></span>
+      </button>
+    </div>
+    <nav id="member-navigation" class="flex-1 px-3 py-4 space-y-1 overflow-y-auto" aria-label="أقسام حساب التدريب"></nav>
+    <div class="px-4 pb-2">
+      
+    </div>
+    <div class="p-4 border-t border-border">
+      <a href="#" data-action="account" class="flex items-center w-full text-left hover:bg-card2 rounded-lg p-2 transition">
+        <div id="sidebar-avatar" class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bold text-sm">ع</div>
+        <div class="ml-3 flex-1"><p id="sidebar-name" class="text-sm font-medium text-white">عميل Penguins</p><p class="text-xs text-muted"><span class="" data-ar="عرض الحساب" data-en="View account">عرض الحساب</span></p></div>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- APP TOPBAR (always visible, every screen size) -->
+    <div class="flex items-center gap-3 px-4 md:px-8 py-3 border-b border-border bg-card shrink-0">
+      <button data-action="open-menu" class="md:hidden w-9 h-9 flex items-center justify-center text-white text-xl leading-none">☰</button>
+      <h1 class="md:hidden display text-lg font-bold text-white">Penguins 🐧<span class="text-accent">.</span></h1>
+      <div class="flex-1"></div>
+      <div class="relative" id="langSwitchWrap">
+        <button data-action="language" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-sm hover:border-accent/50 transition">
+          <span id="lang-current-flag">🇸🇦</span>
+        </button>
+        <div id="lang-panel" class="hidden absolute top-12 right-0 flex items-center gap-1.5 p-1.5 rounded-full bg-black border border-border z-40 shadow-2xl">
+          <button data-action="none" data-lang="en" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇬🇧</button>
+          
+          <button data-action="none" data-lang="ar" class="lang-option w-8 h-8 rounded-full flex items-center justify-center text-sm transition">🇸🇦</button>
+          
+          
+        </div>
+      </div>
+      <button data-action="theme" id="colorModeBtn" class="w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">🌙</button>
+      <div class="relative" id="notifBellWrap">
+        <button data-action="notifications" class="relative w-10 h-10 rounded-full bg-black border border-border flex items-center justify-center text-white hover:border-accent/50 transition">
+          🔔
+          <span id="notif-dot" class="notif-dot hidden"></span>
+        </button>
+        <div id="notif-panel" class="notif-panel card rounded-2xl p-3 thin-scroll hidden">
+          <p class="text-xs text-muted uppercase tracking-wide px-2 py-1"><span class="" data-ar="رسائل المعاينة" data-en="Preview messages">رسائل المعاينة</span></p>
+          <div id="notif-list" class="space-y-1"></div>
+        </div>
+      </div>
+    </div>
+    <main id="client-main" class="flex-1 overflow-y-auto p-4 md:p-8"><div class="mb-8"><h1 id="greeting" class="display text-3xl font-bold text-white">بنجهّز مساحتك…</h1><p id="page-description" class="text-muted mt-2"></p></div><div class="live-status"><span id="account-kind"></span><span id="last-updated"></span><button id="refresh" type="button">تحديث</button><button id="logout" type="button">تسجيل الخروج</button></div><p id="notice" role="status" aria-live="polite">جارٍ تحميل حسابك…</p><div id="platform-announcement" role="status" hidden></div><div id="content" aria-busy="true"></div><div id="workspace"></div></main></div></div><div id="bottomNav"></div><script src="assets/translations.js?v=2" defer></script><script src="assets/language.js?v=6" defer></script><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/client.js" defer></script><script src="assets/portal-core.js" defer></script><script src="assets/workspace.js?v=connected-2" defer></script><script src="assets/training.js?v=client-shell-1" defer></script><script src="assets/owner.js" defer></script><script src="assets/relationships.js?v=original-live-1" defer></script><script src="assets/exercise-studio.js?v=polished-1" defer></script><script src="assets/client-classic.js?v=original-live-1" defer></script><script src="assets/client-live.js?v=1" defer></script><script src="assets/portal.js?v=original-live-1" defer></script></body></html>
