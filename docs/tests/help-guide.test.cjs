@@ -5,4 +5,6 @@ test('guide separates real client sharing from private business records in both 
  assert.match(sections.find(x=>x[1]==='Clients & messages')[3],/private records/);
  assert.match(sections.find(x=>x[1].includes('Contracts'))[3],/does not process a payment/);
  assert.match(explain('حفظ تقدّمي')[1],/this plan/);assert.match(explain('حفظ الملاحظة الخاصة')[1],/coach-only/);
+ assert.match(explain('إرسال / تحديث متابعة الأسبوع')[1],/Sends to the selected coach/);
+ assert.match(explain('تحديث')[1],/Reloads data/);
 });

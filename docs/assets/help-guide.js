@@ -21,8 +21,12 @@ const sections=[
  ['التصدير والاستيراد والحفظ','Export, import & saving','التصدير ينزّل نسخة من مساحة الكوتش الخاصة. الاستيراد يستبدل محتواها بعد المراجعة. إعادة الحفظ تحاول مزامنة آخر تعديل عند خطأ الاتصال. نسخة الكوتش ليست تصديرًا لكل حسابات المنصة.','Export downloads the private coach workspace. Import replaces its contents after review. Retry save attempts to sync changes after a connection error. A workspace backup does not export all platform accounts.']
 ];
 function explain(label){const s=String(label).trim();const rules=[
+ [/تغيير اللغة|change language|🇸🇦|🇬🇧/i,['يغيّر لغة الواجهة بين العربية والإنجليزية ويحفظ اختيارك دون تغيير نصوصك الشخصية.','Switches between Arabic and English and remembers your choice without rewriting personal text.']],
+ [/تغيير المظهر|change theme/i,['يبدّل بين المظهر الداكن والفاتح ويحفظ تفضيل المظهر على الجهاز.','Switches between dark and light appearance and saves the preference on this device.']],
+ [/المساعدة|help.*guide/i,['يفتح هذا الدليل؛ ابحث باسم الزر أو افتح شرح القسم.','Opens this guide; search for a control or expand a section.']],
+ [/متابعة إنجاز|plan progress|مكتملة.*المفضلة|completed.*favorite/i,['يفتح خيارات حالة الإنجاز والمفضلة والتقييم والتعليق. اضغط حفظ تقدّمي لتثبيت تعديلاتك.','Expands completion, favorite, rating and comment controls. Use Save my progress to save changes.']],
  [/تسجيل الخروج|log out|logout/i,['ينهي جلسة الحساب وينقلك لتسجيل الدخول.','Ends the account session and returns to sign-in.']],
- [/تحديث|refresh|reload|إعادة تحميل/i,['يعيد تحميل البيانات المتاحة لحسابك. تحديث الصفحة لا يحفظ نموذجًا لم ترسله.','Reloads data available to your account. Refreshing does not save an unsubmitted form.']],
+ [/^(تحديث|refresh|reload|إعادة تحميل)$/i,['يعيد تحميل البيانات المتاحة لحسابك. تحديث الصفحة لا يحفظ نموذجًا لم ترسله.','Reloads data available to your account. Refreshing does not save an unsubmitted form.']],
  [/PDF|فتح الملف|open file/i,['يفتح مرفق الخطة المتاح لك برابط مؤقت بعد التحقق من الصلاحيات.','Opens an authorized plan attachment using a temporary file link.']],
  [/مشاهدة.*فيديو|watch.*video/i,['يفتح رابط الفيديو في موقعه الخارجي.','Opens the video on its external website.']],
  [/حفظ تقد|save my progress/i,['يحفظ حالة إكمال هذه الخطة ومفضلتك وتقييمك وتعليقك؛ الكوتش يرى الإنجاز والتقييم والتعليق.','Saves this plan’s completion, favorite, rating and comment. The coach sees completion and feedback.']],
