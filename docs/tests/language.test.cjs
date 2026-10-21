@@ -9,3 +9,5 @@ test('weekly check-in counts and Arabic numeric dates use the selected English i
 test('last-updated clock is translated with readable digits and meridiem',()=>{assert.equal(translate('آخر تحديث ٠٨:٤٢ ص','en'),'Last updated 08:42 AM');assert.equal(translate('آخر تحديث ٠٨:٤٢ م','en'),'Last updated 08:42 PM');});
 
 test('legacy coach metric widgets follow the Arabic interface',()=>{assert.equal(translate('Total Revenue 💰','ar'),'إجمالي الإيرادات');assert.equal(translate('Plans Sent ▤','ar'),'الخطط المرسلة');assert.equal(translate('2 being coached','ar'),'2 يتلقون المتابعة');});
+
+test('plan completion and favorite summaries switch to English',()=>{assert.equal(translate('متابعة إنجاز الخطة · ★ في المفضلة','en'),'Plan progress · ★ Favorite');assert.equal(translate('✓ مكتملة · ★ في المفضلة','en'),'✓ Completed · ★ Favorite');});
