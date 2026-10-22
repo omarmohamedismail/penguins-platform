@@ -52,3 +52,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+const mobileToggle=document.getElementById('mobileNavBtn');if(mobileToggle)new MutationObserver(()=>{mobileToggle.setAttribute('aria-expanded',String(!document.getElementById('mobileNavPanel').classList.contains('hidden')));}).observe(document.getElementById('mobileNavPanel'),{attributes:true,attributeFilter:['class']});

@@ -65,8 +65,8 @@
   }
 </style>
 <link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/product.css">
-<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/arabic.css?v=1"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"></head>
-<body class="text-ink antialiased relative">
+<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/arabic.css?v=1"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"><link rel="stylesheet" href="assets/ui-refinement.css?v=20261022"></head>
+<body class="site-home text-ink antialiased relative">
 <!-- Starfield + nebula background, fixed behind everything -->
 <div id="stars"></div>
 <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
@@ -90,7 +90,7 @@
 <div class="flex items-center gap-2 sm:gap-3">
 <a href="auth.html" class="hidden sm:inline text-sm text-dim hover:text-white transition">تسجيل الدخول</a>
 <a href="auth.html?mode=signup" class="btn-metal text-white text-sm font-semibold px-4 py-2 rounded-lg transition">ابدأ مجانًا</a>
-<button onclick="toggleMobileNav()" id="mobileNavBtn" class="md:hidden w-9 h-9 rounded-lg metal-icon-plate flex items-center justify-center text-white text-lg">☰</button>
+<button onclick="toggleMobileNav()" id="mobileNavBtn" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="mobileNavPanel" class="md:hidden w-9 h-9 rounded-lg metal-icon-plate flex items-center justify-center text-white text-lg">☰</button>
 </div>
 </nav>
 <div id="mobileNavPanel" class="hidden md:hidden mt-2 metal-nav rounded-2xl px-5 py-4 flex flex-col gap-4 text-sm text-dim">
@@ -102,7 +102,7 @@
 </div>
 </header>
 <!-- ============ HERO ============ -->
-<section class="max-w-7xl mx-auto px-6 md:px-8 pt-20 pb-24 text-center">
+<section class="home-hero max-w-7xl mx-auto px-6 md:px-8 pt-20 pb-24 text-center">
 <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs text-dim mb-8">
 <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
       مساحة الكوتش: العملاء والخطط والتقدّم وأدوات العمل
@@ -120,7 +120,7 @@
 </div>
 <p class="text-dim text-xs mt-5">ابدأ بمساحتك الخاصة · بياناتك مرتبطة بحسابك</p>
 <!-- Product preview mock -->
-<div class="mt-16 relative max-w-5xl mx-auto">
+<div class="home-preview mt-16 relative max-w-5xl mx-auto">
 <div class="glass-strong rounded-2xl p-3 md:p-4">
 <div class="rounded-xl overflow-hidden border border-line bg-panel">
 <div class="flex items-center gap-1.5 px-4 py-3 border-b border-line">
@@ -130,18 +130,18 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line">
 <div class="bg-panel p-6 text-left">
-<p class="text-dim text-xs uppercase tracking-wide mb-2">هذا الشهر</p>
-<p class="display text-3xl font-bold text-white">$0</p>
-<p class="text-xs text-green-400 mt-1">سجّل الفواتير وحالة السداد</p>
+<p class="text-dim text-xs uppercase tracking-wide mb-2">خطط التمرين</p>
+<p class="display text-3xl font-bold text-white">خطتك في مكان واحد</p>
+<p class="text-xs text-green-400 mt-1">تمارين وفيديو وملفات PDF</p>
 </div>
 <div class="bg-panel p-6 text-left">
-<p class="text-dim text-xs uppercase tracking-wide mb-2">العملاء النشطون</p>
-<p class="display text-3xl font-bold text-white">0</p>
-<p class="text-xs text-dim mt-1">ابدأ بإضافة عملائك</p>
+<p class="text-dim text-xs uppercase tracking-wide mb-2">المتابعة الأسبوعية</p>
+<p class="display text-3xl font-bold text-white">خطوة بخطوة</p>
+<p class="text-xs text-dim mt-1">أهداف واضحة وردود من الكوتش</p>
 </div>
 <div class="bg-panel p-6 text-left">
 <p class="text-dim text-xs uppercase tracking-wide mb-2">ملخص المتابعة</p>
-<p class="text-sm text-white mt-1">See what needs your attention</p>
+<p class="text-sm text-white mt-1">تابع ما يحتاج اهتمامك</p>
 <p class="text-xs text-dim mt-2">ملخصات أوضح مع كل متابعة</p>
 </div>
 </div>
@@ -295,5 +295,5 @@
 </div>
 </footer>
 </div>
-<script src="assets/translations.js?v=2" defer></script><script src="assets/language.js?v=5" defer></script><script src="assets/landing.js" defer></script><a href="dashboard.html?demo=1" style="position:fixed;bottom:18px;left:18px;z-index:9999;background:#6c5ce7;color:white;border:1px solid #a38eee;padding:14px 20px;border-radius:12px;font:14px Tahoma;text-decoration:none">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
+<script src="assets/translations.js?v=2" defer></script><script src="assets/language.js?v=8" defer></script><script src="assets/landing.js" defer></script><a href="dashboard.html?demo=1" style="position:fixed;bottom:18px;left:18px;z-index:9999;background:#6c5ce7;color:white;border:1px solid #a38eee;padding:14px 20px;border-radius:12px;font:14px Tahoma;text-decoration:none">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
 </html>
