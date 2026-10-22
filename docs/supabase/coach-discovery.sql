@@ -23,8 +23,8 @@ grant select on public.coach_public_profiles,public.coach_free_resources to auth
 create function private.discovery_visible(p_coach uuid) returns boolean language sql stable security definer set search_path='' as $$
  select private.member_enabled(auth.uid()) and private.approved_coach(p_coach) and exists(select 1 from public.coach_public_profiles where coach_id=p_coach and published)
 $$;
-create policy profile_read on public.coach_public_profiles for select to authenticated using(private.member_enabled(auth.uid()) and (coach_id=auth.uid() or private.discovery_visible(coach_id)));
-create policy resource_read on public.coach_free_resources for select to authenticated using(private.member_enabled(auth.uid()) and (coach_id=auth.uid() or (published and private.discovery_visible(coach_id))));
+create policy profile_read on public.coach_public_profiles for select to authenticated using(private.member_enabled((select auth.uid())) and (coach_id=(select auth.uid()) or private.discovery_visible(coach_id)));
+create policy resource_read on public.coach_free_resources for select to authenticated using(private.member_enabled((select auth.uid())) and (coach_id=(select auth.uid()) or (published and private.discovery_visible(coach_id))));
 create function private.save_coach_public_profile(p_data jsonb,p_expected bigint) returns void language plpgsql security definer set search_path='' as $$
 declare slots smallint[];v bigint;
 begin
