@@ -71,17 +71,17 @@ async function plans(parent){
 }
 async function clientPortal(){
  heading('أهلًا '+profile.name,'اختار مدرّبك، وتابع خططك وملفات التمرين من هنا.','عميل');
- await (window.PenguinsOriginalClient||window.PenguinsClientClassic).mount({api,checked,user,profile,section,el,helper,button,openFile});const box=section('مدرّبين معتمدين');const coaches=await checked(api.rpc('coach_directory').limit(100));const links=await checked(api.from('coaching_links').select('*').eq('client_id',user.id));
+ await (window.PenguinsOriginalClient||window.PenguinsClientClassic).mount({api,checked,user,profile,section,el,helper,button,openFile});const box=section('مدرّبين معتمدين');const explore=el('a','اكتشف الكوتشز وملفاتهم المهنية',box,'button secondary');explore.href='coaches.html';const coaches=await checked(api.rpc('coach_directory').limit(100));const links=await checked(api.from('coaching_links').select('*').eq('client_id',user.id));
  if(!coaches.length)empty(box,'مدرّبك الجاي في الطريق','حسابك جاهز. المدرّبون بيظهروا هنا بعد موافقة الإدارة على طلباتهم.','◇');
  const search=coaches.length?field(box,'ابحث باسم الكوتش'):null;if(search){search.placeholder='اسم الكوتش…';search.maxLength=80;}
  const list=el('div',undefined,box);
- function draw(){list.replaceChildren();const matches=coaches.filter(c=>!search||c.name.toLocaleLowerCase().includes(search.value.trim().toLocaleLowerCase()));if(coaches.length&&!matches.length)empty(list,'مفيش نتيجة بالاسم ده','جرّب جزءًا من الاسم أو امسح البحث.');for(const coach of matches){const card=el('article',undefined,list);const head=el('div',undefined,card,'card-head');el('h3',coach.name,head);badge('approved',head);const link=links.find(l=>l.coach_id===coach.id);if(link){badge(link.status,card);if(link.status==='requested')helper('الكوتش هيراجع طلبك. اضغط تحديث لمتابعة الرد.',card);}else button('طلب الانضمام للكوتش',card,async()=>{await checked(api.from('coaching_links').insert({coach_id:coach.id,client_id:user.id}));message('تم إرسال طلبك للكوتش.','success');await render();});}}
+ function draw(){list.replaceChildren();const matches=coaches.filter(c=>!search||c.name.toLocaleLowerCase().includes(search.value.trim().toLocaleLowerCase()));if(coaches.length&&!matches.length)empty(list,'مفيش نتيجة بالاسم ده','جرّب جزءًا من الاسم أو امسح البحث.');for(const coach of matches){const card=el('article',undefined,list);const head=el('div',undefined,card,'card-head');el('h3',coach.name,head);badge('approved',head);const profileLink=el('a','عرض ملف الكوتش ومؤهلاته',card,'button secondary');profileLink.href='coach.html?id='+encodeURIComponent(coach.id);const link=links.find(l=>l.coach_id===coach.id);if(link){badge(link.status,card);if(link.status==='requested')helper('الكوتش هيراجع طلبك. اضغط تحديث لمتابعة الرد.',card);}else button('طلب الانضمام للكوتش',card,async()=>{await checked(api.from('coaching_links').insert({coach_id:coach.id,client_id:user.id}));message('تم إرسال طلبك للكوتش.','success');await render();});}}
  if(search)search.addEventListener('input',draw);draw();if(coaches.length===100)helper('بتشوف أول ١٠٠ كوتش معتمد حاليًا.',box);
  await relationshipHub();await trainingFeatures();await plans(section('خططي وملفات التمرين'));
 }
 async function coachPortal(){
  heading('أهلًا '+profile.name,profile.status==='approved'?'طلبات عملائك وخططهم في مكان واحد.':'كمّل بياناتك وشهاداتك، وتابع قرار الإدارة من هنا.','كوتش');
- const intro=section('حالة حسابك');badge(profile.status,intro);if(profile.review_note)el('p','ملاحظة الإدارة: '+profile.review_note,intro,'inline-note');
+ const intro=section('حالة حسابك');if(profile.status==='approved'){const publicPage=el('a','ملفي المهني والشهادات والموارد المجانية',intro,'button secondary');publicPage.href='coach-profile.html';}badge(profile.status,intro);if(profile.review_note)el('p','ملاحظة الإدارة: '+profile.review_note,intro,'inline-note');
  if(profile.status!=='approved')helper('استقبال العملاء وإرسال الخطط متاحان بعد موافقة الإدارة. رفع الشهادات اختياري، حتى ٣ ملفات.',intro);
  const cert=section('الشهادات والمؤهلات');
  if(profile.status==='approved'){
