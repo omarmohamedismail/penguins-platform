@@ -50,3 +50,23 @@ grant execute on function private.coach_invite_link(),private.claim_coach_invite
 create policy invitations_no_direct_access on private.coach_invites as restrictive for all to anon,authenticated using(false) with check(false);
 create policy referrals_no_direct_access on private.coach_referrals as restrictive for all to anon,authenticated using(false) with check(false);
 create policy rewards_no_direct_access on private.coach_referral_rewards as restrictive for all to anon,authenticated using(false) with check(false);
+
+create function private.capture_coach_invite() returns trigger language plpgsql security definer set search_path='' as $$
+declare token text;begin
+ token:=new.raw_user_meta_data->>'invitation_code';
+ if new.raw_user_meta_data->>'requested_role'='coach' and token ~* '^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$' then
+ insert into private.coach_referrals(coach_id,inviter_id,invite_id)
+ select new.id,i.inviter_id,i.id from private.coach_invites i join public.member_profiles p on p.id=i.inviter_id and p.role='client' and p.status='active'
+ where i.id=token::uuid and i.inviter_id<>new.id and i.created_at<=coalesce(new.created_at,now()) and i.expires_at>coalesce(new.created_at,now()) and private.member_enabled(i.inviter_id)
+ on conflict(coach_id) do nothing;
+ end if;return new;
+end $$;
+revoke all on function private.capture_coach_invite() from public,anon,authenticated;
+create trigger capture_coach_invite after insert on auth.users for each row execute function private.capture_coach_invite();
+create or replace function private.claim_coach_invite(p_code uuid) returns void language plpgsql security definer set search_path='' as $$
+declare inviter uuid;begin
+ if p_code is null or not private.member_enabled(auth.uid()) then raise exception 'Invitation unavailable' using errcode='42501';end if;
+ select r.inviter_id into inviter from private.coach_referrals r where r.coach_id=auth.uid() and r.invite_id=p_code;
+ if not found or inviter=auth.uid() or not private.member_enabled(inviter) then raise exception 'Invitation unavailable' using errcode='42501';end if;
+ if not exists(select 1 from public.member_profiles where id=auth.uid() and role='coach' and status='pending') or not exists(select 1 from public.member_profiles where id=inviter and role='client' and status='active') or not exists(select 1 from auth.users where id=auth.uid() and email_confirmed_at is not null) then raise exception 'Invitation unavailable' using errcode='42501';end if;
+end $$;

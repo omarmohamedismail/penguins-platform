@@ -2,12 +2,15 @@ begin;
 insert into auth.users(id,aud,role,email,email_confirmed_at,created_at) values
 ('77777777-2222-4222-8222-222222222210','authenticated','authenticated','invite-a@example.invalid',now(),now()-interval '2 days'),
 ('77777777-2222-4222-8222-222222222211','authenticated','authenticated','invite-b@example.invalid',now(),now()-interval '2 days'),
-('77777777-2222-4222-8222-222222222212','authenticated','authenticated','invite-coach@example.invalid',now(),now()-interval '1 minute'),
 ('77777777-2222-4222-8222-222222222213','authenticated','authenticated','invite-unconfirmed@example.invalid',null,now()-interval '1 minute'),
 ('77777777-2222-4222-8222-222222222214','authenticated','authenticated','invite-old@example.invalid',now(),now()-interval '3 days');
 insert into public.member_profiles(id,name,role,status) values
-('77777777-2222-4222-8222-222222222210','Invite A','client','active'),('77777777-2222-4222-8222-222222222211','Invite B','client','active'),('77777777-2222-4222-8222-222222222212','Invited coach','coach','pending'),('77777777-2222-4222-8222-222222222213','Unconfirmed coach','coach','pending'),('77777777-2222-4222-8222-222222222214','Old coach','coach','pending');
+('77777777-2222-4222-8222-222222222210','Invite A','client','active'),('77777777-2222-4222-8222-222222222211','Invite B','client','active'),('77777777-2222-4222-8222-222222222213','Unconfirmed coach','coach','pending'),('77777777-2222-4222-8222-222222222214','Old coach','coach','pending');
 insert into private.coach_invites(id,inviter_id,created_at) values('77777777-3333-4333-8333-333333333310','77777777-2222-4222-8222-222222222210',now()-interval '5 minutes'),('77777777-3333-4333-8333-333333333311','77777777-2222-4222-8222-222222222211',now()-interval '5 minutes');
+insert into auth.users(id,aud,role,email,email_confirmed_at,created_at,raw_user_meta_data) values('77777777-2222-4222-8222-222222222212','authenticated','authenticated','invite-coach@example.invalid',now(),now()-interval '1 minute','{"requested_role":"coach","invitation_code":"77777777-3333-4333-8333-333333333310"}');
+reset role;
+insert into public.member_profiles(id,name,role,status) values('77777777-2222-4222-8222-222222222212','Invited coach','coach','pending');
+update auth.users set raw_user_meta_data='{"requested_role":"coach","invitation_code":"77777777-3333-4333-8333-333333333310"}' where id='77777777-2222-4222-8222-222222222214';
 set local role authenticated;
 select set_config('request.jwt.claim.sub','77777777-2222-4222-8222-222222222210',true);
 do $$declare x jsonb;begin
@@ -45,7 +48,11 @@ do $$begin if (public.coach_invite_summary()->>'points')::int<>0 then raise exce
 reset role;
 update public.member_profiles set status='approved' where id='77777777-2222-4222-8222-222222222212';
 update private.coach_invites set expires_at=now()-interval '1 minute' where id='77777777-3333-4333-8333-333333333311';
+insert into auth.users(id,aud,role,email,email_confirmed_at,created_at,raw_user_meta_data) values('77777777-2222-4222-8222-222222222215','authenticated','authenticated','expired-signup@example.invalid',now(),now(),'{"requested_role":"coach","invitation_code":"77777777-3333-4333-8333-333333333311"}');
+insert into public.member_profiles(id,name,role,status) values('77777777-2222-4222-8222-222222222215','Expired signup','coach','pending');
 set local role authenticated;
+select set_config('request.jwt.claim.sub','77777777-2222-4222-8222-222222222215',true);
+do $$begin begin perform public.claim_coach_invite('77777777-3333-4333-8333-333333333311');raise exception 'expired signup captured';exception when insufficient_privilege then null;end;end $$;
 select set_config('request.jwt.claim.sub','77777777-2222-4222-8222-222222222212',true);
 do $$begin begin perform public.claim_coach_invite('77777777-3333-4333-8333-333333333311');raise exception 'expired invite allowed';exception when insufficient_privilege then null;end;end $$;
 select set_config('request.jwt.claim.sub','77777777-2222-4222-8222-222222222210',true);
@@ -64,4 +71,4 @@ set local role anon;
 do $$begin begin perform public.coach_invite_summary();raise exception 'anonymous summary allowed';exception when insufficient_privilege then null;end;begin perform public.coach_invite_link();raise exception 'anonymous creation allowed';exception when insufficient_privilege then null;end;end $$;
 reset role;
 rollback;
-select 'PASS: verified new coach only, no self referral, one owner per coach, exactly 50 after approval, duplicate protection, private ledger, revoked approval, expired token and anonymous denial' as result;
+select 'PASS: immutable signup attribution, verified new coach only, no self referral, one owner per coach, exactly 50 after approval, duplicate protection, private ledger, revoked approval, expired token and anonymous denial' as result;
