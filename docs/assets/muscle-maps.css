@@ -1,1 +1,21 @@
-.exercise-art.pose-art.muscle-map{width:140px;height:168px;max-width:100%;margin:2px auto 16px;transform:none;filter:none;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#8c7bd012,transparent 68%)}.muscle-map svg{height:100%;width:auto;max-width:100%;overflow:visible}.muscle-map .muscle-active{filter:drop-shadow(0 0 3px #c5b7ec35)}.exercise-studio .exercise-card{border-color:#48434f!important}.exercise-studio .exercise-card small{font-size:12px;line-height:1.6}.client-exercises .muscle-map{height:174px}.workout-preview .muscle-map{height:182px}.exercise-art.muscle-map[data-muscle=custom]{opacity:.75}@media(max-width:600px){.exercise-art.pose-art.muscle-map{height:140px;width:116px;margin-bottom:12px}.client-exercises .muscle-map,.workout-preview .muscle-map{height:170px;width:140px}.exercise-studio .exercise-card h4{font-size:14px;line-height:1.7}}@media(prefers-reduced-motion:reduce){.muscle-map .muscle-active{filter:none}}
+/* Detailed muscle maps share the existing coach/client card layout. */
+.muscle-figure{width:100%;min-width:0;margin:0 0 14px;text-align:center;direction:rtl}
+.muscle-view-switch{display:inline-flex;gap:2px;padding:3px;background:#10131c;border:1px solid #464254;border-radius:10px;max-width:100%;margin:0 auto 8px}
+.exercise-card .muscle-view-switch button{appearance:none;min-width:54px;min-height:36px;margin:0;padding:5px 10px;border:0;border-radius:7px;background:transparent;color:#aeb0c0;font:inherit;font-size:11px;font-weight:600;line-height:1.3;box-shadow:none;cursor:pointer;transform:none}
+.exercise-card .muscle-view-switch button[aria-pressed=true]{background:#3f3556;color:#f0e8ff;box-shadow:inset 0 0 0 1px #b29bd04a}
+.exercise-card .muscle-view-switch button:hover{background:#393347;color:#fff}
+.exercise-card .muscle-view-switch button:focus-visible{outline:2px solid #c0a6ed;outline-offset:3px}
+.exercise-art.pose-art.muscle-map{width:150px;height:230px;max-width:100%;margin:0 auto 8px;transform:none;filter:none;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#b8a2ed12,transparent 70%)}
+.muscle-map svg{height:100%;width:auto;max-width:100%;overflow:visible;animation:muscle-view-in .18s ease-out}
+.muscle-map .muscle-active{filter:drop-shadow(0 0 2px #b89aea30)}
+.exercise-card .muscle-caption{font-size:11px!important;line-height:1.7!important;color:#d0c5e6!important;margin:0 auto 6px!important;max-width:230px;min-height:37px;overflow-wrap:anywhere}
+.muscle-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 12px;font-size:10px;color:#b2acbf;line-height:1.5}
+.muscle-legend span{display:inline-flex;align-items:center;gap:5px}
+.muscle-legend span::before{content:'';width:6px;height:6px;border-radius:2px;background:#bfa5f2;border:1px solid #e8d9ff80}
+.muscle-legend .secondary-key::before{background:#79718e;border-color:#a7a0ba70}
+.muscle-legend[hidden],.muscle-legend span[hidden]{display:none}
+.exercise-studio .exercise-card{border-color:#48434f!important}.exercise-studio .exercise-card small{font-size:12px;line-height:1.6}
+.client-exercises .muscle-map,.workout-preview .muscle-map{height:250px;width:160px}
+@keyframes muscle-view-in{from{opacity:.45}to{opacity:1}}
+@media(max-width:600px){.exercise-art.pose-art.muscle-map{height:205px;width:135px}.client-exercises .muscle-map,.workout-preview .muscle-map{height:242px;width:155px}.exercise-card .muscle-view-switch button{min-height:44px;min-width:58px}.exercise-studio .exercise-card h4{font-size:14px;line-height:1.7}.exercise-card .muscle-caption{font-size:11px!important}}
+@media(prefers-reduced-motion:reduce){.muscle-map svg{animation:none}.muscle-map .muscle-active{filter:none}}
