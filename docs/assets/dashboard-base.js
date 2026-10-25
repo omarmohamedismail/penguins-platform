@@ -237,7 +237,7 @@ function renderAll() {
 
           <p class="text-muted text-xs mt-1">${p.sent}</p>
 
-          <p class="text-text text-sm mt-2 whitespace-pre-line">${p.details}</p>
+          <p class="text-text text-sm mt-2 whitespace-pre-line">${window.PenguinsExerciseStudio?.summary(p.details)||p.details}</p>
 
         </div>
 
@@ -409,9 +409,9 @@ document.getElementById('form-plan').onsubmit = e => {
   let f = new FormData(e.target);
   const workoutText = builtWorkout.length ? builtWorkout.map(ex => `${ex.name}: ${ex.scheme}`).join('\n') : '';
   const notes = f.get('details') || '';
-  const details = [workoutText, notes].filter(Boolean).join('\n\n') || 'No details added.';
+  let details;try{const combined=[workoutText,notes].filter(Boolean).join('\n\n');details=window.PenguinsCoachPlan?window.PenguinsCoachPlan.serialize(combined):(combined||'No details added.');}catch(error){toast(error.message);return;}
   db.plans.unshift({id:Date.now(),client:f.get('client'),title:f.get('title'),type:f.get('type'),details,sent:'الآن'});
-  saveData(); e.target.reset(); builtWorkout = []; renderAll();
+  saveData(); e.target.reset(); window.PenguinsCoachPlan?.clear(); builtWorkout = []; renderAll();
   toast('✅ Plan recorded for ' + f.get('client') + '.');
 };
 document.getElementById('form-shop').onsubmit = e => {
@@ -1179,7 +1179,7 @@ function renderTemplates() {
 
       <div class="flex items-center gap-2 mb-1"><h4 class="text-white font-semibold text-sm">${t.title}</h4><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent/15 text-accent">${uiLabel(t.type)}</span></div>
 
-      <p class="text-muted text-xs whitespace-pre-line line-clamp-3">${t.details}</p>
+      <p class="text-muted text-xs whitespace-pre-line line-clamp-3">${window.PenguinsExerciseStudio?.summary(t.details)||t.details}</p>
 
       <div class="flex gap-2 mt-3">
 
@@ -1198,7 +1198,7 @@ window.saveAsTemplate = () => {
   if (!title) { toast('Add a plan title first.'); return; }
   const workoutText = builtWorkout.length ? builtWorkout.map(ex => `${ex.name}: ${ex.scheme}`).join('\n') : '';
   const notes = f.get('details') || '';
-  const details = [workoutText, notes].filter(Boolean).join('\n\n') || 'No details added.';
+  let details;try{const combined=[workoutText,notes].filter(Boolean).join('\n\n');details=window.PenguinsCoachPlan?window.PenguinsCoachPlan.serialize(combined):(combined||'No details added.');}catch(error){toast(error.message);return;}
   db.planTemplates.unshift({ id: Date.now(), title, type: f.get('type'), details });
   saveData(); renderTemplates();
   toast('✅ Saved as template.');
@@ -1208,7 +1208,7 @@ window.useTemplate = (id) => {
   if (!tpl) return;
   document.querySelector('#form-plan [name="title"]').value = tpl.title;
   document.querySelector('#form-plan [name="type"]').value = tpl.type;
-  document.querySelector('#form-plan [name="details"]').value = tpl.details;
+  const parsed=window.PenguinsCoachPlan?.load(tpl.details);if(!parsed)window.PenguinsCoachPlan?.clear();document.querySelector('#form-plan [name="details"]').value = parsed?parsed.notes:tpl.details;
   builtWorkout = [];
   renderBuiltWorkout();
   setPlanTab('sent');
