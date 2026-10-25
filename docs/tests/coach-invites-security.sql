@@ -51,6 +51,15 @@ do $$begin begin perform public.claim_coach_invite('77777777-3333-4333-8333-3333
 select set_config('request.jwt.claim.sub','77777777-2222-4222-8222-222222222210',true);
 do $$begin if (public.coach_invite_summary()->>'points')::int<>50 then raise exception 'repeat approval minted more points';end if;end $$;
 reset role;
+insert into private.account_controls(user_id,paused) values('77777777-2222-4222-8222-222222222212',true);
+set local role authenticated;
+do $$begin if (public.coach_invite_summary()->>'points')::int<>0 then raise exception 'paused coach still rewarded';end if;end $$;
+reset role;
+update private.account_controls set paused=false where user_id='77777777-2222-4222-8222-222222222212';
+insert into private.account_controls(user_id,paused) values('77777777-2222-4222-8222-222222222210',true);
+set local role authenticated;
+do $$begin begin perform public.coach_invite_summary();raise exception 'paused client summary allowed';exception when insufficient_privilege then null;end;begin perform public.coach_invite_link();raise exception 'paused client invitation allowed';exception when insufficient_privilege then null;end;end $$;
+reset role;
 set local role anon;
 do $$begin begin perform public.coach_invite_summary();raise exception 'anonymous summary allowed';exception when insufficient_privilege then null;end;begin perform public.coach_invite_link();raise exception 'anonymous creation allowed';exception when insufficient_privilege then null;end;end $$;
 reset role;
