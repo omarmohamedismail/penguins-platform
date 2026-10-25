@@ -8,7 +8,7 @@ function showError(id,message){const field=$(id);field.textContent=message;field
 function authError(error){return ({invalid_credentials:'تعذر الدخول. تأكد من البريد وكلمة المرور، وأكّد بريدك أولًا إذا كان الحساب جديدًا.',email_not_confirmed:'أكّد بريدك الإلكتروني من رسالة التفعيل أولًا.',over_email_send_rate_limit:'تم بلوغ حد إرسال البريد. انتظر قليلًا ثم حاول مجددًا.',email_address_not_authorized:'خدمة البريد تحتاج إعدادًا من إدارة المنصة قبل إرسال رسالة لهذا العنوان.',user_already_exists:'هذا البريد مسجل بالفعل. استخدم تسجيل الدخول.',signup_disabled:'التسجيل متوقف مؤقتًا. تواصل مع إدارة المنصة.'})[error.code]||error.message||'تعذر إتمام العملية. حاول مجددًا.';}
 function authUrl(name){return new URL(name,location.href).href;}
 if(new URLSearchParams(location.search).get('mode')==='signup')setMode('signup');
-api.auth.getSession().then(({data})=>{if(data.session)location.replace('portal.html');});
+api.auth.getSession().then(({data,error})=>{if(error)throw error;if(data?.session)location.replace('portal.html');}).catch(()=>showError('login-form-error','تعذر التحقق من جلسة الدخول. حدّث الصفحة وحاول مجددًا.'));
 $('form-login').addEventListener('submit',async event=>{
  event.preventDefault();clearAuthFeedback();const button=$('login-submit');button.disabled=true;$('login-form-error').classList.add('hidden');
  try{const {error}=await api.auth.signInWithPassword({email:$('login-email').value.trim(),password:$('login-password').value});if(error)throw error;location.assign('portal.html');}
@@ -24,7 +24,7 @@ $('form-signup').addEventListener('submit',async event=>{
  if(!$('signup-terms').checked)return showError('signup-form-error','اطّلع على بيان البيانات وأكّد موافقتك قبل المتابعة.');
  button.disabled=true;
  try{
-  const {data,error}=await api.auth.signUp({email:$('signup-email').value.trim(),password,options:{emailRedirectTo:authUrl('auth.html'),data:{name,requested_role:$('signup-role').value,niche:$('signup-niche').value}}});
+  const {data,error}=await api.auth.signUp({email:$('signup-email').value.trim(),password,options:{emailRedirectTo:authUrl('auth.html'),data:{name,requested_role:$('signup-role').value,niche:$('signup-niche').value,invitation_code:window.PenguinsInvites?.code||null}}});
   if(error)throw error;
   if(data.session)location.assign('portal.html');else{setMode('login');toast('لو البريد جديد، راجع رسالة التفعيل لتأكيد حسابك قبل الدخول. لو الحساب موجود بالفعل وكلمة المرور مش معاك، استخدم «نسيت كلمة المرور؟».');$('login-email').value=$('signup-email').value.trim();}
  }catch(error){showError('signup-form-error',authError(error));}finally{button.disabled=false;}
@@ -58,3 +58,5 @@ $('email-link-login').addEventListener('click',async()=>{
  try{const {error}=await api.auth.signInWithOtp({email,options:{emailRedirectTo:authUrl('auth.html'),shouldCreateUser:true}});if(error)throw error;toast('راجع بريدك واضغط رابط الدخول. افتحه من نفس المتصفح اللي طلبت منه الرابط. لو مش لاقي الرسالة، راجع الرسائل غير المرغوب فيها.');}
  catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
 });
+
+const callbackError=new URLSearchParams(location.search).get('error')||new URLSearchParams((location.hash||'').slice(1)).get('error');if(callbackError)showError('login-form-error','رابط الدخول منتهي أو غير صالح. اطلب رسالة جديدة وافتحها من نفس المتصفح.');
