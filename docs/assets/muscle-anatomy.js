@@ -77,19 +77,20 @@ if(typeof module!=='undefined'&&module.exports){module.exports=api;return;}
 let serial=0;
 const instances=new WeakMap();
 const language=()=>window.PenguinsLanguage?.language==='en'?'en':'ar';
-function labels(root){const state=instances.get(root);if(!state)return;const en=language()==='en',p=state.profile;root.dir=en?'ltr':'rtl';for(const b of root.querySelectorAll('button[data-view]')){const rear=b.dataset.view==='back';b.textContent=en?(rear?'Back':'Front'):(rear?'خلف':'أمام');b.setAttribute('aria-label',en?(rear?'View muscles from the back':'View muscles from the front'):(rear?'عرض العضلات من الخلف':'عرض العضلات من الأمام'));}state.caption.textContent=p.primary.length?(en?'Focus: ':'التركيز: ')+p.primary.map(x=>muscles[x][en?1:0]).join(' · '):(en?'Custom exercise':'تمرين مخصّص');state.primaryLabel.textContent=en?'Main':'أساسية';state.secondaryLabel.textContent=en?'Supporting':'مساعدة';state.legend.hidden=!p.primary.length;state.caption.title=p.secondary.length?(en?'Supporting: ':'عضلات مساعدة: ')+p.secondary.map(x=>muscles[x][en?1:0]).join(' · '):'';}
+function labels(root){const state=instances.get(root);if(!state)return;const en=language()==='en',p=state.profile;root.dir=en?'ltr':'rtl';for(const b of root.querySelectorAll('button[data-view]')){const rear=b.dataset.view==='back';b.textContent=en?(rear?'Back':'Front'):(rear?'خلف':'أمام');b.setAttribute('aria-label',en?(rear?'View muscles from the back':'View muscles from the front'):(rear?'عرض العضلات من الخلف':'عرض العضلات من الأمام'));}state.caption.textContent=p.primary.length?(en?'Focus: ':'التركيز: ')+p.primary.map(x=>muscles[x][en?1:0]).join(' · '):(en?'Custom exercise':'تمرين مخصّص');state.primaryLabel.textContent=en?'Main':'أساسية';state.secondaryLabel.textContent=en?'Supporting':'مساعدة';state.legend.hidden=!p.primary.length;state.support.textContent=p.secondary.length?(en?'Supporting: ':'المساعدة: ')+p.secondary.map(x=>muscles[x][en?1:0]).join(' · '):'';state.support.hidden=!p.secondary.length;}
 window.addEventListener('penguins-language-change',()=>{document.querySelectorAll('.muscle-figure').forEach(labels);});
 api.render=function(parent,ex){
  const p=profile(ex),root=document.createElement('div');root.className='muscle-figure';root.dataset.languageControl='true';parent.append(root);
  const views=document.createElement('div');views.className='muscle-view-switch';root.append(views);
  const art=document.createElement('div');art.className='exercise-art pose-art muscle-map';art.dataset.specific=String(p.specific);art.setAttribute('aria-hidden','true');root.append(art);
  const caption=document.createElement('p');caption.className='muscle-caption';root.append(caption);
+ const support=document.createElement('p');support.className='muscle-support-caption';root.append(support);
  const legend=document.createElement('div');legend.className='muscle-legend';root.append(legend);
  const primaryLabel=document.createElement('span'),secondaryLabel=document.createElement('span');primaryLabel.className='primary-key';secondaryLabel.className='secondary-key';legend.append(primaryLabel,secondaryLabel);secondaryLabel.hidden=!p.secondary.length;
- instances.set(root,{profile:p,caption,legend,primaryLabel,secondaryLabel});
+ instances.set(root,{profile:p,caption,support,legend,primaryLabel,secondaryLabel});
  function draw(view){art.replaceChildren();art.dataset.view=view;const id='pg-muscle-'+(++serial),ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 180 300');art.append(svg);
   const add=(tag,attrs,into=svg)=>{const n=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,String(v));into.append(n);return n;};
-  const defs=add('defs',{});for(const [key,stops]of Object.entries({body:['#343946','#212530','#424956'],active:['#ddd1ff','#9b80dc','#66519e'],support:['#9f99b6','#67617b','#4a455e'],rest:['#606778','#414754','#303642']})){const g=add('linearGradient',{id:id+'-'+key,x1:'0%',y1:'0%',x2:'100%',y2:'80%'},defs);stops.forEach((color,i)=>add('stop',{offset:(i/(stops.length-1)*100)+'%','stop-color':color},g));}
+  const defs=add('defs',{});for(const [key,stops]of Object.entries({body:['#343946','#212530','#424956'],active:['#ddd1ff','#9b80dc','#66519e'],support:['#b7f3ed','#63cbbf','#388c88'],rest:['#606778','#414754','#303642']})){const g=add('linearGradient',{id:id+'-'+key,x1:'0%',y1:'0%',x2:'100%',y2:'80%'},defs);stops.forEach((color,i)=>add('stop',{offset:(i/(stops.length-1)*100)+'%','stop-color':color},g));}
   add('ellipse',{cx:90,cy:290,rx:42,ry:5,fill:'#090c14',opacity:.45});
   const body={fill:'url(#'+id+'-body)',stroke:'#798296','stroke-opacity':.55,'stroke-width':.8,'stroke-linejoin':'round'};
   add('path',{...body,d:'M79 12 Q90 5 101 12 Q106 20 101 30 L96 37 L84 37 L79 30 Q74 20 79 12 Z'});
@@ -98,7 +99,7 @@ api.render=function(parent,ex){
    const layer=add('g',mirror?{transform:'translate(180 0) scale(-1 1)'}:{});
    for(const d of ['M51 57 Q44 58 41 73 L37 96 L34 110 Q29 125 29 144 L25 153 L26 164 Q29 168 32 163 L34 155 L39 150 L44 131 L50 113 L56 96 L61 78 Z','M65 151 Q60 169 63 190 L67 214 Q61 227 62 242 L67 269 L67 278 L62 284 Q63 288 70 287 L78 284 L78 271 L81 248 L85 227 L85 213 L89 186 L89 160 Z'])add('path',{...body,d},layer);
    const zones=view==='back'?back:front;
-   for(const [key,paths]of Object.entries(zones))for(const d of paths){const level=p.primary.includes(key)?'active':p.secondary.includes(key)?'support':'rest';add('path',{d,fill:'url(#'+id+'-'+level+')',stroke:level==='active'?'#e3d5ff':'#828a9b','stroke-opacity':level==='active'?.65:.28,'stroke-width':.65,'stroke-linejoin':'round','data-muscle':key,'data-level':level,class:'muscle-zone muscle-'+level},layer);}
+   for(const [key,paths]of Object.entries(zones))for(const d of paths){const level=p.primary.includes(key)?'active':p.secondary.includes(key)?'support':'rest';add('path',{d,fill:'url(#'+id+'-'+level+')',stroke:level==='active'?'#e3d5ff':level==='support'?'#c7fff6':'#828a9b','stroke-opacity':level==='rest'?.28:.8,'stroke-width':.65,'stroke-linejoin':'round','data-muscle':key,'data-level':level,class:'muscle-zone muscle-'+level},layer);}
    // Tendons and bony landmarks help separate adjacent muscle groups.
    add('path',{d:view==='back'?'M71 255 L72 277 M71 218 Q76 220 81 217':'M67 215 Q75 211 82 215 L80 222 Q74 225 68 220 Z M76 229 L74 270',fill:'none',stroke:'#8991a2','stroke-opacity':.38,'stroke-width':.8},layer);
   }

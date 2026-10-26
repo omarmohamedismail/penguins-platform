@@ -68,7 +68,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/product.css">
-<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"><link rel="stylesheet" href="assets/ui-refinement.css?v=20261022b"><link rel="stylesheet" href="assets/coach-invites.css?v=2"></head>
+<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"><link rel="stylesheet" href="assets/ui-refinement.css?v=20261022b"><link rel="stylesheet" href="assets/coach-invites.css?v=2"><link rel="stylesheet" href="assets/access-connections.css?v=1"></head>
 <body class="site-auth text-ink antialiased relative min-h-screen" >
 
 <div id="stars"></div>
@@ -123,12 +123,15 @@
             <button type="submit" id="login-submit" class="btn-metal w-full text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2">
               <span id="login-submit-label">تسجيل الدخول</span>
             </button>
-            <button type="button" id="email-link-login" class="btn-metal w-full text-white py-3 rounded-xl">الدخول أو إنشاء حساب برابط على البريد</button><p class="text-xs text-dim">اكتب بريدك واضغط الزر؛ لو البريد جديد، هننشئ حسابك بعد تأكيده. افتح الرابط من نفس المتصفح. <a href="privacy.html">بيان البيانات</a></p><button type="button" id="resend-confirmation" class="text-sm text-nebula">إعادة إرسال رسالة التفعيل</button><button type="button" id="reset-password" class="text-sm text-nebula">نسيت كلمة المرور؟</button><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
+            <p class="text-xs text-dim">بعد الدخول هنفتح حسابك حسب نوعه: عميل أو كوتش. اعتماد الكوتش يتم من الإدارة.</p>
+<details id="auth-help-options"><summary>مساعدة في الدخول أو تأكيد البريد</summary>
+<button type="button" id="email-link-login" class="text-sm text-nebula">ادخل برابط على البريد بدل كلمة المرور</button><p>الخيار ده للحسابات الموجودة. لو دي أول مرة، اختار «حساب جديد» وحدد عميل أو كوتش.</p>
+<button type="button" id="resend-confirmation" class="text-sm text-nebula">إعادة إرسال رسالة التفعيل</button><button type="button" id="reset-password" class="text-sm text-nebula">نسيت كلمة المرور؟</button></details><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
           </form>
 
           <!-- ============ SIGNUP FORM ============ -->
           <form id="form-signup" class="space-y-4 hidden" novalidate>
-<label for="signup-role">اختر نوع حسابك</label><select id="signup-role" class="w-full rounded-xl py-3 px-4 bg-panel border border-line"><option value="client">عميل — ابدأ متابعة تمرينك</option><option value="coach">كوتش — قدّم طلب انضمام</option></select><p class="text-dim text-xs">العميل يدخل مباشرة بعد تأكيد بريده الإلكتروني، ولا يحتاج موافقة الإدارة. الكوتش ينتظر مراجعة طلبه.</p>
+<label for="signup-role">اختر نوع حسابك</label><select id="signup-role" class="w-full rounded-xl py-3 px-4 bg-panel border border-line"><option value="client">عميل — ابدأ متابعة تمرينك</option><option value="coach">كوتش — قدّم طلب انضمام</option></select>
             <div>
               <label class="text-xs text-dim mb-1.5 block" for="signup-name">الاسم الكامل</label>
               <input type="text" id="signup-name" maxlength="80" name="name" autocomplete="name" placeholder="اكتب اسمك الكامل" class="field w-full rounded-xl px-4 py-3 text-sm">
@@ -200,5 +203,5 @@
   @keyframes fadeSlideIn { from{ opacity:0; transform:translateX(16px);} to{ opacity:1; transform:translateX(0);} }
 </style>
 
-<script src="assets/translations.js?v=2" defer></script><script src="assets/language.js?v=invites-1" defer></script><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/coach-invites.js?v=2" defer></script><script src="assets/client.js" defer></script><script src="assets/auth.js?v=invites-1" defer></script><a href="dashboard.html?demo=1" style="position:fixed;bottom:18px;left:18px;z-index:9999;background:#6c5ce7;color:white;border:1px solid #a38eee;padding:14px 20px;border-radius:12px;font:14px Tahoma;text-decoration:none">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
+<script src="assets/translations.js?v=2" defer></script><script src="assets/language.js?v=connections-1" defer></script><script src="assets/connections.js?v=1" defer></script><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/coach-invites.js?v=2" defer></script><script src="assets/client.js" defer></script><script src="assets/auth-flow.js?v=1" defer></script><script src="assets/auth.js?v=connections-1" defer></script><a href="dashboard.html?demo=1" style="position:fixed;bottom:18px;left:18px;z-index:9999;background:#6c5ce7;color:white;border:1px solid #a38eee;padding:14px 20px;border-radius:12px;font:14px Tahoma;text-decoration:none">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
 </html>

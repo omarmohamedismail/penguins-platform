@@ -2,22 +2,24 @@ const api=window.penguinsClient;
 const $=id=>document.getElementById(id);
 function toast(message){const box=$('auth-status');box.textContent=message;box.hidden=false;}
 function clearAuthFeedback(){ $('auth-status').hidden=true;for(const id of ['login-form-error','signup-form-error'])$(id).classList.add('hidden');}
-function setMode(mode){clearAuthFeedback();const login=mode==='login';$('form-login').classList.toggle('hidden',!login);$('form-signup').classList.toggle('hidden',login);$('tab-login').classList.toggle('active',login);$('tab-signup').classList.toggle('active',!login);}
+function setMode(mode){clearAuthFeedback();const login=mode==='login';$('form-login').classList.toggle('hidden',!login);$('form-signup').classList.toggle('hidden',login);$('tab-login').classList.toggle('active',login);$('tab-signup').classList.toggle('active',!login);window.PenguinsAccess?.mode(mode);}
 function toggleVisibility(id,button){const input=$(id);input.type=input.type==='password'?'text':'password';button.textContent=input.type==='password'?'إظهار':'إخفاء';}
 function showError(id,message){const field=$(id);field.textContent=message;field.classList.remove('hidden');field.setAttribute('role','alert');}
-function authError(error){return ({invalid_credentials:'تعذر الدخول. تأكد من البريد وكلمة المرور، وأكّد بريدك أولًا إذا كان الحساب جديدًا.',email_not_confirmed:'أكّد بريدك الإلكتروني من رسالة التفعيل أولًا.',over_email_send_rate_limit:'تم بلوغ حد إرسال البريد. انتظر قليلًا ثم حاول مجددًا.',email_address_not_authorized:'خدمة البريد تحتاج إعدادًا من إدارة المنصة قبل إرسال رسالة لهذا العنوان.',user_already_exists:'هذا البريد مسجل بالفعل. استخدم تسجيل الدخول.',signup_disabled:'التسجيل متوقف مؤقتًا. تواصل مع إدارة المنصة.'})[error.code]||error.message||'تعذر إتمام العملية. حاول مجددًا.';}
+function authError(error){return ({invalid_credentials:'تعذر الدخول. تأكد من البريد وكلمة المرور، وأكّد بريدك أولًا إذا كان الحساب جديدًا.',email_not_confirmed:'أكّد بريدك الإلكتروني من رسالة التفعيل أولًا.',over_email_send_rate_limit:'تم بلوغ حد إرسال البريد. انتظر قليلًا ثم حاول مجددًا.',email_address_not_authorized:'خدمة البريد تحتاج إعدادًا من إدارة المنصة قبل إرسال رسالة لهذا العنوان.',user_already_exists:'هذا البريد مسجل بالفعل. استخدم تسجيل الدخول.',signup_disabled:'التسجيل متوقف مؤقتًا. تواصل مع إدارة المنصة.',otp_disabled:'تعذر إرسال رابط الدخول. لو دي أول مرة، اختار حساب جديد وحدد نوع حسابك.'})[error.code]||error.message||'تعذر إتمام العملية. حاول مجددًا.';}
 function authUrl(name){return new URL(name,location.href).href;}
 if(new URLSearchParams(location.search).get('mode')==='signup')setMode('signup');
-api.auth.getSession().then(({data,error})=>{if(error)throw error;if(data?.session)location.replace('portal.html');}).catch(()=>showError('login-form-error','تعذر التحقق من جلسة الدخول. حدّث الصفحة وحاول مجددًا.'));
+api.auth.getSession().then(({data,error})=>{if(error)throw error;if(data?.session&&new URLSearchParams(location.search).get('switch')!=='1')location.replace('portal.html');}).catch(()=>showError('login-form-error','تعذر التحقق من جلسة الدخول. حدّث الصفحة وحاول مجددًا.'));
 $('form-login').addEventListener('submit',async event=>{
- event.preventDefault();clearAuthFeedback();const button=$('login-submit');button.disabled=true;$('login-form-error').classList.add('hidden');
+ event.preventDefault();clearAuthFeedback();if(!$('login-email').value.trim()||!$('login-email').checkValidity()||!$('login-password').value)return showError('login-form-error','اكتب البريد الإلكتروني وكلمة المرور أولًا.');const button=$('login-submit');if(button.disabled)return;button.disabled=true;$('login-form-error').classList.add('hidden');
  try{const {error}=await api.auth.signInWithPassword({email:$('login-email').value.trim(),password:$('login-password').value});if(error)throw error;location.assign('portal.html');}
  catch(error){showError('login-form-error',authError(error));}
  finally{button.disabled=false;}
 });
 $('form-signup').addEventListener('submit',async event=>{
  event.preventDefault();clearAuthFeedback();const button=$('signup-submit');$('signup-form-error').classList.add('hidden');
- const name=$('signup-name').value.trim(),password=$('signup-password').value;
+ if(button.disabled)return;const name=$('signup-name').value.trim(),password=$('signup-password').value;
+ if(!$('signup-email').value.trim()||!$('signup-email').checkValidity())return showError('signup-form-error','اكتب بريدك الإلكتروني الصحيح أولًا.');
+ if(!['coach','client'].includes($('signup-role').value))return showError('signup-form-error','اختار نوع حسابك أولًا.');
  if(!name||name.length>80)return showError('signup-form-error','اكتب اسمك، بحد أقصى ٨٠ حرفًا.');
  if(password.length<10)return showError('signup-form-error','استخدم كلمة مرور من ١٠ أحرف على الأقل.');
  if(password!==$('signup-confirm').value)return showError('signup-form-error','كلمتا المرور غير متطابقتين.');
@@ -26,7 +28,7 @@ $('form-signup').addEventListener('submit',async event=>{
  try{
   const {data,error}=await api.auth.signUp({email:$('signup-email').value.trim(),password,options:{emailRedirectTo:authUrl('auth.html'),data:{name,requested_role:$('signup-role').value,niche:$('signup-niche').value,invitation_code:window.PenguinsInvites?.code||null}}});
   if(error)throw error;
-  if(data.session)location.assign('portal.html');else{setMode('login');toast('لو البريد جديد، راجع رسالة التفعيل لتأكيد حسابك قبل الدخول. لو الحساب موجود بالفعل وكلمة المرور مش معاك، استخدم «نسيت كلمة المرور؟».');$('login-email').value=$('signup-email').value.trim();}
+  if(data.session)location.assign('portal.html');else{setMode('login');toast('لو البريد جديد، راجع رسالة التفعيل لتأكيد حسابك قبل الدخول. لو الحساب موجود بالفعل وكلمة المرور مش معاك، استخدم «نسيت كلمة المرور؟».');$('login-email').value=$('signup-email').value.trim();window.PenguinsAccess?.confirmed();}
  }catch(error){showError('signup-form-error',authError(error));}finally{button.disabled=false;}
 });
 $('signup-password').addEventListener('input',event=>{
@@ -40,7 +42,7 @@ $('reset-password').addEventListener('click',async()=>{
  catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
 });
 
-function updateSignupRole(){const coach=$('signup-role').value==='coach';$('signup-niche').parentElement.hidden=!coach;}
+function updateSignupRole(){const coach=$('signup-role').value==='coach';$('signup-niche').parentElement.hidden=!coach;window.PenguinsAccess?.updateRole();}
 $('signup-role').addEventListener('change',updateSignupRole);updateSignupRole();
 
 $('resend-confirmation').addEventListener('click',async()=>{
@@ -55,7 +57,7 @@ $('email-link-login').addEventListener('click',async()=>{
  clearAuthFeedback();const email=$('login-email').value.trim();
  if(!email||!$('login-email').checkValidity())return showError('login-form-error','اكتب بريدك الإلكتروني الصحيح أولًا.');
  const button=$('email-link-login');button.disabled=true;
- try{const {error}=await api.auth.signInWithOtp({email,options:{emailRedirectTo:authUrl('auth.html'),shouldCreateUser:true}});if(error)throw error;toast('راجع بريدك واضغط رابط الدخول. افتحه من نفس المتصفح اللي طلبت منه الرابط. لو مش لاقي الرسالة، راجع الرسائل غير المرغوب فيها.');}
+ try{const {error}=await api.auth.signInWithOtp({email,options:{emailRedirectTo:authUrl('auth.html'),shouldCreateUser:false}});if(error)throw error;toast('لو عندك حساب، راجع بريدك واضغط رابط الدخول. افتحه من نفس المتصفح اللي طلبت منه الرابط. لو مش لاقي الرسالة، راجع الرسائل غير المرغوب فيها.');}
  catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
 });
 
