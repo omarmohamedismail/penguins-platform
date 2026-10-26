@@ -11,3 +11,11 @@ test('last-updated clock is translated with readable digits and meridiem',()=>{a
 test('legacy coach metric widgets follow the Arabic interface',()=>{assert.equal(translate('Total Revenue 💰','ar'),'إجمالي الإيرادات');assert.equal(translate('Plans Sent ▤','ar'),'الخطط المرسلة');assert.equal(translate('2 being coached','ar'),'2 يتلقون المتابعة');});
 
 test('plan completion and favorite summaries switch to English',()=>{assert.equal(translate('متابعة إنجاز الخطة · ★ في المفضلة','en'),'Plan progress · ★ Favorite');assert.equal(translate('✓ مكتملة · ★ في المفضلة','en'),'✓ Completed · ★ Favorite');});
+
+test('account errors translate and personal review text is preserved',()=>{
+ const source='تعذر الدخول. تأكد من البريد وكلمة المرور، وأكّد بريدك أولًا إذا كان الحساب جديدًا.';
+ const english=translate(source,'en');assert.notEqual(english,source);assert.equal(translate(english,'ar'),source);
+ assert.equal(translate('الشهادة 2','en'),'Certificate 2');
+ assert.equal(translate('ملاحظة الإدارة: مراجعة','en'),'Owner feedback: مراجعة');
+});
+
