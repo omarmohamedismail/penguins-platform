@@ -2,7 +2,7 @@
 function chartWeeks(rows){const weeks=new Map();for(const r of rows){if(!/^\d{4}-\d{2}-\d{2}$/.test(r.week)||!Number.isFinite(r.days))continue;weeks.set(r.week,Math.max(weeks.get(r.week)||0,r.days));}return [...weeks].sort(([a],[b])=>a.localeCompare(b)).slice(-8);}
 if(typeof module!=='undefined'&&module.exports){module.exports={chartWeeks};return;}
 const live=document.body.classList.contains('original-live');if(!live)return;
-const $=id=>document.getElementById(id);let current='overview',chart,chartRows=[];
+const $=id=>document.getElementById(id);const initialSection=new URLSearchParams(location.search).get('section')||location.hash.slice(1);let current=['overview','people','plans','followup','organizer','account'].includes(initialSection)?initialSection:'overview',chart,chartRows=[];
 const labels={overview:['الرئيسية','Dashboard'],people:['الكوتش','My coaches'],plans:['خططي وملفاتي','Plans & files'],followup:['المتابعة والردود','Check-ins & replies'],organizer:['مهامي ومؤقّت الراحة','Tasks & rest timer'],account:['حسابي','My account']};
 function bilingual(n,ar,en){n.dataset.languageControl='true';n.dataset.ar=ar;n.dataset.en=en;n.textContent=window.PenguinsLanguage.language==='en'?en:ar;return n;}
 function node(tag,text,parent,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cls)n.className=cls;parent?.append(n);return n;}
