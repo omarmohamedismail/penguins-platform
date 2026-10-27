@@ -19,3 +19,10 @@ test('account errors translate and personal review text is preserved',()=>{
  assert.equal(translate('ملاحظة الإدارة: مراجعة','en'),'Owner feedback: مراجعة');
 });
 
+
+test('plan ratings and legacy plan types use coherent English labels',()=>{
+ assert.equal(translate('3 / ٥','en'),'3 / 5');
+ assert.equal(translate('✓ العميل علّم الخطة كمكتملة · تقييم: 4 / ٥','en'),'✓ Client marked the plan complete · Rating: 4 / 5');
+ assert.equal(translate('Life &amp; Mindset','en'),'Life & Mindset');
+ assert.equal(translate('BUSINESS GOALS','ar'),'أهداف العمل');
+});
