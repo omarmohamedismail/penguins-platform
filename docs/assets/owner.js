@@ -15,13 +15,34 @@ function modal(title){const d=el('dialog',undefined,document.body);const h=el('h
 async function reason(title,description,run){const d=modal(title);el('p',description,d);const note=field(d,'سبب القرار');note.maxLength=500;const actions=el('div',undefined,d,'actions');button('رجوع',actions,()=>d.close(),'secondary');button('تأكيد القرار',actions,async()=>{if(!note.value.trim()){note.setCustomValidity('اكتب سبب القرار');note.reportValidity();return;}note.setCustomValidity('');await run(note.value.trim());d.close();});note.addEventListener('input',()=>note.setCustomValidity(''));d.showModal();note.focus();}
 async function editName(row){const d=modal('تعديل اسم العضو');const name=field(d,'الاسم الظاهر');name.value=row.name;name.maxLength=80;const actions=el('div',undefined,d,'actions');button('رجوع',actions,()=>d.close(),'secondary');button('حفظ الاسم',actions,async()=>{if(!name.value.trim()){name.setCustomValidity('اكتب الاسم');name.reportValidity();return;}await action('rename',{id:row.id,name:name.value.trim(),expected_name:row.name});d.close();});d.showModal();name.focus();}
 function stats(data,parent){const grid=el('div',undefined,parent,'owner-stats');for(const [key,title]of [['members','كل الأعضاء'],['coaches','حسابات الكوتش'],['clients','العملاء'],['pending','مستنيين المراجعة'],['links','روابط تدريب مقبولة'],['plans','الخطط المحفوظة']]){const card=el('article',undefined,grid,'owner-stat');el('span',title,card);el('strong',data[key]??0,card);}}
+async function recentActivity(parent){
+const box=el('section',undefined,parent,'owner-live');el('h3','آخر نشاط على المنصة',box);
+el('p','أحدث التسجيلات وطلبات الربط والخطط وقرارات الإدارة. اضغط تحديث البيانات لجلب الجديد.',box,'helper');
+const sources=['members','links','plans','activity'];
+const results=await Promise.all(sources.map(p_view=>checked(api.rpc('owner_data',{p_view,p_page:0,p_search:''}))));
+const events=[];
+results.forEach((result,i)=>{for(const row of result.rows||[]){const source=sources[i];events.push({source,row,time:new Date(row.created_at).getTime()});}});
+events.sort((a,b)=>b.time-a.time);
+if(!events.length)el('p','لسه مفيش نشاط مسجل.',box,'helper');
+for(const {source,row}of events.slice(0,12)){
+const card=el('article',undefined,box,'owner-event');
+const title=source==='members'?'انضمام عضو':source==='links'?'طلب تدريب':source==='plans'?'خطة مشتركة':label(row.action);
+el('strong',title,card);
+const detail=source==='members'?row.name:source==='links'?row.client_name+' ← '+row.coach_name:source==='plans'?row.title+' · '+row.coach_name+' ← '+row.client_name:row.target;
+el('p',detail,card).dataset.userContent='true';
+if(source==='links')el('span',label(row.status),card,'badge');
+el('small',date(row.created_at),card);
+button('عرض التفاصيل',card,async()=>{state.tab=source;state.page=0;state.search='';await draw();},'secondary');
+}
+el('p','آخر تحديث: '+date(new Date()),box,'helper');
+}
 async function draw(){const token=++version;pane.setAttribute('aria-busy','true');try{
 for(const b of nav.querySelectorAll('[data-tab]')){b.setAttribute('aria-current',b.dataset.tab===state.tab?'page':'false');}
-const f=document.createDocumentFragment();const header=el('div',undefined,f,'owner-title');el('h2',titles[state.tab],header);el('span','OWNER CONSOLE',header,'eyebrow');
-if(state.tab==='reviews'){await reviewQueue(f);if(token===version)pane.replaceChildren(f);return;}
+const f=document.createDocumentFragment();const header=el('div',undefined,f,'owner-title');el('h2',titles[state.tab],header);button('تحديث البيانات',header,()=>draw(),'secondary');
+if(state.tab==='reviews'){const guide=el('section',undefined,f,'owner-review-guide');el('h3','إزاي تعتمد كوتش؟',guide);const steps=el('ol',undefined,guide);for(const text of ['اختار قيد المراجعة وابحث باسم الكوتش.','راجع بياناته وافتح الشهادات المرفوعة إن وجدت.','اضغط اعتماد الكوتش ثم أكّد القرار. للرفض، اكتب سببًا واضحًا.'])el('li',text,steps);el('p','العميل يدخل بعد تأكيد البريد بدون موافقتك. اعتماد الكوتش يفتح له استقبال العملاء وإرسال الخطط.',guide,'helper');await reviewQueue(f);if(token===version)pane.replaceChildren(f);return;}
 const result=await checked(api.rpc('owner_data',{p_view:state.tab==='settings'?'overview':state.tab,p_page:state.page,p_search:state.search}));
 if(state.tab==='overview'){
-stats(result,f);const strip=el('div',undefined,f,'owner-summary');el('p','انضم خلال آخر ٧ أيام: '+result.new_week,strip);el('p','حسابات موقوفة: '+result.paused,strip);el('p','خطط مخفية: '+result.hidden,strip);
+stats(result,f);await recentActivity(f);const strip=el('div',undefined,f,'owner-summary');el('p','انضم خلال آخر ٧ أيام: '+result.new_week,strip);el('p','حسابات موقوفة: '+result.paused,strip);el('p','خطط مخفية: '+result.hidden,strip);
 const chart=el('section',undefined,f);el('h3','حركة الانضمام · آخر ٧ أيام',chart);const max=Math.max(1,...(result.days||[]).map(d=>Number(d.members)));for(const d of result.days||[]){const row=el('div',undefined,chart,'chart-row');el('span',new Date(d.day).toLocaleDateString('ar-EG',{weekday:'short',day:'numeric'}),row);const bar=el('progress',undefined,row);bar.max=max;bar.value=Number(d.members);bar.setAttribute('aria-label',d.day+': '+d.members+' أعضاء');el('strong',d.members,row);}
 const quick=el('section',undefined,f);el('h3','الخطوة الجاية',quick);el('p',result.pending?'فيه طلبات كوتش مستنية قرارك.':'مفيش طلبات كوتش معلّقة دلوقتي. تابع الأعضاء والطلبات من القائمة.',quick,'helper');button('افتح مراجعة الكوتشات',quick,async()=>{state.tab='reviews';state.page=0;await draw();});
 }else if(state.tab==='settings'){
