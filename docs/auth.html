@@ -68,7 +68,7 @@
   }
 </style>
 <link rel="stylesheet" href="assets/utilities.css"><link rel="stylesheet" href="assets/product.css">
-<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"><link rel="stylesheet" href="assets/ui-refinement.css?v=20261022b"><link rel="stylesheet" href="assets/coach-invites.css?v=2"><link rel="stylesheet" href="assets/access-connections.css?v=2"></head>
+<link rel="stylesheet" href="assets/motion.css"><link rel="stylesheet" href="assets/language.css?v=1"><link rel="stylesheet" href="assets/interface.css?v=20261021"><link rel="stylesheet" href="assets/ui-refinement.css?v=20261022b"><link rel="stylesheet" href="assets/coach-invites.css?v=2"><link rel="stylesheet" href="assets/access-connections.css?v=2"><link rel="stylesheet" href="assets/auth-polish.css?v=1"></head>
 <body class="site-auth text-ink antialiased relative min-h-screen" >
 
 <div id="stars"></div>
@@ -102,7 +102,7 @@
         <div class="p-6 pt-4">
 
           <!-- ============ LOGIN FORM ============ -->
-          <div id="auth-status" role="status" aria-live="polite" hidden></div><form id="form-login" class="space-y-4" novalidate>
+          <section id="existing-session" hidden><p>فيه حساب مفتوح على المتصفح ده:</p><strong id="existing-session-email" dir="ltr" data-user-content="true"></strong><button id="continue-session" type="button">المتابعة بالحساب الحالي</button><p>لو ده مش حسابك، اكتب بريدك وكلمة مرورك في النموذج بالأسفل.</p></section><div id="auth-status" role="status" aria-live="polite" hidden></div><form id="form-login" class="space-y-4" novalidate>
             <div>
               <label class="text-xs text-dim mb-1.5 block" for="login-email">البريد الإلكتروني</label>
               <input type="email" id="login-email" dir="ltr" aria-label="البريد الإلكتروني" required name="email" autocomplete="email" placeholder="you@example.com" class="field w-full rounded-xl px-4 py-3 text-sm">
@@ -110,10 +110,10 @@
             </div>
             <div>
               <div class="flex items-center justify-between mb-1.5">
-                <label class="text-xs text-dim" for="login-password">كلمة المرور</label>
+                <label class="text-xs text-dim" for="login-password">كلمة المرور</label><button type="button" id="reset-password" class="text-sm text-nebula">نسيت كلمة المرور؟</button>
                 
               </div>
-              <div class="relative">
+              <div class="relative auth-password-field">
                 <input type="password" id="login-password" aria-label="كلمة المرور" required name="password" autocomplete="current-password" placeholder="••••••••" class="field w-full rounded-xl px-4 py-3 text-sm pl-11">
                 <button type="button" onclick="toggleVisibility('login-password', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">إظهار</button>
               </div>
@@ -126,7 +126,7 @@
             <p class="text-xs text-dim">بعد الدخول هنفتح حسابك حسب نوعه: عميل أو كوتش. اعتماد الكوتش يتم من الإدارة.</p>
 <details id="auth-help-options"><summary>مساعدة في الدخول أو تأكيد البريد</summary>
 <button type="button" id="email-link-login" class="text-sm text-nebula">ادخل برابط على البريد بدل كلمة المرور</button><p>الخيار ده للحسابات الموجودة. لو دي أول مرة، اختار «حساب جديد» وحدد عميل أو كوتش.</p>
-<button type="button" id="resend-confirmation" class="text-sm text-nebula">إعادة إرسال رسالة التفعيل</button><button type="button" id="reset-password" class="text-sm text-nebula">نسيت كلمة المرور؟</button></details><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
+<button type="button" id="resend-confirmation" class="text-sm text-nebula">إعادة إرسال رسالة التفعيل</button></details><p id="login-form-error" class="hidden text-danger text-xs text-center"></p>
           </form>
 
           <!-- ============ SIGNUP FORM ============ -->
@@ -154,7 +154,7 @@
             </div>
             <div>
               <label class="text-xs text-dim mb-1.5 block" for="signup-password">كلمة المرور</label>
-              <div class="relative">
+              <div class="relative auth-password-field">
                 <input type="password" id="signup-password" name="password" autocomplete="new-password" placeholder="١٠ أحرف على الأقل" class="field w-full rounded-xl px-4 py-3 text-sm pl-11">
                 <button type="button" onclick="toggleVisibility('signup-password', this)" class="absolute left-3 top-1/2 -translate-y-1/2 text-dim hover:text-white text-xs">إظهار</button>
               </div>
@@ -203,5 +203,5 @@
   @keyframes fadeSlideIn { from{ opacity:0; transform:translateX(16px);} to{ opacity:1; transform:translateX(0);} }
 </style>
 
-<script src="assets/translations.js?v=owner-4" defer></script><script src="assets/language.js?v=mobile-4" defer></script><script src="assets/connections.js?v=2" defer></script><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/coach-invites.js?v=2" defer></script><script src="assets/client.js" defer></script><script src="assets/auth-flow.js?v=2" defer></script><script src="assets/auth.js?v=access-review-1" defer></script><a href="dashboard.html?demo=1" class="auth-demo-link">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
+<script src="assets/translations.js?v=access-5" defer></script><script src="assets/language.js?v=mobile-4" defer></script><script src="assets/connections.js?v=2" defer></script><script src="assets/config.js" defer></script><script src="assets/vendor.js" defer></script><script src="assets/coach-invites.js?v=2" defer></script><script src="assets/client.js" defer></script><script src="assets/auth-flow.js?v=2" defer></script><script src="assets/auth.js?v=session-choice-2" defer></script><a href="dashboard.html?demo=1" class="auth-demo-link">جرّب الداشبورد الأصلية بدون تسجيل ←</a></body>
 </html>
