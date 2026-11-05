@@ -1,0 +1,1 @@
+export default function Skeleton(){return <div className="skeleton-grid" role="status" aria-label="Loading tools / تحميل الأدوات">{Array.from({length:6},(_,i)=><div className="skeleton-card" key={i}><i/><i/><i/></div>)}</div>}

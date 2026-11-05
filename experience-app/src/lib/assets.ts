@@ -1,0 +1,2 @@
+// All visual artwork is native SVG/CSS. No remote image or video dependencies.
+export const assets = {fonts:'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap'};

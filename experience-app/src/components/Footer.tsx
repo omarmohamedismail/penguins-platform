@@ -1,0 +1,1 @@
+export default function Footer({ar}:{ar:boolean}){return <footer><a className="brand" href="index.html">penguins®</a><p>{ar?'خطوة واضحة. كل يوم.':'A clearer next step. Every day.'}</p><a href="auth.html">{ar?'تسجيل الدخول':'Sign in'} ↗</a></footer>}
