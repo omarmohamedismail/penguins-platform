@@ -5,7 +5,7 @@ function clearAuthFeedback(){ $('auth-status').hidden=true;for(const id of ['log
 function setMode(mode){clearAuthFeedback();const login=mode==='login';$('form-login').classList.toggle('hidden',!login);$('form-signup').classList.toggle('hidden',login);$('tab-login').classList.toggle('active',login);$('tab-signup').classList.toggle('active',!login);window.PenguinsAccess?.mode(mode);}
 function toggleVisibility(id,button){const input=$(id);input.type=input.type==='password'?'text':'password';button.textContent=input.type==='password'?'إظهار':'إخفاء';}
 function showError(id,message){const field=$(id);field.textContent=message;field.classList.remove('hidden');field.setAttribute('role','alert');}
-function authError(error){if(error.code==='email_not_confirmed')window.PenguinsAccess?.confirmed();if(error.name==='AuthRetryableFetchError'||error.message==='Failed to fetch')return 'تعذر الاتصال. تأكد من الإنترنت وحاول مرة أخرى.';return ({invalid_credentials:'تعذر الدخول. تأكد من البريد وكلمة المرور، وأكّد بريدك أولًا إذا كان الحساب جديدًا.',email_not_confirmed:'أكّد بريدك الإلكتروني من رسالة التفعيل أولًا.',over_email_send_rate_limit:'تم بلوغ حد إرسال البريد. انتظر قليلًا ثم حاول مجددًا.',email_address_not_authorized:'خدمة البريد تحتاج إعدادًا من إدارة المنصة قبل إرسال رسالة لهذا العنوان.',user_already_exists:'هذا البريد مسجل بالفعل. استخدم تسجيل الدخول.',signup_disabled:'التسجيل متوقف مؤقتًا. تواصل مع إدارة المنصة.',otp_disabled:'تعذر إرسال رابط الدخول. لو دي أول مرة، اختار حساب جديد وحدد نوع حسابك.'})[error.code]||error.message||'تعذر إتمام العملية. حاول مجددًا.';}
+function authError(error){if(error.code==='email_not_confirmed')window.PenguinsAccess?.confirmed();if(error.name==='AuthRetryableFetchError'||error.message==='Failed to fetch')return 'تعذر الاتصال. تأكد من الإنترنت وحاول مرة أخرى.';return ({invalid_credentials:'تعذر الدخول. تأكد من البريد وكلمة المرور، أو استخدم «نسيت كلمة المرور؟».',email_not_confirmed:'أكّد بريدك الإلكتروني من رسالة التفعيل أولًا.',over_email_send_rate_limit:'تم بلوغ حد إرسال البريد. انتظر قليلًا ثم حاول مجددًا.',email_address_not_authorized:'خدمة البريد تحتاج إعدادًا من إدارة المنصة قبل إرسال رسالة لهذا العنوان.',user_already_exists:'هذا البريد مسجل بالفعل. استخدم تسجيل الدخول.',signup_disabled:'التسجيل متوقف مؤقتًا. تواصل مع إدارة المنصة.',otp_disabled:'تعذر إرسال رابط الدخول. لو دي أول مرة، اختار حساب جديد وحدد نوع حسابك.'})[error.code]||error.message||'تعذر إتمام العملية. حاول مجددًا.';}
 function authUrl(name){return new URL(name,location.href).href;}
 if(new URLSearchParams(location.search).get('mode')==='signup')setMode('signup');
 const authParams=new URLSearchParams(location.search),authHash=new URLSearchParams((location.hash||'').slice(1));
@@ -52,6 +52,8 @@ $('reset-password').addEventListener('click',async()=>{
 function updateSignupRole(){const coach=$('signup-role').value==='coach';$('signup-niche').parentElement.hidden=!coach;window.PenguinsAccess?.updateRole();}
 $('signup-role').addEventListener('change',updateSignupRole);updateSignupRole();
 
+const callbackError=new URLSearchParams(location.search).get('error')||new URLSearchParams((location.hash||'').slice(1)).get('error');if(callbackError)showError('login-form-error','رابط الدخول منتهي أو غير صالح. اطلب رسالة جديدة وافتحها من نفس المتصفح.');
+
 $('resend-confirmation').addEventListener('click',async()=>{
  clearAuthFeedback();const email=$('login-email').value.trim();
  if(!email||!$('login-email').checkValidity())return showError('login-form-error','اكتب بريدك الإلكتروني الصحيح أولًا.');
@@ -59,13 +61,3 @@ $('resend-confirmation').addEventListener('click',async()=>{
  try{const {error}=await api.auth.resend({type:'signup',email,options:{emailRedirectTo:authUrl('auth.html')}});if(error)throw error;toast('لو الحساب محتاج تفعيل، هتوصلك رسالة على نفس البريد. راجع الرسائل غير المرغوب فيها كمان.');}
  catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
 });
-
-$('email-link-login').addEventListener('click',async()=>{
- clearAuthFeedback();const email=$('login-email').value.trim();
- if(!email||!$('login-email').checkValidity())return showError('login-form-error','اكتب بريدك الإلكتروني الصحيح أولًا.');
- const button=$('email-link-login');if(button.disabled)return;button.disabled=true;
- try{const {error}=await api.auth.signInWithOtp({email,options:{emailRedirectTo:authUrl('auth.html'),shouldCreateUser:false}});if(error)throw error;toast('لو عندك حساب، راجع بريدك واضغط رابط الدخول. افتحه من نفس المتصفح اللي طلبت منه الرابط. لو مش لاقي الرسالة، راجع الرسائل غير المرغوب فيها.');}
- catch(error){showError('login-form-error',authError(error));}finally{button.disabled=false;}
-});
-
-const callbackError=new URLSearchParams(location.search).get('error')||new URLSearchParams((location.hash||'').slice(1)).get('error');if(callbackError)showError('login-form-error','رابط الدخول منتهي أو غير صالح. اطلب رسالة جديدة وافتحها من نفس المتصفح.');

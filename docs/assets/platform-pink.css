@@ -20,3 +20,26 @@ html[data-theme=light]{--accent-color:#a63c6c}html[data-theme=light] .coach-work
 #content:empty[aria-busy="true"]::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 25%,#e8a6bf0d 45%,transparent 65%);transform:translateX(-100%);animation:penguins-loading 1.6s ease-in-out infinite}
 @keyframes penguins-loading{to{transform:translateX(100%)}}
 @media(prefers-reduced-motion:reduce){#content:empty[aria-busy="true"]::after{animation:none}}
+
+/* Platform-wide visual system: shared type, surfaces, controls and focus. */
+:root{--bg:#101012;--panel:#1c1a1f;--line:#3e3741;--muted:#b9b0bb;--accent:#efa8c3;--accent-color:#d694b1;--brand-font:'IBM Plex Sans Arabic',system-ui,sans-serif}
+body,body.site-home,body.site-auth,body.recovery-page,body[data-discovery],body.platform-document{font-family:var(--brand-font);background:#101012;color:#f3eff3}
+body .display,body .brand,body button,body input,body select,body textarea{font-family:var(--brand-font)}
+html:not([data-theme=light]) body{--bg-c:#101012;--card-c:#1c1a1f;--card2-c:#252128;--border-c:#3e3741;--text-c:#f3eff3;--muted-c:#b9b0bb}
+body :focus-visible{outline:2px solid #efa8c3!important;outline-offset:3px}
+.site-home .glow,.site-auth .glow{display:none}.site-home .grad-text,.site-auth .grad-text{background:none;-webkit-text-fill-color:#efa8c3;color:#efa8c3}
+.site-home .metal-nav,.site-home .glass,.site-home .glass-strong,.site-home .bg-panel,.site-auth .metal-card,.recovery-card{background:#1c1a1f;border-color:#3e3741;box-shadow:none}
+.site-home .btn-metal,.site-auth .btn-metal,.recovery-card button,body[data-discovery] button:not(.secondary):not(.danger),body[data-discovery] .button:not(.secondary):not(.danger),.platform-document .button{background:#efa8c3;color:#21151b;border:1px solid #efa8c3;box-shadow:none;border-radius:10px}
+.site-home .btn-metal::before,.site-auth .btn-metal::before{display:none}.site-home .text-nebula,.site-auth .text-nebula,.recovery-card a{color:#efa8c3}
+body[data-discovery] header{background:#17161a;border-color:#3e3741}body[data-discovery] .coach-result,body[data-discovery] .coach-panel,body[data-discovery] .coach-hero{background:#1c1a1f;border-color:#3e3741;border-radius:12px}
+body[data-discovery] .coach-avatar{background:#382630;color:#f4c4d7}body[data-discovery] .coach-specialty{color:#e4bbce}
+body[data-discovery] .secondary,.platform-portal .secondary,.recovery-card{border-color:#54434f}body[data-discovery] .secondary{background:#28212a;color:#e9d6e1}
+body[data-discovery] input:not([type=checkbox]),body[data-discovery] select,body[data-discovery] textarea,.recovery-card input,.site-auth .field{background:#141216;border-color:#54434f;color:#f3eff3;border-radius:10px}
+body dialog{background:#1c1a1f;border-color:#54434f;border-radius:14px}body dialog button:not(.danger):not(.secondary):not(.quiet){background:#efa8c3;color:#21151b}
+body .language-picker select{background:#211b22;color:#eed8e3;border:1px solid #66505f;border-radius:8px;min-height:40px}
+.site-auth input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #141216 inset!important;-webkit-text-fill-color:#f3eff3}
+.site-auth .auth-password-field{background:#141216}.site-auth .tab-btn.active{background:#382630;border-color:#725164}.site-auth .auth-header{border-bottom:1px solid #3e3741;padding-bottom:18px}
+.platform-document main{max-width:860px;margin:auto;padding:40px 24px}.platform-document h1{font-size:32px}.platform-document p,.platform-document li{color:#c2b7c4;line-height:2}.platform-document a{color:#efa8c3}
+.recovery-card{border-radius:14px}.recovery-card button{min-height:48px}.recovery-card .recovery-return{display:inline-block;min-height:44px;padding-block:10px}
+@media(max-width:640px){body input:not([type=checkbox]):not([type=range]),body select,body textarea{font-size:16px}body[data-discovery] nav{gap:10px}.site-home .home-hero{padding-block:44px 52px}.site-home h1{font-size:clamp(32px,9vw,48px);line-height:1.35}.site-home header nav{flex-wrap:wrap}.site-auth .auth-header{gap:12px;flex-wrap:wrap}.recovery-card{padding:24px 20px}.platform-document main{padding:24px 16px}}
+@media(prefers-reduced-motion:no-preference){.site-home .btn-metal,.tool-card,.coach-result{transition:background-color .18s,border-color .18s}.coach-result:hover{border-color:#9e6d86}}

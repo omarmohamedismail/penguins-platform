@@ -1,6 +1,8 @@
+const recoveryParams=new URLSearchParams(location.search), recoveryHash=new URLSearchParams(location.hash.slice(1));
+const invalidRecovery=recoveryParams.has('error')||recoveryHash.has('error');
 let recoveryReady=false;
-penguinsClient.auth.onAuthStateChange(event=>{if(event==='PASSWORD_RECOVERY')recoveryReady=true;});
-penguinsClient.auth.getSession().then(({data})=>{if(data.session)recoveryReady=true;});
+penguinsClient.auth.onAuthStateChange(event=>{if(!invalidRecovery&&event==='PASSWORD_RECOVERY')recoveryReady=true;});
+penguinsClient.auth.getSession().then(({data})=>{if(!invalidRecovery&&data.session)recoveryReady=true;}).catch(()=>{recoveryReady=false;});
 document.getElementById('recovery-form').addEventListener('submit',async event=>{
  event.preventDefault();const message=document.getElementById('recovery-message'),button=event.target.querySelector('button');
  if(!recoveryReady){message.textContent='رابط الاستعادة غير صالح أو انتهت مدته. اطلب رابطًا جديدًا من صفحة تسجيل الدخول.';return;}
