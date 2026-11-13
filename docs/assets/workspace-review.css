@@ -18,3 +18,23 @@
 @media(max-width:1100px){.workspace-review.coach-workspace main{padding-inline:24px}.review-next{grid-template-columns:1fr}.review-next-actions{grid-column:1;grid-row:auto;display:flex;flex-wrap:wrap;margin-top:20px}.review-main-grid,.review-lower-grid{grid-template-columns:minmax(0,1fr)}.workspace-review #dash-stats>.card{padding:18px}.workspace-review #dash-stats h3{font-size:28px}}
 @media(max-width:767px){.workspace-review.coach-workspace main{padding:20px 16px 110px}.review-topline{font-size:9px;margin-bottom:16px}.workspace-review #page-dashboard>header h2{font-size:27px}.workspace-review #dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-review #dash-stats>.card{min-height:124px}.workspace-review #dash-stats>.card:nth-child(2){border-inline-end:0}.workspace-review #dash-stats>.card:nth-child(-n+2){border-bottom:1px solid var(--review-line)}.review-next{padding:22px}.review-next h3{font-size:22px}.review-next-actions{display:grid;width:100%;min-width:0}.review-main-grid,.review-lower-grid{gap:16px}.workspace-review .review-tasks,.workspace-review .review-activity,.review-lower-grid>.card{padding:20px}.workspace-review #dash-stats h3{font-size:27px}.workspace-review #dash-stats .text-sm{font-size:11px}}
 html[data-theme=light] .workspace-review #dash-stats{background:#fff}html[data-theme=light] .workspace-review .review-next{background:#f6edf2;color:#30232d}html[data-theme=light] .workspace-review .review-next p{color:#6e5a69}
+
+/* Interaction and narrow-screen refinements. */
+.workspace-review .review-main-grid>*,.workspace-review .review-lower-grid>*,.review-next>*{min-width:0}
+.review-topline{flex-wrap:wrap;font-size:12px;line-height:1.6}
+.review-topline a{min-height:44px;display:inline-flex;align-items:center}
+.review-next-actions button{transition:background-color .18s ease,border-color .18s ease}
+.review-next-actions button:hover{border-color:#e4b1c9;background:#342832}
+.review-next-actions button:first-child:hover{background:#f0c6d9;color:#281922}
+.workspace-review :is(.review-topline a,.review-next-actions button):focus-visible{outline:2px solid #e4b1c9;outline-offset:4px}
+.workspace-review #dash-activity,.workspace-review #list-tasks{overflow-wrap:anywhere}
+html[data-theme=light] .workspace-review{--review-line:#ded7df;--review-panel:#fff}
+html[data-theme=light] .workspace-review #sidebar{background:#faf7fa!important}
+html[data-theme=light] .workspace-review .review-topline{color:#6d5c6b}
+html[data-theme=light] .workspace-review .review-topline a{color:#8d315c}
+html[data-theme=light] .workspace-review .review-next>span{color:#8d315c}
+html[data-theme=light] .workspace-review .review-next h3{color:#30232d}
+html[data-theme=light] .workspace-review #form-task :is(input,select){background:#fff;color:#30232d;border-color:#cfc4ce}
+@media(max-width:1100px) and (min-width:768px){.workspace-review #dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-review #dash-stats>.card:nth-child(2){border-inline-end:0}.workspace-review #dash-stats>.card:nth-child(-n+2){border-bottom:1px solid var(--review-line)}}
+@media(max-width:767px){.workspace-review #form-task{grid-template-columns:minmax(0,1fr)}.workspace-review #form-task :is(input,select,button){grid-column:1;font-size:16px;min-height:44px}.review-next-actions button{font-size:14px}.review-topline{font-size:12px}.workspace-review #dash-stats>.card{padding:16px 12px}}
+@media(prefers-reduced-motion:reduce){.review-next-actions button{transition:none}}

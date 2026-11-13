@@ -1,12 +1,12 @@
 (()=>{'use strict';
-const page=document.getElementById('page-dashboard');if(!page)return;
+const page=document.getElementById('page-dashboard');if(!page||page.dataset.reviewReady)return;
 const task=document.getElementById('form-task')?.closest('.card');
 const activity=document.getElementById('dash-activity')?.closest('.card');
 const finance=document.getElementById('earningsChart')?.closest('.card');
 const review=page.querySelector('.coach-review-grid');
-const header=page.querySelector('header');
+const header=page.querySelector('header');if(!header)return;page.dataset.reviewReady='true';
 const top=document.createElement('div');top.className='review-topline';
-const label=document.createElement('span');const back=document.createElement('a');back.href='dashboard.html?demo=1';top.append(label,back);header.prepend(top);
+const label=document.createElement('span');const back=document.createElement('a');const destination=new URL('dashboard.html',location.href);if(new URLSearchParams(location.search).get('demo')==='1')destination.searchParams.set('demo','1');back.href=destination.href;top.append(label,back);header.prepend(top);
 const grid=document.createElement('div');grid.className='review-main-grid';
 const next=document.createElement('section');next.className='review-next';const eyebrow=document.createElement('span'),title=document.createElement('h3'),description=document.createElement('p'),actions=document.createElement('div');actions.className='review-next-actions';
 next.append(eyebrow,title,description,actions);
