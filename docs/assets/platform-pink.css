@@ -84,3 +84,33 @@ html:not([data-theme=light]) body{--bg-c:#101012;--card-c:#19191c;--card2-c:#222
 @media(max-width:1100px){.coach-workspace main,.original-live #client-main{padding-inline:24px}.coach-workspace #dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.coach-workspace .coach-review-grid{grid-template-columns:1fr 1fr}.coach-workspace #dash-insights{grid-column:1/-1}}
 @media(max-width:767px){.coach-workspace main,.original-live #client-main{padding:22px 16px 110px}.coach-workspace #workspace-tools{margin-bottom:24px;padding-bottom:16px;gap:8px}.coach-workspace #workspace-tools>a{font-size:11px}.coach-workspace .page>header h2,.original-live #greeting{font-size:25px}.coach-workspace .coach-header-actions>*{flex:1 1 140px;font-size:12px}.coach-workspace #dash-stats{gap:10px}.coach-workspace #dash-stats>.card{padding:18px 16px;min-height:132px}.coach-workspace #dash-stats h3{font-size:29px}.coach-workspace .coach-review-grid{grid-template-columns:1fr}.coach-workspace #page-dashboard>.grid>.card{padding:20px}.coach-workspace #form-task{gap:10px}.coach-workspace #bottomNav{background:#161418;border-top-color:#3b3039}.coach-workspace #bottomNav .bottom-nav-item{min-height:60px}.coach-workspace #quick-actions-fab{width:44px;height:44px}.coach-workspace #sidebar .nav-link{min-height:46px}}
 html[data-theme=light] .coach-workspace #dash-stats>.card,html[data-theme=light] .coach-workspace .coach-fold{background:#fff;border-color:#e0dbe2}html[data-theme=light] .coach-workspace #dash-stats .text-xs{color:#6b606e!important}html[data-theme=light] .coach-workspace .page>header p{color:#6b606e}
+
+/* Shared component palette: templates, exercise cards, overlays and connected views. */
+:root{--pg-surface:#19191c;--pg-raised:#222225;--pg-line:#39343b;--pg-text:#f2eff3;--pg-muted:#b5adb8;--pg-soft:#30232b;--pg-brand:#e8a6bf;--pg-brand-text:#f4c3d6}
+html[data-theme=light]{--pg-surface:#fff;--pg-raised:#f4f0f3;--pg-line:#d9cfd7;--pg-text:#30232d;--pg-muted:#6b5c68;--pg-soft:#f5e2ea;--pg-brand:#9c365f;--pg-brand-text:#852c51}
+body :is(.exercise-studio,.exercise-card,.exercise-editor,.progress-panel,.coach-invitation,.coach-panel,.coach-result,.coach-hero,.metal-card,.metal-tab,.metal-icon-plate){background:var(--pg-surface)!important;border-color:var(--pg-line)!important;color:var(--pg-text);box-shadow:none}
+body .metal-card::before{display:none}
+body :is(.exercise-card h4,.exercise-editor h4,.progress-panel summary){color:var(--pg-text)}
+body :is(.exercise-card small,.exercise-studio .helper){color:var(--pg-muted)}
+body :is(.metal-tab.active,.lang-option-active){background:var(--pg-soft)!important;border-color:var(--pg-brand)!important;color:var(--pg-brand-text)}
+body :is(.member-dashboard,.embedded-dashboard){background:var(--bg-c,#101012);color:var(--pg-text)}
+.member-dashboard :is(section,article,.page-heading,.stats-grid .stat),body #member-navigation{background:var(--pg-surface)!important;border-color:var(--pg-line)!important;box-shadow:none;color:var(--pg-text)}
+body #member-navigation button[aria-pressed=true]{background:var(--pg-soft);color:var(--pg-brand-text);border-color:var(--pg-brand)}
+body #member-navigation p{color:var(--pg-muted)}
+body .relationship-grid article{border-top-color:var(--pg-brand)!important}
+body :is(.relationship-grid progress,.progress-panel input[type=checkbox]){accent-color:var(--pg-brand)}
+body :is(.exercise-studio,.progress-panel,.member-dashboard) :is(input:not([type=checkbox]):not([type=range]),select,textarea){background:var(--pg-raised);border-color:var(--pg-line);color:var(--pg-text)}
+body #penguins-help-guide h3{color:var(--pg-brand-text)}
+body #penguins-help-guide input{border-color:var(--pg-line)}
+body :is(dialog,.toast,.notif-panel,#lang-panel){background:var(--pg-surface);border-color:var(--pg-line);color:var(--pg-text)}
+.coach-workspace :is(.metal-stock-bar,kbd){background:var(--pg-raised);border-color:var(--pg-line);color:var(--pg-muted)}
+.coach-workspace .metal-stock-fill{background:var(--pg-brand)}
+html[data-theme=light] body{background:#f8f5f7;color:var(--pg-text)}
+html[data-theme=light] :is(.platform-portal,.original-live) :is(section,article,.owner-sidebar,.owner-stat){background:var(--pg-surface);color:var(--pg-text);border-color:var(--pg-line)}
+html[data-theme=light] :is(.platform-portal,.original-live) :is(input,select,textarea){background:var(--pg-raised);color:var(--pg-text);border-color:var(--pg-line)}
+
+.coach-workspace #list-templates>div{background:var(--pg-surface);border-color:var(--pg-line)}
+.coach-workspace #list-templates h4{color:var(--pg-text)}
+.coach-workspace #list-templates p{color:var(--pg-muted)}
+.coach-workspace #list-templates :is(button.flex-1,span){background:var(--pg-soft);color:var(--pg-brand-text)}
+.coach-workspace #list-templates button.flex-1:hover{border-color:var(--pg-brand);background:var(--pg-raised)}
