@@ -164,22 +164,36 @@ body :focus-visible{outline-color:var(--pg-brand)!important}
 html[data-theme=light] body :is(.review-next,.focus-card,.auth-story){background:#e2f0e9;border-color:#b8d1c2;color:#23372e}
 html[data-theme=light] body .review-next p{color:#566b5e}
 
-/* Planner layout: compact discovery beside a spacious workout editor. */
-body .exercise-studio .workout-workspace{grid-template-columns:minmax(280px,.85fr) minmax(0,1.35fr);gap:28px}
-body .workout-workspace .exercise-catalog{grid-template-columns:1fr;gap:12px;max-height:720px;padding:4px 8px;scrollbar-width:thin;scrollbar-color:#496456 transparent}
-body .exercise-catalog .exercise-card{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:18px;align-content:center;padding:18px!important;min-height:188px}
-body .exercise-catalog .muscle-figure{grid-column:1;grid-row:1/6;margin:0;align-self:center}
-body .exercise-catalog .exercise-card>:not(.muscle-figure){grid-column:2;min-width:0}
-body .exercise-catalog .muscle-map{width:90px;height:135px;margin:0 auto}
-body .exercise-catalog .muscle-view-switch{width:100%;padding:2px}
-body .exercise-catalog .muscle-view-switch button{min-width:0;flex:1;min-height:30px;font-size:10px;padding:4px}
-body .exercise-catalog .exercise-card h4{margin:0 0 8px;font-size:15px}
-body .exercise-catalog .exercise-card>button{margin-top:12px;min-height:40px;background:var(--pg-soft);color:var(--pg-brand-text);border:1px solid #496456;border-radius:8px}
-body .exercise-selected{padding:22px;background:var(--pg-raised);border:1px solid var(--pg-line);border-radius:16px}
-body .exercise-selected>p{line-height:1.9;color:var(--pg-muted)}
-body .exercise-fields{gap:16px}
-body .exercise-editor .actions{border-top:1px solid var(--pg-line);padding-top:16px;margin-top:20px}
-body .workout-totals{font-weight:600;font-variant-numeric:tabular-nums}
-.coach-workspace #page-planner>header{padding-bottom:24px;border-bottom:1px solid var(--pg-line)}
-@media(max-width:1100px){body .exercise-studio .workout-workspace{grid-template-columns:1fr}body .workout-workspace .exercise-catalog{grid-template-columns:repeat(2,minmax(0,1fr));max-height:470px}body .exercise-catalog .exercise-card{grid-template-columns:90px minmax(0,1fr);gap:12px}}
-@media(max-width:680px){body .workout-workspace .exercise-catalog{grid-template-columns:1fr;max-height:440px}body .exercise-selected{padding:14px}body .exercise-catalog .exercise-card{padding:14px!important;min-height:170px}body .exercise-catalog .exercise-card>button{min-height:44px}body .exercise-studio .workout-workspace{gap:20px}}
+
+/* Training studio: one library panel and one editable session. */
+body .exercise-studio{background:transparent!important;border:0;padding:0!important;box-shadow:none}
+body .studio-heading{font-size:11px;font-weight:600;letter-spacing:.12em;color:var(--pg-brand);margin-bottom:10px}
+body .exercise-studio>h3{font-size:28px;font-weight:600;letter-spacing:-.6px;margin-bottom:8px}
+body .exercise-studio>p.helper{max-width:720px;font-size:13px;margin-bottom:20px}
+body .workout-totals{background:transparent;border:0;border-block:1px solid var(--pg-line);border-radius:0;padding:16px 0;margin-block:24px}
+body .exercise-studio .workout-workspace{display:grid;grid-template-columns:minmax(280px,.85fr) minmax(0,1.3fr);gap:24px;align-items:start}
+body .studio-library{min-width:0;padding:20px;background:var(--pg-surface);border:1px solid var(--pg-line);border-radius:14px}
+body .studio-library .exercise-filters{grid-template-columns:1fr;margin:0 0 18px;padding:0 0 18px;gap:12px}
+body .studio-library .exercise-catalog{display:grid;grid-template-columns:1fr;max-height:640px;overflow:auto;margin:0;padding:0 4px;gap:10px;scrollbar-width:thin;scrollbar-color:#496456 transparent}
+body .studio-library .exercise-card{display:grid;grid-template-columns:106px minmax(0,1fr);column-gap:16px;padding:14px!important;min-height:180px;border-radius:10px!important;background:var(--pg-raised)!important;align-content:center}
+body .studio-library .muscle-figure{grid-column:1;grid-row:1/5;margin:0;align-self:center}
+body .studio-library .exercise-card>:not(.muscle-figure){grid-column:2;min-width:0}
+body .studio-library .muscle-map{width:88px;height:128px;margin:0 auto}
+body .studio-library .muscle-view-switch{width:100%;padding:2px}
+body .studio-library .muscle-view-switch button{min-width:0;flex:1;min-height:30px;padding:4px;font-size:10px}
+body .studio-library .exercise-card h4{font-size:15px;margin:6px 0 12px;line-height:1.7}
+body .studio-library .exercise-card>button{background:var(--pg-soft);border:1px solid #496456;color:var(--pg-brand-text);border-radius:8px;min-height:44px;margin:0}
+body .studio-custom-disclosure{border-top:1px solid var(--pg-line);margin-top:18px;padding-top:16px}
+body .studio-custom-disclosure summary{cursor:pointer;font-size:13px;min-height:44px;color:var(--pg-brand-text)}
+body .studio-custom-disclosure .workout-custom{display:grid;border:0;background:transparent;padding:0;margin:12px 0;gap:12px}
+body .exercise-selected{min-width:0;background:var(--pg-surface);border:1px solid var(--pg-line);border-radius:14px;padding:24px;counter-reset:exercise}
+body .exercise-selected>h4{font-size:18px;font-weight:600;padding-bottom:18px;border-bottom:1px solid var(--pg-line)}
+body .exercise-selected>p{padding:48px 24px;text-align:center;line-height:2;color:var(--pg-muted);border:1px dashed var(--pg-line);border-radius:10px;margin-top:22px}
+body .exercise-selected .exercise-editor{background:var(--pg-raised)!important;margin-block:20px;padding:20px!important;border-radius:10px!important}
+body .exercise-fields{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body .exercise-editor .actions{display:flex;gap:8px;border-top:1px solid var(--pg-line);padding-top:16px}
+body .exercise-editor .actions button{flex:0 1 auto;font-size:12px;background:transparent!important;color:var(--pg-muted)!important;border:1px solid var(--pg-line);padding:8px 12px;border-radius:8px;min-height:44px}
+body .exercise-editor .actions button:last-child{margin-inline-start:auto;color:#eea2a2!important}
+body .exercise-studio>button{min-height:46px;padding:12px 22px;margin-block:16px;border-radius:9px}
+@media(max-width:1100px){body .exercise-studio .workout-workspace{grid-template-columns:1fr}body .studio-library .exercise-catalog{grid-template-columns:repeat(2,minmax(0,1fr));max-height:430px}}
+@media(max-width:680px){body .studio-library .exercise-catalog{grid-template-columns:1fr;max-height:400px}body .studio-library,body .exercise-selected{padding:16px}body .exercise-selected .exercise-editor{padding:14px!important}body .exercise-fields{grid-template-columns:1fr 1fr}body .exercise-studio>h3{font-size:23px}body .exercise-editor .actions button{white-space:normal}body .exercise-studio>button{width:100%}}
