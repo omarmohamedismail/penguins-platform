@@ -114,3 +114,37 @@ html[data-theme=light] :is(.platform-portal,.original-live) :is(input,select,tex
 .coach-workspace #list-templates p{color:var(--pg-muted)}
 .coach-workspace #list-templates :is(button.flex-1,span){background:var(--pg-soft);color:var(--pg-brand-text)}
 .coach-workspace #list-templates button.flex-1:hover{border-color:var(--pg-brand);background:var(--pg-raised)}
+
+/* Component rhythm and interaction polish. */
+body :is(.exercise-studio,.coach-panel,.coach-hero,.progress-panel){border-radius:16px}
+body .exercise-studio{padding:28px!important;margin-block:28px}
+body .exercise-studio>h3{font-size:22px;line-height:1.6;letter-spacing:-.4px;margin-bottom:12px}
+body .exercise-studio>p{max-width:760px;line-height:1.9;color:var(--pg-muted)}
+body .exercise-filters{padding-block:16px;margin-bottom:12px;border-bottom:1px solid var(--pg-line)}
+body :is(.exercise-filters,.exercise-fields,.workout-custom) label{font-size:13px;line-height:1.8;color:var(--pg-muted)}
+body .exercise-studio :is(input:not([type=checkbox]),select){min-height:46px;padding:10px 12px;border-radius:9px}
+body .workout-custom{background:var(--pg-raised);border-color:var(--pg-line);padding:20px;gap:16px}
+body .workout-totals{background:var(--pg-soft);color:var(--pg-brand-text)!important;border-color:var(--pg-line);padding:15px 18px;line-height:1.8}
+body .exercise-card{border-radius:12px!important;transition:border-color .18s ease,box-shadow .18s ease}
+body .exercise-card:hover{border-color:var(--pg-brand)!important;box-shadow:0 8px 24px #00000012;transform:none}
+body .exercise-card h4{font-size:15px;line-height:1.7;margin-block:12px 6px;font-weight:600}
+body .exercise-card small{line-height:1.7}
+body .exercise-card .muscle-view-switch{background:var(--pg-raised);border-color:var(--pg-line);border-radius:8px}
+body .exercise-card .muscle-view-switch button[aria-pressed=true]{background:var(--pg-soft);color:var(--pg-brand-text);box-shadow:none}
+body .exercise-card .muscle-view-switch button{color:var(--pg-muted)}
+body .exercise-editor{padding:24px!important;border-radius:14px!important}
+body .exercise-editor h4{padding-bottom:14px;margin-bottom:18px;border-bottom:1px solid var(--pg-line)}
+body .exercise-coach-note{background:var(--pg-raised);border-color:var(--pg-brand);border-radius:8px;color:var(--pg-text)}
+.coach-workspace #list-templates{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;align-items:stretch}
+.coach-workspace #list-templates>div{padding:22px;border-radius:12px;display:flex;flex-direction:column;gap:8px}
+.coach-workspace #list-templates>div>p{line-height:1.9;flex:1;font-size:13px}
+.coach-workspace #list-templates>div>div:last-child{padding-top:14px;border-top:1px solid var(--pg-line)}
+.coach-workspace #list-templates button{min-height:44px;padding-inline:14px}
+body :is(.coach-result,.coach-panel,.coach-hero){padding:26px}
+body .coach-result h2{font-size:20px;line-height:1.6}
+body :is(.coach-result,.coach-panel,.coach-hero) p{line-height:1.85}
+body dialog{max-width:calc(100vw - 32px);max-height:88dvh;overflow:auto;padding:26px;box-shadow:0 24px 80px #0005}
+body dialog::backdrop{background:#08080cb3;backdrop-filter:blur(5px)}
+body button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:767px){body .exercise-studio{padding:18px!important}body .exercise-editor{padding:18px!important}body :is(.coach-result,.coach-panel,.coach-hero){padding:20px}body .exercise-studio :is(input:not([type=checkbox]),select){font-size:16px}body .workout-custom{padding:16px}body dialog{padding:20px}.coach-workspace #list-templates>div{padding:18px}}
+@media(prefers-reduced-motion:reduce){body .exercise-card{transition:none}}
