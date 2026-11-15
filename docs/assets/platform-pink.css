@@ -163,3 +163,23 @@ body .review-next-actions button:first-child:hover{background:#b1dfd0;color:#132
 body :focus-visible{outline-color:var(--pg-brand)!important}
 html[data-theme=light] body :is(.review-next,.focus-card,.auth-story){background:#e2f0e9;border-color:#b8d1c2;color:#23372e}
 html[data-theme=light] body .review-next p{color:#566b5e}
+
+/* Planner layout: compact discovery beside a spacious workout editor. */
+body .exercise-studio .workout-workspace{grid-template-columns:minmax(280px,.85fr) minmax(0,1.35fr);gap:28px}
+body .workout-workspace .exercise-catalog{grid-template-columns:1fr;gap:12px;max-height:720px;padding:4px 8px;scrollbar-width:thin;scrollbar-color:#496456 transparent}
+body .exercise-catalog .exercise-card{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:18px;align-content:center;padding:18px!important;min-height:188px}
+body .exercise-catalog .muscle-figure{grid-column:1;grid-row:1/6;margin:0;align-self:center}
+body .exercise-catalog .exercise-card>:not(.muscle-figure){grid-column:2;min-width:0}
+body .exercise-catalog .muscle-map{width:90px;height:135px;margin:0 auto}
+body .exercise-catalog .muscle-view-switch{width:100%;padding:2px}
+body .exercise-catalog .muscle-view-switch button{min-width:0;flex:1;min-height:30px;font-size:10px;padding:4px}
+body .exercise-catalog .exercise-card h4{margin:0 0 8px;font-size:15px}
+body .exercise-catalog .exercise-card>button{margin-top:12px;min-height:40px;background:var(--pg-soft);color:var(--pg-brand-text);border:1px solid #496456;border-radius:8px}
+body .exercise-selected{padding:22px;background:var(--pg-raised);border:1px solid var(--pg-line);border-radius:16px}
+body .exercise-selected>p{line-height:1.9;color:var(--pg-muted)}
+body .exercise-fields{gap:16px}
+body .exercise-editor .actions{border-top:1px solid var(--pg-line);padding-top:16px;margin-top:20px}
+body .workout-totals{font-weight:600;font-variant-numeric:tabular-nums}
+.coach-workspace #page-planner>header{padding-bottom:24px;border-bottom:1px solid var(--pg-line)}
+@media(max-width:1100px){body .exercise-studio .workout-workspace{grid-template-columns:1fr}body .workout-workspace .exercise-catalog{grid-template-columns:repeat(2,minmax(0,1fr));max-height:470px}body .exercise-catalog .exercise-card{grid-template-columns:90px minmax(0,1fr);gap:12px}}
+@media(max-width:680px){body .workout-workspace .exercise-catalog{grid-template-columns:1fr;max-height:440px}body .exercise-selected{padding:14px}body .exercise-catalog .exercise-card{padding:14px!important;min-height:170px}body .exercise-catalog .exercise-card>button{min-height:44px}body .exercise-studio .workout-workspace{gap:20px}}
