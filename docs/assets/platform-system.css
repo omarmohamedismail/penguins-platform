@@ -1,0 +1,75 @@
+/* Platform-wide layout and component system. */
+:root{--ui-bg:#101513;--ui-panel:#19211d;--ui-raised:#222d26;--ui-line:#35473c;--ui-text:#f0f1e9;--ui-muted:#adbbb0;--ui-accent:#b8d6ab;--ui-ink:#1b2c1c;--ui-radius:14px;--accent-color:#b8d6ab!important}
+html[data-theme=light]{--ui-bg:#f3f5ef;--ui-panel:#fff;--ui-raised:#eaf0e5;--ui-line:#cbd8c5;--ui-text:#223021;--ui-muted:#5a6d57;--ui-accent:#426f35;--ui-ink:#fff;--accent-color:#426f35!important}
+html body{background:var(--ui-bg);color:var(--ui-text);--bg-c:var(--ui-bg);--card-c:var(--ui-panel);--card2-c:var(--ui-raised);--border-c:var(--ui-line);--text-c:var(--ui-text);--muted-c:var(--ui-muted);--pg-surface:var(--ui-panel);--pg-raised:var(--ui-raised);--pg-line:var(--ui-line);--pg-text:var(--ui-text);--pg-muted:var(--ui-muted);--pg-brand:var(--ui-accent);--pg-soft:var(--ui-raised);--pg-brand-text:var(--ui-accent)}
+html body,html[dir=rtl] body,html[dir=rtl] body .display{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif}
+body h1,body h2,body h3{text-wrap:balance;letter-spacing:-.025em}
+body p{line-height:1.85}
+body :focus-visible{outline:2px solid var(--ui-accent)!important;outline-offset:4px}
+body :is(.card,.metal-card,.glass,.glass-strong,.coach-result,.coach-panel,.coach-hero,.owner-record,.owner-stat,.progress-panel,.live-stat){background:var(--ui-panel)!important;border:1px solid var(--ui-line);border-radius:var(--ui-radius);box-shadow:none;color:var(--ui-text)}
+body :is(.helper,.muted,.text-muted,.date){color:var(--ui-muted)}
+body :is(.bg-accent,.btn-metal,#login-submit,#signup-submit){background:var(--ui-accent)!important;color:var(--ui-ink)!important;border-color:var(--ui-accent)!important;box-shadow:none}
+body :is(.text-accent,.text-nebula,.eyebrow){color:var(--ui-accent)!important}
+body :is(.secondary,.quiet){background:var(--ui-raised);color:var(--ui-text);border-color:var(--ui-line)}
+body :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea){background:var(--ui-bg);color:var(--ui-text);border:1px solid var(--ui-line);border-radius:9px;min-height:46px;line-height:1.6}
+body textarea{padding:14px;min-height:110px}
+body label{line-height:1.7}
+/* Workspace shells: identical rail, content width and heading rhythm. */
+body:is(.coach-workspace,.original-live) #sidebar{background:var(--ui-bg)!important;border-color:var(--ui-line)!important;padding-inline:10px}
+body:is(.coach-workspace,.original-live) #sidebar .nav-link{padding:11px 14px;margin-block:3px;border-radius:8px;color:var(--ui-muted);font-size:13px;min-height:44px}
+body:is(.coach-workspace,.original-live) #sidebar .nav-link.active{background:var(--ui-raised)!important;color:var(--ui-accent)!important;border-inline-start:2px solid var(--ui-accent);box-shadow:none!important}
+body:is(.coach-workspace,.original-live) #sidebar .nav-link:hover{background:var(--ui-panel);color:var(--ui-text)}
+body.coach-workspace main,body.original-live #client-main{max-width:1500px;width:100%;padding:36px clamp(20px,3vw,48px) 100px;margin-inline:auto;min-width:0}
+body.coach-workspace .page>header,body.original-live #client-main>header{padding-bottom:24px;border-bottom:1px solid var(--ui-line);margin-bottom:28px}
+body.coach-workspace .page>header h2,body.original-live #greeting{font-size:32px;font-weight:600;line-height:1.5}
+body.coach-workspace .page>header p{max-width:760px;font-size:14px;color:var(--ui-muted)}
+body.coach-workspace .coach-header-actions button,body.coach-workspace #quick-actions-fab{background:var(--ui-accent)!important;color:var(--ui-ink)!important;border-color:var(--ui-accent)!important}
+body .coach-header-actions a,body #workspace-tools>a{color:var(--ui-muted)!important;border-color:var(--ui-line)!important}
+body .coach-fold,body.original-live #workspace,body.original-live #content>section:not(.live-overview){background:var(--ui-panel);border-color:var(--ui-line);border-radius:14px}
+body .live-stat strong,body .owner-stat strong{font-family:inherit;font-size:32px;font-weight:500;color:var(--ui-text);font-variant-numeric:tabular-nums}
+body .live-stat,body .owner-stat{padding:24px}
+body .live-status{padding-block:12px;border-bottom:1px solid var(--ui-line);margin-bottom:24px}
+body #bottomNav{background:var(--ui-bg);border-color:var(--ui-line)}
+/* Public pages. */
+body.site-home>header{max-width:1280px;margin:auto;padding-top:24px}
+body.site-home .metal-nav{background:var(--ui-panel);border:1px solid var(--ui-line);border-radius:14px;box-shadow:none}
+body.site-home .home-hero{max-width:1050px;padding-block:88px 64px;margin:auto}
+body.site-home .home-hero h1{font-size:clamp(40px,5.5vw,72px);line-height:1.3;font-weight:600;letter-spacing:-.04em}
+body.site-home .home-hero p{max-width:680px;margin-inline:auto;font-size:18px;color:var(--ui-muted)}
+body.site-home .grad-text,body.site-auth .grad-text{background:none;color:var(--ui-accent);-webkit-text-fill-color:var(--ui-accent)}
+body.site-home :is(#features,#workflow,#faq){padding-block:64px;border-top:1px solid var(--ui-line)}
+body.site-home #features :is(.glass,.glass-strong){padding:28px;border-radius:14px}
+body.site-home #faq details{background:var(--ui-panel);border-color:var(--ui-line);padding:20px;border-radius:12px;margin-block:12px}
+/* Account entry: calm, focused form. */
+body.site-auth main{padding-block:48px}
+body.site-auth .metal-card{padding:32px;border-radius:18px;box-shadow:0 20px 70px #0002}
+body.site-auth .metal-card::before{display:none}
+body.site-auth .tab-btn{min-height:48px;border-radius:9px;color:var(--ui-muted)}
+body.site-auth .tab-btn.active,body.site-auth .auth-role-choices button[aria-pressed=true]{background:var(--ui-raised);color:var(--ui-accent);border-color:var(--ui-line);box-shadow:none}
+body.site-auth .auth-password-field{background:var(--ui-bg);border-color:var(--ui-line)}
+body.site-auth :is(#reset-password,#auth-help-options summary,.auth-demo-link){color:var(--ui-accent)}
+body.site-auth :is(#existing-session,.auth-confirmation){background:var(--ui-raised);border-color:var(--ui-line)}
+body.site-auth input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px var(--ui-bg) inset!important;-webkit-text-fill-color:var(--ui-text)}
+/* Discovery and administration use the same page frame. */
+body[data-discovery] main,body.platform-portal>main{max-width:1320px;margin:auto;padding:36px 32px 80px}
+body[data-discovery]>header,body.platform-portal>.site-header{background:var(--ui-bg);border-bottom:1px solid var(--ui-line);padding-block:20px}
+body[data-discovery] .coach-results{gap:20px}
+body[data-discovery] .coach-result{padding:26px;display:flex;flex-direction:column;align-items:start}
+body[data-discovery] .coach-result .button{margin-top:auto}
+body[data-discovery] .coach-avatar{background:var(--ui-raised);color:var(--ui-accent);border:1px solid var(--ui-line);border-radius:12px}
+body .owner-shell{gap:28px;grid-template-columns:220px minmax(0,1fr)}
+body .owner-sidebar{background:var(--ui-panel)!important;border:1px solid var(--ui-line);border-radius:14px;padding:24px 14px;box-shadow:none}
+body .owner-tab{color:var(--ui-muted);min-height:46px;border-radius:8px}
+body .owner-tab[aria-current=page]{background:var(--ui-raised)!important;color:var(--ui-accent)!important;border-color:var(--ui-line)!important}
+body .owner-search{background:var(--ui-panel);border-color:var(--ui-line);border-radius:12px;padding:18px}
+body .owner-stat{border-top:1px solid var(--ui-line)}
+body .owner-stat span,body .owner-summary,body .chart-row{color:var(--ui-muted)}
+body .chart-row progress::-webkit-progress-bar{background:var(--ui-raised)}
+body .chart-row progress::-webkit-progress-value{background:var(--ui-accent)}
+body .owner-event,body .resource-row{padding-block:18px;border-color:var(--ui-line)}
+body dialog{background:var(--ui-panel);border-color:var(--ui-line);color:var(--ui-text)}
+body .language-picker select{background:var(--ui-raised);border-color:var(--ui-line);color:var(--ui-text)}
+@media(min-width:768px){body:is(.coach-workspace,.original-live) #sidebar{width:238px}}
+@media(max-width:900px){body .owner-shell{grid-template-columns:1fr}body .owner-sidebar{position:static}body .owner-sidebar nav{display:flex;overflow-x:auto;margin:16px 0;gap:8px}body .owner-tab{width:auto;flex:0 0 auto}body .owner-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:767px){body.coach-workspace main,body.original-live #client-main{padding:24px 16px 110px}body.coach-workspace .page>header h2,body.original-live #greeting{font-size:26px}body[data-discovery] main,body.platform-portal>main{padding:24px 16px 80px}body.site-home .home-hero{padding-block:48px}body.site-home .home-hero p{font-size:16px}body.site-home :is(#features,#workflow,#faq){padding-block:40px}body.site-auth main{padding:24px 16px}body.site-auth .metal-card{padding:24px 20px}body .owner-stat{padding:18px}body :is(button,.button){touch-action:manipulation}body input,body select,body textarea{font-size:16px}}
+@media(prefers-reduced-motion:no-preference){body :is(.coach-result,.owner-tab,.nav-link,.btn-metal){transition:background-color .18s,border-color .18s,color .18s}}
