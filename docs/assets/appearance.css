@@ -1,0 +1,39 @@
+/* Appearance is a state, not a separate page. */
+.appearance-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;margin-inline:8px;border:1px solid #b9b1a0;border-radius:8px;background:transparent;color:inherit;font-size:23px;cursor:pointer}
+html[data-theme=dark]{color-scheme:dark;--ui-bg:#191a18;--ui-panel:#23251f;--ui-raised:#2d3028;--ui-line:#484b3f;--ui-text:#eee9da;--ui-muted:#bbb6a6;--ui-accent:#ddc98e;--ui-ink:#24251f;--accent-color:#ddc98e!important}
+html[data-theme=dark] body{background:#191a18!important;background-image:none!important;color:#eee9da!important;--bg-c:#191a18!important;--card-c:#23251f!important;--card2-c:#2d3028!important;--border-c:#484b3f!important;--text-c:#eee9da!important;--muted-c:#bbb6a6!important;--pg-surface:#23251f;--pg-raised:#2d3028;--pg-line:#484b3f;--pg-text:#eee9da;--pg-muted:#bbb6a6;--pg-brand:#ddc98e;--pg-soft:#37372b;--pg-brand-text:#ddc98e}
+html[data-theme=dark] body :is(main,.page,section,header){color:#eee9da}
+html[data-theme=dark] body :is(h1,h2,h3,h4,.text-white,.text-text,.text-ink,.display){color:#eee9da!important}
+html[data-theme=dark] body :is(.text-muted,.text-dim,.helper,.muted,.date,.page>header p,label){color:#bbb6a6!important}
+html[data-theme=dark] body :is(.card,.metal-card,.glass,.glass-strong,.coach-panel,.coach-result,.coach-hero,.owner-record,.owner-stat,.live-stat,.progress-panel,.studio-library,.exercise-selected,.coach-fold,.coach-invitation,.recovery-card,dialog,#penguins-help-guide,.notif-panel,#lang-panel,.owner-search){background:#23251f!important;color:#eee9da!important;border-color:#484b3f!important;box-shadow:none!important}
+html[data-theme=dark] body :is(.bg-black,.bg-card,.bg-panel,.bg-card2,.exercise-editor,.exercise-card,.workout-custom,.workout-totals,.exercise-coach-note,.metal-tab){background:#2d3028!important;color:#eee9da!important;border-color:#484b3f!important}
+html[data-theme=dark] body :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea,.auth-password-field,.language-picker select){background:#191a18!important;color:#eee9da!important;border-color:#626454!important}
+html[data-theme=dark] body input::placeholder,html[data-theme=dark] body textarea::placeholder{color:#a49f90}
+html[data-theme=dark] body :is(.bg-accent,.btn-metal,#login-submit,#signup-submit,.coach-header-actions button,#pg-add-client,.studio-library .exercise-card>button){background:#ddc98e!important;color:#24251f!important;border-color:#ddc98e!important;box-shadow:none!important}
+html[data-theme=dark] body :is(.secondary,.quiet,.exercise-editor .actions button,.appearance-toggle){background:#2d3028!important;color:#e0d9c7!important;border-color:#626454!important}
+html[data-theme=dark] body .exercise-editor .actions button:last-child,html[data-theme=dark] body .danger{color:#efa5a0!important}
+html[data-theme=dark] body :is(.text-accent,.eyebrow,.text-nebula,.coach-specialty,.verified-label){color:#ddc98e!important}
+html[data-theme=dark] body #app>div>div:first-child,html[data-theme=dark] body #sidebar,html[data-theme=dark] body #bottomNav,html[data-theme=dark] body .owner-sidebar,html[data-theme=dark] body>.site-header,html[data-theme=dark] body[data-discovery]>header{background:#20221c!important;color:#eee9da!important;border-color:#484b3f!important;--ui-text:#eee9da;--ui-muted:#bbb6a6}
+html[data-theme=dark] body #app>div>div:first-child :is(h1,button),html[data-theme=dark] body #sidebar :is(h1,h2,p,.text-white,.display),html[data-theme=dark] body .owner-sidebar :is(h2,p){color:#eee9da!important}
+html[data-theme=dark] body #app>div>div:first-child button{background:#2d3028!important;border-color:#626454!important}
+html[data-theme=dark] body #sidebar .nav-link,html[data-theme=dark] body #bottomNav .bottom-nav-item,html[data-theme=dark] body .owner-tab{color:#bbb6a6!important}
+html[data-theme=dark] body #sidebar .nav-link.active,html[data-theme=dark] body #bottomNav .bottom-nav-item.active,html[data-theme=dark] body .owner-tab[aria-current=page]{background:#3a392b!important;color:#f1dda4!important;border-color:#626454!important}
+html[data-theme=dark] body #sidebar .nav-link:hover:not(.active){background:#2d3028;color:#eee9da}
+html[data-theme=dark] body :is(#workspace-tools>a,#workspace-more summary,#sync-status,.review-topline,.review-topline a){color:#bbb6a6!important;border-color:#484b3f!important}
+html[data-theme=dark] body #dash-stats,html[data-theme=dark] body .live-status{background:#23251f;border-color:#484b3f}
+html[data-theme=dark] body :is(.review-next,.focus-card,.auth-story){background:#333426!important;color:#eee9da!important;border-color:#626454!important}
+html[data-theme=dark] body .review-next :is(h3,p,span){color:#eee9da}
+html[data-theme=dark] body .review-next-actions button{background:#2d3028!important;color:#eee9da!important;border-color:#626454}
+html[data-theme=dark] body .review-next-actions button:first-child{background:#ddc98e!important;color:#24251f!important}
+html[data-theme=dark] body .grad-text{background:linear-gradient(transparent 70%,#ddc98e33 70%);color:#eee9da!important;-webkit-text-fill-color:#eee9da!important}
+html[data-theme=dark] body.site-home .metal-nav{background:#23251f;border-color:#626454;box-shadow:none}
+html[data-theme=dark] body .exercise-card :is(h4,small){color:#eee9da!important}
+html[data-theme=dark] body .exercise-card .muscle-view-switch,html[data-theme=dark] body.site-auth :is(#existing-session,.auth-confirmation){background:#2d3028;color:#eee9da;border-color:#626454}
+html[data-theme=dark] body.site-auth .tab-btn.active{background:#3a392b;color:#f1dda4;border-color:#626454}
+html[data-theme=dark] body.site-auth input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #191a18 inset!important;-webkit-text-fill-color:#eee9da}
+html[data-theme=dark] body #page-messages :is(p,span,h3){color:#bbb6a6}
+html[data-theme=dark] body :focus-visible{outline-color:#ddc98e!important}
+html[data-theme=dark] body .ipenguins-mark{background:#e8dfc9;border-radius:6px;padding:2px}
+html[data-theme=light]{color-scheme:light}
+@media(max-width:767px){.appearance-toggle{min-width:44px;min-height:44px}}
+
