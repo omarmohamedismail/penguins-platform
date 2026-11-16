@@ -1,6 +1,6 @@
 /* FIELD NOTES — expressive marks outside, quiet working surfaces inside. */
-:root,html[data-theme=light]{--ui-bg:#f0ebdd;--ui-panel:#faf7ee;--ui-raised:#e7e1d2;--ui-line:#b9b1a0;--ui-text:#191917;--ui-muted:#625e54;--ui-accent:#2448c7;--ui-ink:#fff;--ui-radius:3px;--accent-color:#2448c7!important;--art-yellow:#f6cf32;--art-ink:#191917}
-html body{background-color:var(--ui-bg)!important;background-image:radial-gradient(#1919170a .7px,transparent .7px);background-size:6px 6px;color:var(--ui-text);--accent:#2448c7;--accent-color:#2448c7;--panel:var(--ui-panel);--line:var(--ui-line);--muted:var(--ui-muted)}
+:root,html[data-theme=light]{--ui-bg:#f0ebdd;--ui-panel:#faf7ee;--ui-raised:#e7e1d2;--ui-line:#b9b1a0;--ui-text:#34332e;--ui-muted:#625e54;--ui-accent:#526b88;--ui-ink:#fff;--ui-radius:3px;--accent-color:#526b88!important;--art-yellow:#e0cb83;--art-ink:#34332e}
+html body{background-color:var(--ui-bg)!important;background-image:radial-gradient(#34332e0a .7px,transparent .7px);background-size:6px 6px;color:var(--ui-text);--accent:#526b88;--accent-color:#526b88;--panel:var(--ui-panel);--line:var(--ui-line);--muted:var(--ui-muted)}
 html body :is(h1,h2,h3,h4,.text-white,.text-text,.text-ink){color:var(--ui-text)}
 html body :is(.text-dim,.text-muted,.helper,.muted,.date){color:var(--ui-muted)}
 html body :is(.card,.metal-card,.glass,.glass-strong,.coach-result,.coach-panel,.coach-hero,.owner-record,.owner-stat,.progress-panel,.live-stat,.coach-fold,.studio-library,.exercise-selected){background:var(--ui-panel)!important;border:1px solid var(--ui-line)!important;border-radius:3px!important;box-shadow:none}
@@ -10,79 +10,99 @@ html body :is(.bg-accent,.btn-metal,#login-submit,#signup-submit,.coach-header-a
 html body :is(.secondary,.quiet){background:transparent;color:var(--art-ink);border-color:var(--ui-line);border-radius:3px}
 html body :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea){background:#fffdf7!important;color:var(--art-ink)!important;border:1px solid #aaa28e!important;border-radius:3px!important;box-shadow:none}
 html body :is(.language-picker select,.auth-password-field){background:var(--ui-panel)!important;color:var(--art-ink)!important;border-color:var(--ui-line)!important}
-html body :is(.text-accent,.text-nebula,.eyebrow){color:#2448c7!important}
-html body :focus-visible{outline:2px solid #2448c7!important;outline-offset:4px}
+html body :is(.text-accent,.text-nebula,.eyebrow){color:#526b88!important}
+html body :focus-visible{outline:2px solid #526b88!important;outline-offset:4px}
 /* The public front door is a poster, not another dashboard. */
 body.site-home .home-hero{position:relative;isolation:isolate;text-align:start;max-width:1180px;padding-block:64px 72px}
 body.site-home .home-hero::before{content:"";display:block;width:min(420px,75vw);height:126px;background:url('field-notes.svg') center/contain no-repeat;margin:0 0 24px;pointer-events:none}
 body.site-home .home-hero h1{max-width:950px;margin-inline:0;font-size:clamp(42px,6.4vw,86px);font-weight:800;letter-spacing:-.045em;line-height:1.25}
 body.site-home .home-hero p{margin-inline:0;max-width:650px}
 body.site-home .home-hero .justify-center{justify-content:flex-start}
-body.site-home .grad-text,body.site-auth .grad-text{color:#191917;-webkit-text-fill-color:#191917;background:linear-gradient(transparent 65%,#f6cf32 65%);padding-inline:3px}
-body.site-home .metal-nav{border:2px solid #191917;border-radius:2px;background:var(--ui-panel);box-shadow:5px 5px 0 #191917}
-body.site-home #features .metal-card{border:1.5px solid #191917!important;padding:30px!important;box-shadow:4px 4px 0 #d8cfba}
-body.site-home #features .metal-card:nth-child(3n+2){border-top:7px solid #2448c7!important}
-body.site-home #features .metal-card:nth-child(3n+1){border-top:7px solid #f6cf32!important}
-body.site-home :is(#features,#workflow,#faq){border-top:2px solid #191917}
-body.site-home .bg-panel{background:#e7e1d2;color:#191917}
+body.site-home .grad-text,body.site-auth .grad-text{color:#34332e;-webkit-text-fill-color:#34332e;background:linear-gradient(transparent 65%,#e0cb83 65%);padding-inline:3px}
+body.site-home .metal-nav{border:2px solid #34332e;border-radius:2px;background:var(--ui-panel);box-shadow:5px 5px 0 #34332e}
+body.site-home #features .metal-card{border:1.5px solid #34332e!important;padding:30px!important;box-shadow:4px 4px 0 #d8cfba}
+body.site-home #features .metal-card:nth-child(3n+2){border-top:7px solid #526b88!important}
+body.site-home #features .metal-card:nth-child(3n+1){border-top:7px solid #e0cb83!important}
+body.site-home :is(#features,#workflow,#faq){border-top:2px solid #34332e}
+body.site-home .bg-panel{background:#e7e1d2;color:#34332e}
 /* Strong black navigation rail, paper workspace. */
-html body:is(.coach-workspace,.original-live) #sidebar{background:#191917!important;border-color:#191917!important;--ui-text:#faf7ee;--ui-muted:#c7c0b1}
+html body:is(.coach-workspace,.original-live) #sidebar{background:#34332e!important;border-color:#34332e!important;--ui-text:#faf7ee;--ui-muted:#c7c0b1}
 html body:is(.coach-workspace,.original-live) #sidebar :is(h1,h2,.text-white,.display){color:#faf7ee}
 html body:is(.coach-workspace,.original-live) #sidebar .nav-link{color:#c7c0b1;border-radius:2px}
-html body:is(.coach-workspace,.original-live) #sidebar .nav-link.active{background:#f6cf32!important;color:#191917!important;border:0;box-shadow:none!important;font-weight:700}
+html body:is(.coach-workspace,.original-live) #sidebar .nav-link.active{background:#e0cb83!important;color:#34332e!important;border:0;box-shadow:none!important;font-weight:700}
 html body:is(.coach-workspace,.original-live) #sidebar .nav-link:hover{background:#34342c;color:#fff}
-html body.coach-workspace .page>header{border-bottom:2px solid #191917;padding-bottom:24px;position:relative}
+html body.coach-workspace .page>header{border-bottom:2px solid #34332e;padding-bottom:24px;position:relative}
 html body.coach-workspace .page>header h2,html body.original-live #greeting{font-size:34px;font-weight:750;letter-spacing:-.035em}
-html body.coach-workspace .page>header h2::after{content:"";display:block;width:64px;height:5px;background:#2448c7;transform:rotate(-3deg);margin-top:12px}
+html body.coach-workspace .page>header h2::after{content:"";display:block;width:64px;height:5px;background:#526b88;transform:rotate(-3deg);margin-top:12px}
 html body #workspace-tools{border-color:#b9b1a0}
-html body :is(.coach-fold,.workout-totals,.live-status){border-radius:2px;background:var(--ui-panel);color:#191917}
-html body #dash-stats{background:var(--ui-panel);border-color:#191917;border-radius:2px}
+html body :is(.coach-fold,.workout-totals,.live-status){border-radius:2px;background:var(--ui-panel);color:#34332e}
+html body #dash-stats{background:var(--ui-panel);border-color:#34332e;border-radius:2px}
 html body #dash-stats>.card{border-color:#b9b1a0;box-shadow:none}
-html body #dash-stats h3{font-weight:650;color:#191917}
-html body #dash-stats>.card:first-child{border-top:5px solid #2448c7!important}
-html body #dash-stats>.card:nth-child(2){border-top:5px solid #f6cf32!important}
-html body :is(.review-next,.focus-card,.auth-story){background:#f6cf32!important;border:2px solid #191917!important;border-radius:2px;color:#191917;box-shadow:5px 5px 0 #191917}
-html body .review-next :is(h3,p,span){color:#191917}
-html body .review-next-actions button{background:transparent!important;color:#191917!important;border:1px solid #191917;border-radius:2px}
-html body .review-next-actions button:first-child{background:#191917!important;color:#faf7ee!important}
+html body #dash-stats h3{font-weight:650;color:#34332e}
+html body #dash-stats>.card:first-child{border-top:5px solid #526b88!important}
+html body #dash-stats>.card:nth-child(2){border-top:5px solid #e0cb83!important}
+html body :is(.review-next,.focus-card,.auth-story){background:#e0cb83!important;border:2px solid #34332e!important;border-radius:2px;color:#34332e;box-shadow:5px 5px 0 #34332e}
+html body .review-next :is(h3,p,span){color:#34332e}
+html body .review-next-actions button{background:transparent!important;color:#34332e!important;border:1px solid #34332e;border-radius:2px}
+html body .review-next-actions button:first-child{background:#34332e!important;color:#faf7ee!important}
 html body .review-topline,html body .review-topline a{color:#625e54!important}
-html body #bottomNav{background:#191917;color:#faf7ee}
-html body #bottomNav .active{color:#f6cf32}
-html body #quick-actions-fab{background:#f6cf32!important;color:#191917!important;border:2px solid #191917!important;border-radius:3px;box-shadow:3px 3px 0 #191917}
+html body #bottomNav{background:#34332e;color:#faf7ee}
+html body #bottomNav .active{color:#e0cb83}
+html body #quick-actions-fab{background:#e0cb83!important;color:#34332e!important;border:2px solid #34332e!important;border-radius:3px;box-shadow:3px 3px 0 #34332e}
 /* Forms and public profiles stay deliberate and readable. */
-html body.site-auth .metal-card,html body .recovery-card{border:2px solid #191917!important;border-radius:2px;box-shadow:8px 8px 0 #d3c9af}
-html body.site-auth .auth-header{border-bottom:2px solid #191917}
-html body.site-auth .tab-btn.active,html body.site-auth .auth-role-choices button[aria-pressed=true]{background:#f6cf32;color:#191917;border-color:#191917;border-radius:2px}
-html body.site-auth :is(#existing-session,.auth-confirmation){background:#e7e1d2;border-color:#aaa28e;color:#191917}
-html body.site-auth input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #fffdf7 inset!important;-webkit-text-fill-color:#191917}
-html body[data-discovery] header,html body.platform-portal>.site-header{background:var(--ui-bg);border-bottom:2px solid #191917}
-html body[data-discovery] .coach-result{border:1.5px solid #191917!important;border-top:6px solid #2448c7!important;box-shadow:4px 4px 0 #d3c9af}
-html body[data-discovery] .coach-result .button,html body.platform-portal button:not(.secondary):not(.quiet):not(.danger):not(.owner-tab){background:#191917;color:#faf7ee;border-color:#191917;border-radius:3px}
-html body .owner-sidebar{background:#191917!important;border-radius:2px;border-color:#191917;--ui-text:#faf7ee;--ui-muted:#c7c0b1}
+html body.site-auth .metal-card,html body .recovery-card{border:2px solid #34332e!important;border-radius:2px;box-shadow:8px 8px 0 #d3c9af}
+html body.site-auth .auth-header{border-bottom:2px solid #34332e}
+html body.site-auth .tab-btn.active,html body.site-auth .auth-role-choices button[aria-pressed=true]{background:#e0cb83;color:#34332e;border-color:#34332e;border-radius:2px}
+html body.site-auth :is(#existing-session,.auth-confirmation){background:#e7e1d2;border-color:#aaa28e;color:#34332e}
+html body.site-auth input:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px #fffdf7 inset!important;-webkit-text-fill-color:#34332e}
+html body[data-discovery] header,html body.platform-portal>.site-header{background:var(--ui-bg);border-bottom:2px solid #34332e}
+html body[data-discovery] .coach-result{border:1.5px solid #34332e!important;border-top:6px solid #526b88!important;box-shadow:4px 4px 0 #d3c9af}
+html body[data-discovery] .coach-result .button,html body.platform-portal button:not(.secondary):not(.quiet):not(.danger):not(.owner-tab){background:#34332e;color:#faf7ee;border-color:#34332e;border-radius:3px}
+html body .owner-sidebar{background:#34332e!important;border-radius:2px;border-color:#34332e;--ui-text:#faf7ee;--ui-muted:#c7c0b1}
 html body .owner-sidebar :is(h2,p){color:#faf7ee}
-html body .owner-tab[aria-current=page]{background:#f6cf32!important;color:#191917!important;border-color:#f6cf32!important;border-radius:2px}
+html body .owner-tab[aria-current=page]{background:#e0cb83!important;color:#34332e!important;border-color:#e0cb83!important;border-radius:2px}
 html body .owner-search{background:var(--ui-panel);border-color:var(--ui-line);border-radius:2px}
-html body .owner-stat{border-top:4px solid #2448c7!important}
-html body .owner-stat strong{color:#191917}
-html body dialog,html body #penguins-help-guide{background:var(--ui-panel);color:#191917;border:2px solid #191917;border-radius:3px}
+html body .owner-stat{border-top:4px solid #526b88!important}
+html body .owner-stat strong{color:#34332e}
+html body dialog,html body #penguins-help-guide{background:var(--ui-panel);color:#34332e;border:2px solid #34332e;border-radius:3px}
 html body :is(.exercise-card,.exercise-editor){border-color:#b9b1a0!important;border-radius:3px!important;background:var(--ui-panel)!important}
 html body .studio-library .exercise-card{background:#eee8da!important}
-html body .exercise-card :is(h4,small){color:#191917}
+html body .exercise-card :is(h4,small){color:#34332e}
 html body .exercise-card .muscle-view-switch{background:#e7e1d2;border-color:#b9b1a0}
 html body .exercise-card .muscle-view-switch button{color:#625e54}
-html body .exercise-card .muscle-view-switch button[aria-pressed=true]{background:#191917;color:#fff}
-html body .exercise-editor .actions button{color:#191917!important}
+html body .exercise-card .muscle-view-switch button[aria-pressed=true]{background:#34332e;color:#fff}
+html body .exercise-editor .actions button{color:#34332e!important}
 html body .exercise-editor .actions button:last-child{color:#a22525!important}
-html body .studio-library .exercise-card>button{background:#2448c7;color:#fff;border-color:#2448c7}
-html body :is(.progress-panel,.coach-invitation,.workspace-tabs){background:var(--ui-panel);border-color:#b9b1a0;color:#191917}
-html body .exercise-selected>p{background:repeating-linear-gradient(0deg,transparent,transparent 31px,#1919170d 32px);border-radius:2px}
+html body .studio-library .exercise-card>button{background:#526b88;color:#fff;border-color:#526b88}
+html body :is(.progress-panel,.coach-invitation,.workspace-tabs){background:var(--ui-panel);border-color:#b9b1a0;color:#34332e}
+html body .exercise-selected>p{background:repeating-linear-gradient(0deg,transparent,transparent 31px,#34332e0d 32px);border-radius:2px}
 @media(max-width:767px){body.site-home .home-hero{padding-block:32px 48px}body.site-home .home-hero::before{height:90px;margin-bottom:20px}body.site-home .home-hero h1{font-size:clamp(36px,10vw,52px)}html body.coach-workspace .page>header h2,html body.original-live #greeting{font-size:27px}html body.site-auth .metal-card{box-shadow:4px 4px 0 #d3c9af}body.site-home #features .metal-card{padding:22px!important}}
-@media(prefers-reduced-motion:no-preference){body.site-home .btn-metal:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #2448c7}}
+@media(prefers-reduced-motion:no-preference){body.site-home .btn-metal:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 #526b88}}
 
-html body main :is(.bg-black,.bg-card,.bg-panel,.input-dark){background:var(--ui-panel)!important;color:#191917;border-color:#b9b1a0}
-html body main .bg-card2{background:#e7e1d2!important;color:#191917}
+html body main :is(.bg-black,.bg-card,.bg-panel,.input-dark){background:var(--ui-panel)!important;color:#34332e;border-color:#b9b1a0}
+html body main .bg-card2{background:#e7e1d2!important;color:#34332e}
 html body .platform-document p,html body.platform-document li{color:#625e54}
-html body .site-header a,html body[data-discovery] header a{color:#2448c7}
-html body .coach-specialty,html body .verified-label,html body #penguins-help-guide h3{color:#2448c7}
-html body .exercise-studio .workout-totals{color:#191917!important}
-html body .workspace-tabs button[aria-pressed=true]{background:#191917;color:#fff}
+html body .site-header a,html body[data-discovery] header a{color:#526b88}
+html body .coach-specialty,html body .verified-label,html body #penguins-help-guide h3{color:#526b88}
+html body .exercise-studio .workout-totals{color:#34332e!important}
+html body .workspace-tabs button[aria-pressed=true]{background:#34332e;color:#fff}
+
+/* Muted identity and readable mobile chrome. */
+html body.coach-workspace,html body.original-live,html body.platform-portal{--bg-c:#f0ebdd!important;--card-c:#faf7ee!important;--card2-c:#e7e1d2!important;--border-c:#b9b1a0!important;--text-c:#34332e!important;--muted-c:#625e54!important}
+.ipenguins-mark{display:inline-block;width:36px;height:43px;object-fit:contain;vertical-align:middle;flex-shrink:0;margin-inline:5px}
+html body #app>div>div:first-child{background:#e7e1d2!important;border-bottom:2px solid #8a8373!important;color:#34332e!important}
+html body #app>div>div:first-child :is(h1,button,.text-white){color:#34332e!important}
+html body #app>div>div:first-child button{background:#f4efe3!important;border:1px solid #b9b1a0;border-radius:5px;box-shadow:none}
+html body #bottomNav{background:#e7e1d2!important;border-top:2px solid #8a8373!important;box-shadow:0 -5px 18px #34332e0a}
+html body #bottomNav .bottom-nav-item{color:#625e54!important;border-radius:0;font-size:11px}
+html body #bottomNav .bottom-nav-item.active{background:#e0cb8366!important;color:#34332e!important;box-shadow:inset 0 3px #526b88}
+html body main :is(h1,h2,h3,h4,.text-white,.text-text){color:#34332e!important}
+html body main :is(.text-muted,.text-dim,.helper,.date,.page>header p){color:#625e54!important}
+html body #workspace-tools>a,html body #workspace-more summary,html body #sync-status{color:#625e54!important;border-color:#b9b1a0!important}
+html body #pg-add-client{background:#526b88!important;color:#fffdf7!important;border-color:#526b88!important;box-shadow:none}
+html body #page-messages :is(p,span,h3){color:#625e54}
+html body #page-messages .chat-bubble-me{background:#526b88;color:#fffdf7}
+html body #quick-actions-fab{background:#e0cb83!important;color:#34332e!important;border-color:#8a8373!important;box-shadow:3px 3px 0 #b9b1a0!important}
+html body main :is(button.bg-accent,a.bg-accent,.btn-metal){color:#fffdf7!important}
+@media(max-width:480px){.ipenguins-mark{width:29px;height:35px}html body #app>div>div:first-child h1{font-size:17px;white-space:nowrap}html body #app>div>div:first-child{gap:8px;padding-inline:12px}}
+
