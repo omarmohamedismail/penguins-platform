@@ -552,7 +552,7 @@ document.getElementById('form-account').onsubmit = e => {
   if (!changed) { toast('No changes to submit.'); return; }
   db.pendingAccountChange = { ...requested, submittedAt: 'الآن' };
   saveData(); renderAll();
-  toast('Submitted — awaiting Penguins approval.');
+  toast('Submitted — awaiting ipenguins approval.');
 };
 
 function renderAccountApproval() {
@@ -1629,7 +1629,7 @@ const PAGE_INFO = [
   { label:'الفواتير', icon:'▥', text:'Create invoices, track what\'s outstanding, paid, or overdue, and mark them paid.' },
   { label:'المتجر', icon:'▨', text:'List merch, digital products, or brand collabs for sale.' },
   { label:'الإحالات', icon:'↗', text:'Your referral link — track clicks, signups, and the revenue they generated.' },
-  { label:'التحقق', icon:'✓', text:'Your identity/certification verification status. Read-only — managed by the Penguins team.' },
+  { label:'التحقق', icon:'✓', text:'Your identity/certification verification status. Read-only — managed by the ipenguins team.' },
   { label:'الحساب', icon:'◉', text:'Your coach profile: name, niche, bio, hourly rate — plus an Appearance section to pick your own accent color for the whole dashboard (purple by default).' },
   { label:'معاينة واجهة العميل', icon:'◑', text:'Preview what a client sees in their portal — their plan, points, free resources, and today\'s readiness note.' },
 ];
@@ -2258,3 +2258,4 @@ document.addEventListener('keydown',event=>{
  if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='s'){event.preventDefault();sync.flush();}
 });
 window.addEventListener('online',()=>toast('Back online — retrying unsaved changes.'));
+
